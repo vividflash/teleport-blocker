@@ -24,38 +24,42 @@
  */
 package com.vividflash.teleportblocker;
 
-import com.google.inject.Provides;
-import com.vividflash.teleportblocker.features.TeleportBlockFeature;
-import javax.inject.Inject;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDescriptor;
+import java.util.function.Predicate;
 
-@PluginDescriptor(
-    name = "Teleport Blocker",
-    description = "Teleport Option Removal: Minigames, Spells, Jewellery",
-    tags = {"teleport", "block", "spellbook", "chunk", "locked", "restriction", "minigame"}
-)
-public class TeleportBlockerPlugin extends Plugin
+/**
+ * The four destinations the rat pit dialogue offers, each paired with its
+ * option line and the toggle that blocks it. Cancel is not listed and is never
+ * touched.
+ */
+public enum RatPit
 {
-    @Inject
-    private TeleportBlockFeature teleportBlockFeature;
+    ARDOUGNE("Ardougne (kittens)", TeleportBlockerConfig::ratPitsArdougne),
+    VARROCK("Varrock (grown cats)", TeleportBlockerConfig::ratPitsVarrock),
+    KELDAGRIM("Keldagrim (overgrown cats)", TeleportBlockerConfig::ratPitsKeldagrim),
+    PORT_SARIM("Port Sarim (wily cats)", TeleportBlockerConfig::ratPitsPortSarim);
 
-    @Override
-    protected void startUp()
+    private final String optionLine;
+    private final Predicate<TeleportBlockerConfig> blocked;
+
+    RatPit(String optionLine, Predicate<TeleportBlockerConfig> blocked)
     {
-        teleportBlockFeature.startUp();
+        this.optionLine = optionLine;
+        this.blocked = blocked;
+    }
+
+    public String getOptionLine()
+    {
+        return optionLine;
+    }
+
+    public boolean isBlocked(TeleportBlockerConfig config)
+    {
+        return blocked.test(config);
     }
 
     @Override
-    protected void shutDown()
+    public String toString()
     {
-        teleportBlockFeature.shutDown();
-    }
-
-    @Provides
-    TeleportBlockerConfig provideConfig(ConfigManager configManager)
-    {
-        return configManager.getConfig(TeleportBlockerConfig.class);
+        return optionLine;
     }
 }

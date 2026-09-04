@@ -29,12 +29,14 @@ import net.runelite.api.gameval.InterfaceID;
 
 /**
  * Standard spellbook teleports in spellbook order, each paired with its packed
- * component id and the toggle that blocks it.
+ * component id and the toggle that blocks it. Minigame Teleport takes its
+ * toggle from the minigame master instead, so the teleport master leaves it
+ * alone.
  */
 public enum TeleportSpell
 {
     HOME("Home Teleport", InterfaceID.MagicSpellbook.TELEPORT_HOME_STANDARD, TeleportBlockerConfig::homeTeleport),
-    MINIGAME("Minigame Teleport", InterfaceID.MagicSpellbook.TELEPORT_MINIGAME_STANDARD, TeleportBlockerConfig::minigameTeleport),
+    MINIGAME("Minigame Teleport", InterfaceID.MagicSpellbook.TELEPORT_MINIGAME_STANDARD, TeleportBlockerConfig::blockAllMinigames, false),
     VARROCK("Varrock Teleport", InterfaceID.MagicSpellbook.VARROCK_TELEPORT, TeleportBlockerConfig::varrockTeleport),
     LUMBRIDGE("Lumbridge Teleport", InterfaceID.MagicSpellbook.LUMBRIDGE_TELEPORT, TeleportBlockerConfig::lumbridgeTeleport),
     FALADOR("Falador Teleport", InterfaceID.MagicSpellbook.FALADOR_TELEPORT, TeleportBlockerConfig::faladorTeleport),
@@ -50,12 +52,19 @@ public enum TeleportSpell
     private final String spellName;
     private final int componentId;
     private final Predicate<TeleportBlockerConfig> blocked;
+    private final boolean coveredByBlockAll;
 
     TeleportSpell(String spellName, int componentId, Predicate<TeleportBlockerConfig> blocked)
+    {
+        this(spellName, componentId, blocked, true);
+    }
+
+    TeleportSpell(String spellName, int componentId, Predicate<TeleportBlockerConfig> blocked, boolean coveredByBlockAll)
     {
         this.spellName = spellName;
         this.componentId = componentId;
         this.blocked = blocked;
+        this.coveredByBlockAll = coveredByBlockAll;
     }
 
     public int getComponentId()
@@ -65,7 +74,7 @@ public enum TeleportSpell
 
     public boolean isBlocked(TeleportBlockerConfig config)
     {
-        return blocked.test(config);
+        return (coveredByBlockAll && config.blockAllTeleports()) || blocked.test(config);
     }
 
     @Override

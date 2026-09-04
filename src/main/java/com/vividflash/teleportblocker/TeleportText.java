@@ -24,38 +24,17 @@
  */
 package com.vividflash.teleportblocker;
 
-import com.google.inject.Provides;
-import com.vividflash.teleportblocker.features.TeleportBlockFeature;
-import javax.inject.Inject;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDescriptor;
+import java.util.Locale;
 
-@PluginDescriptor(
-    name = "Teleport Blocker",
-    description = "Teleport Option Removal: Minigames, Spells, Jewellery",
-    tags = {"teleport", "block", "spellbook", "chunk", "locked", "restriction", "minigame"}
-)
-public class TeleportBlockerPlugin extends Plugin
+/** Comparison key for option text, ignoring case and punctuation. */
+public final class TeleportText
 {
-    @Inject
-    private TeleportBlockFeature teleportBlockFeature;
-
-    @Override
-    protected void startUp()
+    private TeleportText()
     {
-        teleportBlockFeature.startUp();
     }
 
-    @Override
-    protected void shutDown()
+    public static String key(String text)
     {
-        teleportBlockFeature.shutDown();
-    }
-
-    @Provides
-    TeleportBlockerConfig provideConfig(ConfigManager configManager)
-    {
-        return configManager.getConfig(TeleportBlockerConfig.class);
+        return text == null ? "" : text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
     }
 }
