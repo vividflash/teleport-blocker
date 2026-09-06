@@ -27,37 +27,27 @@ package com.vividflash.teleportblocker;
 import java.util.function.Predicate;
 
 /**
- * Canoe destinations in map order, River Lum first, each paired with the name
- * the map prints and the toggle that blocks it. Canoes have no master toggle,
- * so every destination is blocked only by its own. The station tree, the canoe
- * shape picker and the expert's own options are left alone.
+ * The two destinations the Soul Wars portal dialogue offers, each paired with
+ * its option line and the toggle that blocks it. Nowhere is not listed and is
+ * never touched.
  */
-public enum CanoeDestination
+public enum SoulWarsPortal
 {
-    LUMBRIDGE("Lumbridge", TeleportBlockerConfig::canoeLumbridge),
-    CHAMPIONS_GUILD("Champions' Guild", TeleportBlockerConfig::canoeChampionsGuild),
-    BARBARIAN_VILLAGE("Barbarian Village", TeleportBlockerConfig::canoeBarbarianVillage),
-    EDGEVILLE("Edgeville", TeleportBlockerConfig::canoeEdgeville),
-    FEROX_ENCLAVE("Ferox Enclave", TeleportBlockerConfig::canoeFeroxEnclave),
-    WILDERNESS_POND("Wilderness Pond", TeleportBlockerConfig::canoeWildernessPond),
-    CASTLE_WARS("Castle Wars", TeleportBlockerConfig::canoeCastleWars),
-    TREE_GNOME_VILLAGE("Tree Gnome Village", TeleportBlockerConfig::canoeTreeGnomeVillage),
-    CLOCKTOWER("Clocktower", TeleportBlockerConfig::canoeClocktower),
-    CHAOS_DRUID_TOWER("Chaos Druid Tower", TeleportBlockerConfig::canoeChaosDruidTower),
-    TREE_GNOME_STRONGHOLD("Tree Gnome Stronghold", TeleportBlockerConfig::canoeTreeGnomeStronghold);
+    EDGEVILLE("Edgeville", TeleportBlockerConfig::soulWarsPortalEdgeville),
+    FEROX_ENCLAVE("Ferox Enclave", TeleportBlockerConfig::soulWarsPortalFeroxEnclave);
 
-    private final String destinationName;
+    private final String optionLine;
     private final Predicate<TeleportBlockerConfig> blocked;
 
-    CanoeDestination(String destinationName, Predicate<TeleportBlockerConfig> blocked)
+    SoulWarsPortal(String optionLine, Predicate<TeleportBlockerConfig> blocked)
     {
-        this.destinationName = destinationName;
+        this.optionLine = optionLine;
         this.blocked = blocked;
     }
 
-    public String getDestinationName()
+    public String getOptionLine()
     {
-        return destinationName;
+        return optionLine;
     }
 
     public boolean isBlocked(TeleportBlockerConfig config)
@@ -68,6 +58,6 @@ public enum CanoeDestination
     @Override
     public String toString()
     {
-        return destinationName;
+        return optionLine;
     }
 }

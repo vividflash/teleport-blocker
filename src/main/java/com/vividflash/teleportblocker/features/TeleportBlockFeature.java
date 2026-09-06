@@ -31,6 +31,7 @@ import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.RatPit;
+import com.vividflash.teleportblocker.SoulWarsPortal;
 import com.vividflash.teleportblocker.TeleportBlockerConfig;
 import com.vividflash.teleportblocker.TeleportSpell;
 import com.vividflash.teleportblocker.TeleportText;
@@ -63,14 +64,17 @@ import net.runelite.client.util.Text;
  * Removes the menu entries pointing at blocked spellbook teleports, at
  * blocked rows of the Minigames window, at blocked canoe map destinations and
  * at blocked destinations on worn teleport jewellery, and consumes clicks and
- * number-key presses on blocked options of the rat pit and jewellery
- * dialogues. The spell icons themselves are only touched through the minigame
+ * number-key presses on blocked options of the rat pit, jewellery and Soul
+ * Wars portal dialogues. The spell icons themselves are only touched through the minigame
  * master toggle.
  */
 @Singleton
 public class TeleportBlockFeature implements KeyListener
 {
     private static final String SELECT_OPTION = "Select";
+
+    private static final int CANOE_MAP_LUM = WidgetUtil.componentToInterface(InterfaceID.CanoeMapLum.UNIVERSE);
+    private static final int CANOE_MAP_DOUGNE = WidgetUtil.componentToInterface(InterfaceID.CanoeMapDougne.UNIVERSE);
 
     /** Line breaks are dropped by removeTags, so they are converted first. */
     private static final Pattern BREAK_TAG = Pattern.compile("(?i)<br\\s*/?>");
@@ -114,6 +118,8 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<Minigame> blockedMinigames = EnumSet.noneOf(Minigame.class);
     private final Set<RatPit> blockedRatPits = EnumSet.noneOf(RatPit.class);
     private final Set<JewelleryTeleport> blockedJewellery = EnumSet.noneOf(JewelleryTeleport.class);
+    private final Set<SoulWarsPortal> blockedPortals = EnumSet.noneOf(SoulWarsPortal.class);
+    private final Set<CanoeDestination> blockedCanoes = EnumSet.noneOf(CanoeDestination.class);
 
     public void startUp()
     {
@@ -130,6 +136,8 @@ public class TeleportBlockFeature implements KeyListener
         blockedMinigames.clear();
         blockedRatPits.clear();
         blockedJewellery.clear();
+        blockedPortals.clear();
+        blockedCanoes.clear();
     }
 
     @Subscribe
@@ -144,7 +152,8 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onMenuEntryAdded(MenuEntryAdded event)
     {
-        if (blockedComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty())
+        if (blockedComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
+            && blockedCanoes.isEmpty())
         {
             return;
         }
@@ -152,7 +161,8 @@ public class TeleportBlockFeature implements KeyListener
         Menu menu = client.getMenu();
         MenuEntry[] entries = menu.getMenuEntries();
         MenuEntry[] filtered = Arrays.stream(entries)
-            .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry))
+            .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
+                && !isBlockedCanoe(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -236,7 +246,7 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked event)
     {
-        if ((!blockedRatPits.isEmpty() || !blockedJewellery.isEmpty()) && isBlockedDialogueClick(event))
+        if (isDialogueBlocking() && isBlockedDialogueClick(event))
         {
             event.consume();
         }
@@ -264,7 +274,7 @@ public class TeleportBlockFeature implements KeyListener
 
     private void consumeIfBlockedDialogueDigit(KeyEvent e)
     {
-        if (blockedRatPits.isEmpty() && blockedJewellery.isEmpty())
+        if (!isDialogueBlocking())
         {
             return;
         }
@@ -274,6 +284,11 @@ public class TeleportBlockFeature implements KeyListener
         {
             e.consume();
         }
+    }
+
+    private boolean isDialogueBlocking()
+    {
+        return !blockedRatPits.isEmpty() || !blockedJewellery.isEmpty() || !blockedPortals.isEmpty();
     }
 
     private static int digitOf(KeyEvent e)
@@ -316,10 +331,12 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
+        Jewellery item = dialogueItem(lines);
+        boolean portal = isPortalDialogue(lines);
         int firstOptionIndex = -1;
         for (int i = 0; i < lines.length; i++)
         {
-            if (lines[i] != null && matchesAnyDialogueLine(lines[i].getText()))
+            if (lines[i] != null && matchesAnyDialogueLine(item, portal, lines[i].getText()))
             {
                 firstOptionIndex = i;
                 break;
@@ -336,51 +353,154 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        return isBlockedDialogueLine(lines[index].getText());
+        return isBlockedDialogueLine(item, portal, lines[index].getText());
     }
 
-    private static boolean matchesAnyDialogueLine(String text)
+    /**
+     * The item whose rub dialogue the lines belong to, or null when they belong
+     * to none. The dialogue carries no marker of the item that opened it, and a
+     * portal or an NPC can offer a place a piece of jewellery also travels to,
+     * so the lines are read as a rub dialogue only when one item accounts for
+     * more of them than any other item and for more than one of them. Every
+     * item offers at least two destinations, while a dialogue that only shares
+     * a place name offers one.
+     */
+    private static Jewellery dialogueItem(Widget[] lines)
     {
-        if (text == null)
+        Jewellery item = null;
+        int most = 0;
+        boolean tied = false;
+
+        for (Jewellery candidate : Jewellery.values())
+        {
+            if (!candidate.hasRubDialogue())
+            {
+                continue;
+            }
+
+            int count = 0;
+            for (Widget line : lines)
+            {
+                if (line != null && JewelleryTeleport.matchesDialogueLine(candidate, plainText(line.getText())))
+                {
+                    count++;
+                }
+            }
+
+            if (count > most)
+            {
+                item = candidate;
+                most = count;
+                tied = false;
+            }
+            else if (count == most && count > 0)
+            {
+                tied = true;
+            }
+        }
+
+        return most > 1 && !tied ? item : null;
+    }
+
+    /**
+     * True when the lines are the Soul Wars portal dialogue. That dialogue
+     * carries no marker of its own either, and one of the two places it offers
+     * is a jewellery destination as well, so it is only recognised when both of
+     * them are present.
+     */
+    private static boolean isPortalDialogue(Widget[] lines)
+    {
+        for (SoulWarsPortal destination : SoulWarsPortal.values())
+        {
+            boolean present = false;
+            for (Widget line : lines)
+            {
+                if (line != null && matchesLine(destination.getOptionLine(), plainText(line.getText())))
+                {
+                    present = true;
+                    break;
+                }
+            }
+            if (!present)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean matchesAnyDialogueLine(Jewellery item, boolean portal, String text)
+    {
+        String line = plainText(text);
+        if (line.isEmpty())
         {
             return false;
         }
 
-        String line = Text.removeTags(text).trim();
         for (RatPit pit : RatPit.values())
         {
-            if (TeleportText.key(pit.getOptionLine()).equals(TeleportText.key(line)))
+            if (matchesLine(pit.getOptionLine(), line))
             {
                 return true;
             }
         }
-        return JewelleryTeleport.matchesAnyDialogueLine(line);
+        if (portal)
+        {
+            for (SoulWarsPortal destination : SoulWarsPortal.values())
+            {
+                if (matchesLine(destination.getOptionLine(), line))
+                {
+                    return true;
+                }
+            }
+        }
+        return item != null && JewelleryTeleport.matchesDialogueLine(item, line);
     }
 
-    /** True when the text is a blocked rat pit or jewellery destination. */
-    private boolean isBlockedDialogueLine(String text)
+    /** True when the text is a blocked line of the dialogue it was read from. */
+    private boolean isBlockedDialogueLine(Jewellery item, boolean portal, String text)
     {
-        if (text == null)
+        String line = plainText(text);
+        if (line.isEmpty())
         {
             return false;
         }
 
-        String line = Text.removeTags(text).trim();
         for (RatPit pit : blockedRatPits)
         {
-            if (TeleportText.key(pit.getOptionLine()).equals(TeleportText.key(line)))
+            if (matchesLine(pit.getOptionLine(), line))
             {
                 return true;
+            }
+        }
+        if (portal)
+        {
+            for (SoulWarsPortal destination : blockedPortals)
+            {
+                if (matchesLine(destination.getOptionLine(), line))
+                {
+                    return true;
+                }
             }
         }
         for (JewelleryTeleport teleport : blockedJewellery)
         {
-            if (teleport.getItem().hasRubDialogue() && teleport.matchesOption(line))
+            if (teleport.getItem() == item && teleport.matchesOption(line))
             {
                 return true;
             }
         }
         return false;
+    }
+
+    private static boolean matchesLine(String optionLine, String line)
+    {
+        return !line.isEmpty() && TeleportText.key(optionLine).equals(TeleportText.key(line));
+    }
+
+    private static String plainText(String text)
+    {
+        return text == null ? "" : Text.removeTags(text).trim();
     }
 
     // CC_OP_LOW_PRIORITY carries op index 6 and above, where the alternate
@@ -394,6 +514,45 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
         return blockedComponents.contains(entry.getParam1());
+    }
+
+    // The canoe map carries its Travel to option on the destination frame
+    // rather than on the map pin, and the two maps frame their destinations in
+    // a different order, so the place is read from the option text. The
+    // interface check keeps those words off anything outside the map.
+    private boolean isBlockedCanoe(MenuEntry entry)
+    {
+        if (blockedCanoes.isEmpty())
+        {
+            return false;
+        }
+
+        MenuAction action = entry.getType();
+        if (action != MenuAction.CC_OP && action != MenuAction.CC_OP_LOW_PRIORITY)
+        {
+            return false;
+        }
+
+        int group = WidgetUtil.componentToInterface(entry.getParam1());
+        if (group != CANOE_MAP_LUM && group != CANOE_MAP_DOUGNE)
+        {
+            return false;
+        }
+
+        String option = TeleportText.key(plainText(entry.getOption()));
+        if (option.isEmpty())
+        {
+            return false;
+        }
+
+        for (CanoeDestination destination : blockedCanoes)
+        {
+            if (option.contains(TeleportText.key(destination.getDestinationName())))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isBlockedMinigame(MenuEntry entry)
@@ -559,7 +718,7 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        return isBlockedDialogueLine(lines[index].getText());
+        return isBlockedDialogueLine(dialogueItem(lines), isPortalDialogue(lines), lines[index].getText());
     }
 
     private void rebuildBlocked()
@@ -586,14 +745,6 @@ public class TeleportBlockFeature implements KeyListener
                 blockedComponents.add(spell.getComponentId());
             }
         }
-        for (CanoeDestination destination : CanoeDestination.values())
-        {
-            if (destination.isBlocked(config))
-            {
-                blockedComponents.add(destination.getComponentId());
-            }
-        }
-
         blockedMinigames.clear();
         if (!config.blockAllMinigames())
         {
@@ -624,6 +775,24 @@ public class TeleportBlockFeature implements KeyListener
             if (teleport.isBlocked(config))
             {
                 blockedJewellery.add(teleport);
+            }
+        }
+
+        blockedPortals.clear();
+        for (SoulWarsPortal destination : SoulWarsPortal.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedPortals.add(destination);
+            }
+        }
+
+        blockedCanoes.clear();
+        for (CanoeDestination destination : CanoeDestination.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedCanoes.add(destination);
             }
         }
     }

@@ -125,12 +125,12 @@ public enum JewelleryTeleport
                 || (altOptionLine != null && key.equals(TeleportText.key(altOptionLine))));
     }
 
-    /** True when the line is a known destination of any item that has a rub dialogue. */
-    public static boolean matchesAnyDialogueLine(String line)
+    /** True when the line is a known destination of the given item. */
+    public static boolean matchesDialogueLine(Jewellery item, String line)
     {
         for (JewelleryTeleport teleport : values())
         {
-            if (teleport.item.hasRubDialogue() && teleport.matchesOption(line))
+            if (teleport.item == item && teleport.matchesOption(line))
             {
                 return true;
             }

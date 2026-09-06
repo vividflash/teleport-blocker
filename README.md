@@ -25,10 +25,11 @@ dialogue, by key as well as mouse.
 | Slayer ring | 6 |
 | Digsite pendant | 3 |
 | Burning amulet | 3 |
+| Soul Wars portal | 2 |
 
 The two master toggles start on and cover their whole section. Untick one and
-nothing below it is blocked until you tick what you want. The ancient, lunar and
-canoe sections have no master and start off entirely.
+nothing below it is blocked until you tick what you want. The ancient, lunar,
+canoe and Soul Wars portal sections have no master and start off entirely.
 
 ## License
 
