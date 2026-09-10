@@ -21,7 +21,7 @@ Blocker. <small><i>Available from all state of the art plugin hubs.</i></small>
 | Slayer ring | Stronghold Slayer Cave, Slayer Tower, Fremennik Slayer Dungeon, Tarn's Lair, Dark Beasts, Wyrmscraig Cavern |
 | Digsite pendant | Digsite, Fossil Island, Lithkren Dungeon |
 | Burning amulet | Chaos Temple, Bandit Camp, Lava Maze |
-| Soul Wars portal | Soul Wars to Edgeville, Soul Wars to Ferox Enclave, Edgeville to Soul Wars, Ferox Enclave to Soul Wars |
+| Soul Wars portal and Edgeville lever | Soul Wars to Edgeville, Soul Wars to Ferox Enclave, Edgeville to Soul Wars, Ferox Enclave to Soul Wars, Edgeville lever to Wilderness, Ardougne lever to Wilderness, Wilderness lever to Edgeville, Wilderness lever to Ardougne |
 
 ## License
 

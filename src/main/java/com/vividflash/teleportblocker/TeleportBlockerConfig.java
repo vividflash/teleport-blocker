@@ -1485,8 +1485,8 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Soul Wars portal",
-        description = "One toggle per Soul Wars portal route, into Soul Wars and out of it. Every one starts unblocked.",
+        name = "Soul Wars portal and Edgeville lever",
+        description = "One toggle per Soul Wars portal route, into Soul Wars and out of it, plus the Wilderness lever routes at Edgeville, Ardougne and the Deserted Keep. Every one starts unblocked.",
         position = 128,
         closedByDefault = true
     )
@@ -1536,6 +1536,54 @@ public interface TeleportBlockerConfig extends Config
         section = soulWarsPortalSection
     )
     default boolean soulWarsEntryFeroxEnclave()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "edgevilleLeverToWilderness",
+        name = "Edgeville lever to Wilderness",
+        description = "Removes the Pull option from the lever in Edgeville.",
+        position = 133,
+        section = soulWarsPortalSection
+    )
+    default boolean edgevilleLeverToWilderness()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "ardougneLeverToWilderness",
+        name = "Ardougne lever to Wilderness",
+        description = "Removes the Pull option from the lever in Ardougne.",
+        position = 134,
+        section = soulWarsPortalSection
+    )
+    default boolean ardougneLeverToWilderness()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "wildernessLeverToEdgeville",
+        name = "Wilderness lever to Edgeville",
+        description = "Blocks the Edgeville option on the Deserted Keep lever.",
+        position = 135,
+        section = soulWarsPortalSection
+    )
+    default boolean wildernessLeverToEdgeville()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "wildernessLeverToArdougne",
+        name = "Wilderness lever to Ardougne",
+        description = "Blocks the Ardougne option on the Deserted Keep lever, or its Pull option before the Wilderness Easy Diary.",
+        position = 136,
+        section = soulWarsPortalSection
+    )
+    default boolean wildernessLeverToArdougne()
     {
         return false;
     }

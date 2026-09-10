@@ -34,6 +34,7 @@ import com.vividflash.teleportblocker.SoulWarsPortal;
 import com.vividflash.teleportblocker.StripAndLowercase;
 import com.vividflash.teleportblocker.TeleportBlockerConfig;
 import com.vividflash.teleportblocker.TeleportSpell;
+import com.vividflash.teleportblocker.WildernessLever;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,6 +48,7 @@ import net.runelite.api.Client;
 import net.runelite.api.Menu;
 import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
+import net.runelite.api.ObjectComposition;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.gameval.InterfaceID;
@@ -62,8 +64,8 @@ import net.runelite.client.util.Text;
 /**
  * Removes the menu entries pointing at blocked spellbook teleports, at
  * blocked rows of the Minigames window, at blocked canoe map destinations, at
- * blocked portals into Soul Wars and at blocked destinations on worn teleport
- * jewellery, and consumes clicks and
+ * blocked portals into Soul Wars, at blocked destinations on worn teleport
+ * jewellery and at blocked options of the Wilderness levers, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
  * Wars portal dialogues. The spell icons themselves are only touched through the minigame
  * master toggle.
@@ -129,6 +131,8 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<SoulWarsPortal> blockedPortals = EnumSet.noneOf(SoulWarsPortal.class);
     private final Set<CanoeDestination> blockedCanoes = EnumSet.noneOf(CanoeDestination.class);
     private final Set<SoulWarsPortal.Entry> blockedEntryPortals = EnumSet.noneOf(SoulWarsPortal.Entry.class);
+    private final Set<WildernessLever.Entry> blockedLeverEntries = EnumSet.noneOf(WildernessLever.Entry.class);
+    private final Set<WildernessLever.Destination> blockedLeverDestinations = EnumSet.noneOf(WildernessLever.Destination.class);
 
     public void startUp()
     {
@@ -148,6 +152,8 @@ public class TeleportBlockFeature implements KeyListener
         blockedPortals.clear();
         blockedCanoes.clear();
         blockedEntryPortals.clear();
+        blockedLeverEntries.clear();
+        blockedLeverDestinations.clear();
     }
 
     @Subscribe
@@ -163,7 +169,8 @@ public class TeleportBlockFeature implements KeyListener
     public void onMenuEntryAdded(MenuEntryAdded event)
     {
         if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
-            && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty())
+            && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
+            && blockedLeverDestinations.isEmpty())
         {
             return;
         }
@@ -172,7 +179,8 @@ public class TeleportBlockFeature implements KeyListener
         MenuEntry[] entries = menu.getMenuEntries();
         MenuEntry[] filtered = Arrays.stream(entries)
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
-                && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry))
+                && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry) && !isBlockedLeverEntry(entry)
+                && !isBlockedLeverDestination(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -565,6 +573,19 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
+    // An object whose look depends on the player's progress reaches the menu
+    // under its base id, so the id of the variant on screen is checked too.
+    private int variantId(int objectId)
+    {
+        ObjectComposition composition = client.getObjectDefinition(objectId);
+        if (composition == null || composition.getImpostorIds() == null)
+        {
+            return objectId;
+        }
+        ObjectComposition variant = composition.getImpostor();
+        return variant == null ? objectId : variant.getId();
+    }
+
     // The portals into Soul Wars travel straight from Enter with no dialogue
     // in between, so their options are removed from the menu.
     private boolean isBlockedEntryPortal(MenuEntry entry)
@@ -574,9 +595,65 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
+        int objectId = entry.getIdentifier();
+        int variantId = variantId(objectId);
         for (SoulWarsPortal.Entry portal : blockedEntryPortals)
         {
-            if (portal.getObjectId() == entry.getIdentifier())
+            if (portal.getObjectId() == objectId || portal.getObjectId() == variantId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // The Edgeville and Ardougne levers travel straight from Pull with no
+    // dialogue in between, so their option is removed from the menu.
+    private boolean isBlockedLeverEntry(MenuEntry entry)
+    {
+        if (blockedLeverEntries.isEmpty() || !OBJECT_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        int objectId = entry.getIdentifier();
+        int variantId = variantId(objectId);
+        for (WildernessLever.Entry lever : blockedLeverEntries)
+        {
+            if (lever.getObjectId() == objectId || lever.getObjectId() == variantId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // The Deserted Keep lever offers its return destinations as click options
+    // rather than a chat dialogue. Before the Wilderness Easy Diary its only
+    // option is Pull, which goes to Ardougne.
+    private boolean isBlockedLeverDestination(MenuEntry entry)
+    {
+        if (blockedLeverDestinations.isEmpty() || !OBJECT_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        int objectId = entry.getIdentifier();
+        int variantId = variantId(objectId);
+        if (objectId == WildernessLever.Destination.PRE_DIARY_OBJECT_ID
+            || variantId == WildernessLever.Destination.PRE_DIARY_OBJECT_ID)
+        {
+            return blockedLeverDestinations.contains(WildernessLever.Destination.ARDOUGNE);
+        }
+        if (!WildernessLever.Destination.isLeverObject(objectId) && !WildernessLever.Destination.isLeverObject(variantId))
+        {
+            return false;
+        }
+
+        String option = plainText(entry.getOption());
+        for (WildernessLever.Destination destination : blockedLeverDestinations)
+        {
+            if (matchesLine(destination.getOptionLine(), option))
             {
                 return true;
             }
@@ -831,6 +908,24 @@ public class TeleportBlockFeature implements KeyListener
             if (portal.isBlocked(config))
             {
                 blockedEntryPortals.add(portal);
+            }
+        }
+
+        blockedLeverEntries.clear();
+        for (WildernessLever.Entry lever : WildernessLever.Entry.values())
+        {
+            if (lever.isBlocked(config))
+            {
+                blockedLeverEntries.add(lever);
+            }
+        }
+
+        blockedLeverDestinations.clear();
+        for (WildernessLever.Destination destination : WildernessLever.Destination.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedLeverDestinations.add(destination);
             }
         }
     }
