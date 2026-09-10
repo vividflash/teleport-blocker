@@ -1776,4 +1776,108 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigSection(
+        name = "Gnome gliders",
+        description = "One toggle per glider map destination. Every one starts unblocked.",
+        position = 153,
+        closedByDefault = true
+    )
+    String gnomeGliderSection = "gnomeGliderSection";
+
+    @ConfigItem(
+        keyName = "gnomeGliderGrandTree",
+        name = "Grand Tree",
+        description = "Blocks the Ta Quir Priw (Grand Tree) destination on the glider map.",
+        position = 154,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderGrandTree()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderKaramja",
+        name = "Karamja",
+        description = "Blocks the Gandius (Karamja) destination on the glider map.",
+        position = 155,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderKaramja()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderAlKharid",
+        name = "Al Kharid",
+        description = "Blocks the Kar-Hewo (Al Kharid) destination on the glider map.",
+        position = 156,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderAlKharid()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderWhiteWolfMountain",
+        name = "White Wolf Mountain",
+        description = "Blocks the Sindarpos (White Wolf Mountain) destination on the glider map.",
+        position = 157,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderWhiteWolfMountain()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderDigsite",
+        name = "Digsite",
+        description = "Blocks the Lemanto Andra (Digsite) destination on the glider map.",
+        position = 158,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderDigsite()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderFeldipHills",
+        name = "Feldip Hills",
+        description = "Blocks the Lemantolly Undri (Feldip Hills) destination on the glider map.",
+        position = 159,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderFeldipHills()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderApeAtoll",
+        name = "Ape Atoll",
+        description = "Blocks the Ookookolly Undri (Ape Atoll) destination on the glider map.",
+        position = 160,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderApeAtoll()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "gnomeGliderPrevious",
+        name = "Previous destination",
+        description = "Removes the Glider option from glider pilots.",
+        position = 161,
+        section = gnomeGliderSection
+    )
+    default boolean gnomeGliderPrevious()
+    {
+        return false;
+    }
+
 }

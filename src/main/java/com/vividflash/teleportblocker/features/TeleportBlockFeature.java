@@ -26,6 +26,7 @@ package com.vividflash.teleportblocker.features;
 
 import com.vividflash.teleportblocker.AncientTeleportSpell;
 import com.vividflash.teleportblocker.CanoeDestination;
+import com.vividflash.teleportblocker.GnomeGlider;
 import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
@@ -49,6 +50,8 @@ import net.runelite.api.Client;
 import net.runelite.api.Menu;
 import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
+import net.runelite.api.NPC;
+import net.runelite.api.NPCComposition;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
@@ -67,7 +70,8 @@ import net.runelite.client.util.Text;
  * blocked rows of the Minigames window, at blocked canoe map destinations, at
  * blocked portals into Soul Wars, at blocked destinations on worn teleport
  * jewellery, at blocked options of the Wilderness levers, at blocked lines
- * of the spirit tree list and at the trees' Last-destination option, and consumes clicks and
+ * of the spirit tree list and at the trees' Last-destination option, at
+ * blocked glider map destinations and at the pilots' Glider option, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
  * Wars portal dialogues, as well as shortcut key presses on blocked spirit
  * tree lines. The spell icons themselves are only touched through the minigame
@@ -115,6 +119,14 @@ public class TeleportBlockFeature implements KeyListener
         MenuAction.GAME_OBJECT_FOURTH_OPTION,
         MenuAction.GAME_OBJECT_FIFTH_OPTION);
 
+    /** Every click option on an NPC, which leaves Examine out. */
+    private static final Set<MenuAction> NPC_OPTIONS = EnumSet.of(
+        MenuAction.NPC_FIRST_OPTION,
+        MenuAction.NPC_SECOND_OPTION,
+        MenuAction.NPC_THIRD_OPTION,
+        MenuAction.NPC_FOURTH_OPTION,
+        MenuAction.NPC_FIFTH_OPTION);
+
     @Inject
     private Client client;
 
@@ -138,6 +150,8 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<WildernessLever.Destination> blockedLeverDestinations = EnumSet.noneOf(WildernessLever.Destination.class);
     private final Set<SpiritTree.Destination> blockedSpiritTrees = EnumSet.noneOf(SpiritTree.Destination.class);
     private boolean blockSpiritTreePrevious;
+    private final Set<GnomeGlider.Destination> blockedGliders = EnumSet.noneOf(GnomeGlider.Destination.class);
+    private boolean blockGliderPrevious;
 
     public void startUp()
     {
@@ -161,6 +175,8 @@ public class TeleportBlockFeature implements KeyListener
         blockedLeverDestinations.clear();
         blockedSpiritTrees.clear();
         blockSpiritTreePrevious = false;
+        blockedGliders.clear();
+        blockGliderPrevious = false;
     }
 
     @Subscribe
@@ -177,7 +193,8 @@ public class TeleportBlockFeature implements KeyListener
     {
         if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
-            && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious)
+            && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
+            && blockedGliders.isEmpty() && !blockGliderPrevious)
         {
             return;
         }
@@ -188,7 +205,7 @@ public class TeleportBlockFeature implements KeyListener
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
                 && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry) && !isBlockedLeverEntry(entry)
                 && !isBlockedLeverDestination(entry) && !isBlockedSpiritTree(entry)
-                && !isBlockedSpiritTreePrevious(entry))
+                && !isBlockedSpiritTreePrevious(entry) && !isBlockedGlider(entry) && !isBlockedGliderPrevious(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -726,6 +743,51 @@ public class TeleportBlockFeature implements KeyListener
         return variant == null ? objectId : variant.getId();
     }
 
+    // Every pilot opens the same map, which carries one button per
+    // destination, so the button the entry sits on names the place. The
+    // button ids belong to the glider map alone, so the entry type is not
+    // checked.
+    private boolean isBlockedGlider(MenuEntry entry)
+    {
+        if (blockedGliders.isEmpty())
+        {
+            return false;
+        }
+
+        int component = entry.getParam1();
+        for (GnomeGlider.Destination destination : blockedGliders)
+        {
+            if (destination.getComponentId() == component)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Glider flies straight to the pilot's last destination, and its entry
+    // does not name that place, so the option is removed whatever it points
+    // at. The pilot's id is checked so the same option elsewhere is left
+    // alone. A pilot whose look depends on the player's progress reaches the
+    // menu under its base id, so the id of the variant on screen is checked too.
+    private boolean isBlockedGliderPrevious(MenuEntry entry)
+    {
+        if (!blockGliderPrevious || !NPC_OPTIONS.contains(entry.getType())
+            || !matchesLine(GnomeGlider.PREVIOUS_OPTION, plainText(entry.getOption())))
+        {
+            return false;
+        }
+
+        NPC npc = entry.getNpc();
+        if (npc == null)
+        {
+            return false;
+        }
+
+        NPCComposition variant = npc.getTransformedComposition();
+        return GnomeGlider.isPilot(npc.getId()) || (variant != null && GnomeGlider.isPilot(variant.getId()));
+    }
+
     // The portals into Soul Wars travel straight from Enter with no dialogue
     // in between, so their options are removed from the menu.
     private boolean isBlockedEntryPortal(MenuEntry entry)
@@ -1078,5 +1140,15 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
         blockSpiritTreePrevious = config.spiritTreePrevious();
+
+        blockedGliders.clear();
+        for (GnomeGlider.Destination destination : GnomeGlider.Destination.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedGliders.add(destination);
+            }
+        }
+        blockGliderPrevious = config.gnomeGliderPrevious();
     }
 }

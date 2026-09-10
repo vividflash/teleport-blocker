@@ -23,6 +23,7 @@ Blocker. <small><i>Available from all state of the art plugin hubs.</i></small>
 | Burning amulet | Chaos Temple, Bandit Camp, Lava Maze |
 | Soul Wars portal and Edgeville lever | Soul Wars to Edgeville, Soul Wars to Ferox Enclave, Edgeville to Soul Wars, Ferox Enclave to Soul Wars, Edgeville lever to Wilderness, Ardougne lever to Wilderness, Wilderness lever to Edgeville, Wilderness lever to Ardougne |
 | Spirit trees | Tree Gnome Village, Gnome Stronghold, Battlefield of Khazard, Grand Exchange, Feldip Hills, Prifddinas, Port Sarim, Etceteria, Brimhaven, Hosidius, Farming Guild, Your house, Poison Waste, Laguna Aurorae, Previous destination |
+| Gnome gliders | Grand Tree, Karamja, Al Kharid, White Wolf Mountain, Digsite, Feldip Hills, Ape Atoll, Previous destination |
 
 ## License
 
