@@ -2092,4 +2092,156 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigSection(
+        name = "Lovakengj minecarts",
+        description = "One toggle per minecart station, in list order. Every one starts unblocked.",
+        position = 180,
+        closedByDefault = true
+    )
+    String minecartSection = "minecartSection";
+
+    @ConfigItem(
+        keyName = "minecartArceuus",
+        name = "Arceuus",
+        description = "Blocks the Arceuus station in the minecart list.",
+        position = 181,
+        section = minecartSection
+    )
+    default boolean minecartArceuus()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartFarmingGuild",
+        name = "Farming Guild",
+        description = "Blocks the Farming Guild station in the minecart list.",
+        position = 182,
+        section = minecartSection
+    )
+    default boolean minecartFarmingGuild()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartHosidiusSouth",
+        name = "Hosidius South",
+        description = "Blocks the Hosidius South station in the minecart list.",
+        position = 183,
+        section = minecartSection
+    )
+    default boolean minecartHosidiusSouth()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartHosidiusWest",
+        name = "Hosidius West",
+        description = "Blocks the Hosidius West station in the minecart list.",
+        position = 184,
+        section = minecartSection
+    )
+    default boolean minecartHosidiusWest()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartKingstown",
+        name = "Kingstown",
+        description = "Blocks the Kingstown station in the minecart list.",
+        position = 185,
+        section = minecartSection
+    )
+    default boolean minecartKingstown()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartKourendWoodland",
+        name = "Kourend Woodland",
+        description = "Blocks the Kourend Woodland station in the minecart list.",
+        position = 186,
+        section = minecartSection
+    )
+    default boolean minecartKourendWoodland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartLovakengj",
+        name = "Lovakengj",
+        description = "Blocks the Lovakengj station in the minecart list.",
+        position = 187,
+        section = minecartSection
+    )
+    default boolean minecartLovakengj()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartMountQuidamortem",
+        name = "Mount Quidamortem",
+        description = "Blocks the Mount Quidamortem station in the minecart list.",
+        position = 188,
+        section = minecartSection
+    )
+    default boolean minecartMountQuidamortem()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartNorthernTundras",
+        name = "Northern Tundras",
+        description = "Blocks the Northern Tundras station in the minecart list.",
+        position = 189,
+        section = minecartSection
+    )
+    default boolean minecartNorthernTundras()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartPortPiscarilius",
+        name = "Port Piscarilius",
+        description = "Blocks the Port Piscarilius station in the minecart list.",
+        position = 190,
+        section = minecartSection
+    )
+    default boolean minecartPortPiscarilius()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartShayzienEast",
+        name = "Shayzien East",
+        description = "Blocks the Shayzien East station in the minecart list.",
+        position = 191,
+        section = minecartSection
+    )
+    default boolean minecartShayzienEast()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "minecartShayzienWest",
+        name = "Shayzien West",
+        description = "Blocks the Shayzien West station in the minecart list.",
+        position = 192,
+        section = minecartSection
+    )
+    default boolean minecartShayzienWest()
+    {
+        return false;
+    }
+
 }

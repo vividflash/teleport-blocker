@@ -29,6 +29,7 @@ import com.vividflash.teleportblocker.CanoeDestination;
 import com.vividflash.teleportblocker.GnomeGlider;
 import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
+import com.vividflash.teleportblocker.LovakengjMinecart;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.QuetzalTransport;
@@ -45,6 +46,8 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -77,11 +80,12 @@ import net.runelite.client.util.Text;
  * blocked glider map destinations and at the pilots' Glider option, at
  * blocked quetzal map landing sites and legs of the Varrock quetzal route,
  * at the quetzals' and whistles' Last-destination option and at a whistle's
- * Signal set to fly to a blocked Hunter Guild, and consumes clicks and
+ * Signal set to fly to a blocked Hunter Guild and at blocked lines of the
+ * Lovakengj minecart station list, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
  * Wars portal dialogues, as well as shortcut key presses on blocked spirit
- * tree lines. The spell icons themselves are only touched through the minigame
- * master toggle.
+ * tree and minecart lines. The spell icons themselves are only touched
+ * through the minigame master toggle.
  */
 @Singleton
 public class TeleportBlockFeature implements KeyListener
@@ -161,6 +165,7 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<QuetzalTransport.Destination> blockedQuetzalDestinations = EnumSet.noneOf(QuetzalTransport.Destination.class);
     private final Set<QuetzalTransport.Route> blockedQuetzalRoutes = EnumSet.noneOf(QuetzalTransport.Route.class);
     private boolean blockQuetzalPrevious;
+    private final Set<LovakengjMinecart.Station> blockedMinecartStations = EnumSet.noneOf(LovakengjMinecart.Station.class);
 
     public void startUp()
     {
@@ -189,6 +194,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedQuetzalDestinations.clear();
         blockedQuetzalRoutes.clear();
         blockQuetzalPrevious = false;
+        blockedMinecartStations.clear();
     }
 
     @Subscribe
@@ -207,7 +213,7 @@ public class TeleportBlockFeature implements KeyListener
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
             && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
             && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
-            && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious)
+            && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty())
         {
             return;
         }
@@ -220,7 +226,7 @@ public class TeleportBlockFeature implements KeyListener
                 && !isBlockedLeverDestination(entry) && !isBlockedSpiritTree(entry)
                 && !isBlockedSpiritTreePrevious(entry) && !isBlockedGlider(entry) && !isBlockedGliderPrevious(entry)
                 && !isBlockedQuetzalMap(entry) && !isBlockedQuetzalRoute(entry) && !isBlockedQuetzalPrevious(entry)
-                && !isBlockedWhistleSignal(entry))
+                && !isBlockedWhistleSignal(entry) && !isBlockedMinecart(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -311,7 +317,7 @@ public class TeleportBlockFeature implements KeyListener
     }
 
     // The number keys pick a dialogue line, and the number and letter keys a
-    // spirit tree line, without going through
+    // spirit tree or minecart line, without going through
     // MenuOptionClicked. The pressed key and the typed key arrive as separate
     // events, so consuming one does not suppress the other and both are taken.
     @Override
@@ -319,6 +325,7 @@ public class TeleportBlockFeature implements KeyListener
     {
         consumeIfBlockedDialogueDigit(e);
         consumeIfBlockedSpiritTreeKey(e);
+        consumeIfBlockedMinecartKey(e);
     }
 
     @Override
@@ -326,6 +333,7 @@ public class TeleportBlockFeature implements KeyListener
     {
         consumeIfBlockedDialogueDigit(e);
         consumeIfBlockedSpiritTreeKey(e);
+        consumeIfBlockedMinecartKey(e);
     }
 
     @Override
@@ -627,14 +635,33 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        Widget[] lines = spiritTreeLines();
-        int index = entry.getParam0();
-        if (lines == null || index < 0 || index >= lines.length || lines[index] == null)
+        String line = entryLine(entry, spiritTreeLines());
+        return line != null && isBlockedSpiritTreeLine(line);
+    }
+
+    // Every conductor and minecart opens the same station list, drawn on the
+    // interface the spirit tree list uses, so it is read the same way under a
+    // title of its own.
+    private boolean isBlockedMinecart(MenuEntry entry)
+    {
+        if (blockedMinecartStations.isEmpty() || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
         {
             return false;
         }
 
-        return isBlockedSpiritTreeLine(plainText(lines[index].getText()));
+        String line = entryLine(entry, minecartLines());
+        return line != null && isBlockedMinecartLine(line);
+    }
+
+    /** The text of the list line an entry sits on, or null when it sits on none. */
+    private static String entryLine(MenuEntry entry, Widget[] lines)
+    {
+        int index = entry.getParam0();
+        if (lines == null || index < 0 || index >= lines.length || lines[index] == null)
+        {
+            return null;
+        }
+        return plainText(lines[index].getText());
     }
 
     // Each line prints its own shortcut, 1 to 9 and then letters, so the
@@ -642,13 +669,24 @@ public class TeleportBlockFeature implements KeyListener
     // without shortcuts prints none and no key is taken.
     private void consumeIfBlockedSpiritTreeKey(KeyEvent e)
     {
-        if (blockedSpiritTrees.isEmpty())
+        if (!blockedSpiritTrees.isEmpty())
         {
-            return;
+            consumeIfBlockedListKey(e, this::spiritTreeLines, this::isBlockedSpiritTreeLine);
         }
+    }
 
+    private void consumeIfBlockedMinecartKey(KeyEvent e)
+    {
+        if (!blockedMinecartStations.isEmpty())
+        {
+            consumeIfBlockedListKey(e, this::minecartLines, this::isBlockedMinecartLine);
+        }
+    }
+
+    private static void consumeIfBlockedListKey(KeyEvent e, Supplier<Widget[]> openLines, Predicate<String> blocked)
+    {
         String key = keyLabel(e);
-        Widget[] lines = key == null ? null : spiritTreeLines();
+        Widget[] lines = key == null ? null : openLines.get();
         if (lines == null)
         {
             return;
@@ -662,7 +700,7 @@ public class TeleportBlockFeature implements KeyListener
             }
 
             String text = plainText(line.getText());
-            if (key.equalsIgnoreCase(spiritTreeLabel(text)) && isBlockedSpiritTreeLine(text))
+            if (key.equalsIgnoreCase(listLabel(text)) && blocked.test(text))
             {
                 e.consume();
                 return;
@@ -686,6 +724,18 @@ public class TeleportBlockFeature implements KeyListener
     /** The lines of the spirit tree list, or null when that list is not open. */
     private Widget[] spiritTreeLines()
     {
+        return listLines(title -> matchesLine(SpiritTree.TITLE, title));
+    }
+
+    /** The lines of the minecart station list, or null when that list is not open. */
+    private Widget[] minecartLines()
+    {
+        return listLines(LovakengjMinecart::isTitle);
+    }
+
+    /** The lines of the shared list interface, or null when no list with a matching title is open. */
+    private Widget[] listLines(Predicate<String> isTitle)
+    {
         Widget list = client.getWidget(InterfaceID.Menu.LJ_LAYER1);
         Widget frame = client.getWidget(InterfaceID.Menu.LJ_LAYER2);
         if (list == null || list.isHidden() || frame == null)
@@ -701,7 +751,7 @@ public class TeleportBlockFeature implements KeyListener
 
         for (Widget title : titles)
         {
-            if (title != null && matchesLine(SpiritTree.TITLE, plainText(title.getText())))
+            if (title != null && isTitle.test(plainText(title.getText())))
             {
                 return list.getDynamicChildren();
             }
@@ -709,20 +759,39 @@ public class TeleportBlockFeature implements KeyListener
         return null;
     }
 
-    /** The shortcut a spirit tree line prints before its destination, or null when it prints none. */
-    private static String spiritTreeLabel(String line)
+    /** The shortcut a list line prints before its text, or null when it prints none. */
+    private static String listLabel(String line)
     {
         int colon = line.indexOf(": ");
         return colon > 0 ? line.substring(0, colon) : null;
     }
 
-    private boolean isBlockedSpiritTreeLine(String line)
+    /** The text a list line prints after its shortcut. */
+    private static String listText(String line)
     {
         int colon = line.indexOf(": ");
-        String destination = colon > 0 ? line.substring(colon + 2) : line;
+        return colon > 0 ? line.substring(colon + 2) : line;
+    }
+
+    private boolean isBlockedSpiritTreeLine(String line)
+    {
+        String destination = listText(line);
         for (SpiritTree.Destination tree : blockedSpiritTrees)
         {
             if (tree.matchesLine(destination))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isBlockedMinecartLine(String line)
+    {
+        String station = listText(line);
+        for (LovakengjMinecart.Station blocked : blockedMinecartStations)
+        {
+            if (matchesLine(blocked.getStationName(), station))
             {
                 return true;
             }
@@ -1271,5 +1340,14 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
         blockQuetzalPrevious = config.quetzalPrevious();
+
+        blockedMinecartStations.clear();
+        for (LovakengjMinecart.Station station : LovakengjMinecart.Station.values())
+        {
+            if (station.isBlocked(config))
+            {
+                blockedMinecartStations.add(station);
+            }
+        }
     }
 }
