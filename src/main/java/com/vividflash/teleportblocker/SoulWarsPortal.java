@@ -25,6 +25,7 @@
 package com.vividflash.teleportblocker;
 
 import java.util.function.Predicate;
+import net.runelite.api.gameval.ObjectID;
 
 /**
  * The two destinations the Soul Wars portal dialogue offers, each paired with
@@ -59,5 +60,34 @@ public enum SoulWarsPortal
     public String toString()
     {
         return optionLine;
+    }
+
+    /**
+     * The two portals that take you into Soul Wars, each paired with the toggle
+     * that blocks it.
+     */
+    public enum Entry
+    {
+        EDGEVILLE(ObjectID.SOUL_WARS_EDGEVILLE_PORTAL, TeleportBlockerConfig::soulWarsEntryEdgeville),
+        FEROX_ENCLAVE(ObjectID.SOUL_WARS_ENCLAVE_PORTAL, TeleportBlockerConfig::soulWarsEntryFeroxEnclave);
+
+        private final int objectId;
+        private final Predicate<TeleportBlockerConfig> blocked;
+
+        Entry(int objectId, Predicate<TeleportBlockerConfig> blocked)
+        {
+            this.objectId = objectId;
+            this.blocked = blocked;
+        }
+
+        public int getObjectId()
+        {
+            return objectId;
+        }
+
+        public boolean isBlocked(TeleportBlockerConfig config)
+        {
+            return blocked.test(config);
+        }
     }
 }

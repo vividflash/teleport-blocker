@@ -31,7 +31,6 @@ import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.RatPit;
-import com.vividflash.teleportblocker.SoulWarsEntryPortal;
 import com.vividflash.teleportblocker.SoulWarsPortal;
 import com.vividflash.teleportblocker.TeleportBlockerConfig;
 import com.vividflash.teleportblocker.TeleportSpell;
@@ -818,7 +817,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         blockedPortalObjects.clear();
-        for (SoulWarsEntryPortal portal : SoulWarsEntryPortal.values())
+        for (SoulWarsPortal.Entry portal : SoulWarsPortal.Entry.values())
         {
             if (portal.isBlocked(config))
             {
