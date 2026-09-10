@@ -122,13 +122,13 @@ public class TeleportBlockFeature implements KeyListener
     @Inject
     private KeyManager keyManager;
 
-    private final Set<Integer> blockedComponents = new HashSet<>();
+    private final Set<Integer> blockedSpellComponents = new HashSet<>();
     private final Set<Minigame> blockedMinigames = EnumSet.noneOf(Minigame.class);
     private final Set<Minigame.RatPit> blockedRatPits = EnumSet.noneOf(Minigame.RatPit.class);
     private final Set<JewelleryTeleport> blockedJewellery = EnumSet.noneOf(JewelleryTeleport.class);
     private final Set<SoulWarsPortal> blockedPortals = EnumSet.noneOf(SoulWarsPortal.class);
     private final Set<CanoeDestination> blockedCanoes = EnumSet.noneOf(CanoeDestination.class);
-    private final Set<Integer> blockedPortalObjects = new HashSet<>();
+    private final Set<SoulWarsPortal.Entry> blockedEntryPortals = EnumSet.noneOf(SoulWarsPortal.Entry.class);
 
     public void startUp()
     {
@@ -141,13 +141,13 @@ public class TeleportBlockFeature implements KeyListener
     {
         keyManager.unregisterKeyListener(this);
         eventBus.unregister(this);
-        blockedComponents.clear();
+        blockedSpellComponents.clear();
         blockedMinigames.clear();
         blockedRatPits.clear();
         blockedJewellery.clear();
         blockedPortals.clear();
         blockedCanoes.clear();
-        blockedPortalObjects.clear();
+        blockedEntryPortals.clear();
     }
 
     @Subscribe
@@ -162,8 +162,8 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onMenuEntryAdded(MenuEntryAdded event)
     {
-        if (blockedComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
-            && blockedCanoes.isEmpty() && blockedPortalObjects.isEmpty())
+        if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
+            && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty())
         {
             return;
         }
@@ -172,7 +172,7 @@ public class TeleportBlockFeature implements KeyListener
         MenuEntry[] entries = menu.getMenuEntries();
         MenuEntry[] filtered = Arrays.stream(entries)
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
-                && !isBlockedCanoe(entry) && !isBlockedPortalObject(entry))
+                && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -523,7 +523,7 @@ public class TeleportBlockFeature implements KeyListener
         {
             return false;
         }
-        return blockedComponents.contains(entry.getParam1());
+        return blockedSpellComponents.contains(entry.getParam1());
     }
 
     // The canoe map carries its Travel to option on the destination frame
@@ -567,11 +567,21 @@ public class TeleportBlockFeature implements KeyListener
 
     // The portals into Soul Wars travel straight from Enter with no dialogue
     // in between, so their options are removed from the menu.
-    private boolean isBlockedPortalObject(MenuEntry entry)
+    private boolean isBlockedEntryPortal(MenuEntry entry)
     {
-        return !blockedPortalObjects.isEmpty()
-            && OBJECT_OPTIONS.contains(entry.getType())
-            && blockedPortalObjects.contains(entry.getIdentifier());
+        if (blockedEntryPortals.isEmpty() || !OBJECT_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        for (SoulWarsPortal.Entry portal : blockedEntryPortals)
+        {
+            if (portal.getObjectId() == entry.getIdentifier())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isBlockedMinigame(MenuEntry entry)
@@ -742,26 +752,26 @@ public class TeleportBlockFeature implements KeyListener
 
     private void rebuildBlocked()
     {
-        blockedComponents.clear();
+        blockedSpellComponents.clear();
         for (TeleportSpell spell : TeleportSpell.values())
         {
             if (spell.isBlocked(config))
             {
-                blockedComponents.add(spell.getComponentId());
+                blockedSpellComponents.add(spell.getComponentId());
             }
         }
         for (AncientTeleportSpell spell : AncientTeleportSpell.values())
         {
             if (spell.isBlocked(config))
             {
-                blockedComponents.add(spell.getComponentId());
+                blockedSpellComponents.add(spell.getComponentId());
             }
         }
         for (LunarTeleportSpell spell : LunarTeleportSpell.values())
         {
             if (spell.isBlocked(config))
             {
-                blockedComponents.add(spell.getComponentId());
+                blockedSpellComponents.add(spell.getComponentId());
             }
         }
         blockedMinigames.clear();
@@ -815,12 +825,12 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
 
-        blockedPortalObjects.clear();
+        blockedEntryPortals.clear();
         for (SoulWarsPortal.Entry portal : SoulWarsPortal.Entry.values())
         {
             if (portal.isBlocked(config))
             {
-                blockedPortalObjects.add(portal.getObjectId());
+                blockedEntryPortals.add(portal);
             }
         }
     }
