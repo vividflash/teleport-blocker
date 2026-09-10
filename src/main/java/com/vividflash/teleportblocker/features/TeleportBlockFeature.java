@@ -27,14 +27,12 @@ package com.vividflash.teleportblocker.features;
 import com.vividflash.teleportblocker.AncientTeleportSpell;
 import com.vividflash.teleportblocker.CanoeDestination;
 import com.vividflash.teleportblocker.Jewellery;
-import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
-import com.vividflash.teleportblocker.RatPit;
 import com.vividflash.teleportblocker.SoulWarsPortal;
+import com.vividflash.teleportblocker.StripAndLowercase;
 import com.vividflash.teleportblocker.TeleportBlockerConfig;
 import com.vividflash.teleportblocker.TeleportSpell;
-import com.vividflash.teleportblocker.TeleportText;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Collections;
@@ -125,8 +123,8 @@ public class TeleportBlockFeature implements KeyListener
 
     private final Set<Integer> blockedComponents = new HashSet<>();
     private final Set<Minigame> blockedMinigames = EnumSet.noneOf(Minigame.class);
-    private final Set<RatPit> blockedRatPits = EnumSet.noneOf(RatPit.class);
-    private final Set<JewelleryTeleport> blockedJewellery = EnumSet.noneOf(JewelleryTeleport.class);
+    private final Set<Minigame.RatPit> blockedRatPits = EnumSet.noneOf(Minigame.RatPit.class);
+    private final Set<Jewellery.Teleport> blockedJewellery = EnumSet.noneOf(Jewellery.Teleport.class);
     private final Set<SoulWarsPortal> blockedPortals = EnumSet.noneOf(SoulWarsPortal.class);
     private final Set<CanoeDestination> blockedCanoes = EnumSet.noneOf(CanoeDestination.class);
     private final Set<Integer> blockedPortalObjects = new HashSet<>();
@@ -244,7 +242,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         String line = Text.removeTags(option).trim();
-        for (JewelleryTeleport teleport : blockedJewellery)
+        for (Jewellery.Teleport teleport : blockedJewellery)
         {
             if (teleport.getItem() == parent && teleport.matchesOption(line))
             {
@@ -392,7 +390,7 @@ public class TeleportBlockFeature implements KeyListener
             int count = 0;
             for (Widget line : lines)
             {
-                if (line != null && JewelleryTeleport.matchesDialogueLine(candidate, plainText(line.getText())))
+                if (line != null && Jewellery.Teleport.matchesDialogueLine(candidate, plainText(line.getText())))
                 {
                     count++;
                 }
@@ -448,7 +446,7 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        for (RatPit pit : RatPit.values())
+        for (Minigame.RatPit pit : Minigame.RatPit.values())
         {
             if (matchesLine(pit.getOptionLine(), line))
             {
@@ -465,7 +463,7 @@ public class TeleportBlockFeature implements KeyListener
                 }
             }
         }
-        return item != null && JewelleryTeleport.matchesDialogueLine(item, line);
+        return item != null && Jewellery.Teleport.matchesDialogueLine(item, line);
     }
 
     /** True when the text is a blocked line of the dialogue it was read from. */
@@ -477,7 +475,7 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        for (RatPit pit : blockedRatPits)
+        for (Minigame.RatPit pit : blockedRatPits)
         {
             if (matchesLine(pit.getOptionLine(), line))
             {
@@ -494,7 +492,7 @@ public class TeleportBlockFeature implements KeyListener
                 }
             }
         }
-        for (JewelleryTeleport teleport : blockedJewellery)
+        for (Jewellery.Teleport teleport : blockedJewellery)
         {
             if (teleport.getItem() == item && teleport.matchesOption(line))
             {
@@ -506,7 +504,7 @@ public class TeleportBlockFeature implements KeyListener
 
     private static boolean matchesLine(String optionLine, String line)
     {
-        return !line.isEmpty() && TeleportText.key(optionLine).equals(TeleportText.key(line));
+        return !line.isEmpty() && StripAndLowercase.of(optionLine).equals(StripAndLowercase.of(line));
     }
 
     private static String plainText(String text)
@@ -550,7 +548,7 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        String option = TeleportText.key(plainText(entry.getOption()));
+        String option = StripAndLowercase.of(plainText(entry.getOption()));
         if (option.isEmpty())
         {
             return false;
@@ -558,7 +556,7 @@ public class TeleportBlockFeature implements KeyListener
 
         for (CanoeDestination destination : blockedCanoes)
         {
-            if (option.contains(TeleportText.key(destination.getDestinationName())))
+            if (option.contains(StripAndLowercase.of(destination.getDestinationName())))
             {
                 return true;
             }
@@ -693,7 +691,7 @@ public class TeleportBlockFeature implements KeyListener
         boolean bareOnInventory = itemName.isEmpty() && WidgetUtil.componentToInterface(component) == InterfaceID.INVENTORY;
 
         String line = Text.removeTags(option).trim();
-        for (JewelleryTeleport teleport : blockedJewellery)
+        for (Jewellery.Teleport teleport : blockedJewellery)
         {
             Jewellery item = teleport.getItem();
             if (!teleport.matchesOption(line))
@@ -780,7 +778,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedRatPits.clear();
         if (!config.blockAllMinigames() && !blockedMinigames.contains(Minigame.RAT_PITS))
         {
-            for (RatPit pit : RatPit.values())
+            for (Minigame.RatPit pit : Minigame.RatPit.values())
             {
                 if (pit.isBlocked(config))
                 {
@@ -790,7 +788,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         blockedJewellery.clear();
-        for (JewelleryTeleport teleport : JewelleryTeleport.values())
+        for (Jewellery.Teleport teleport : Jewellery.Teleport.values())
         {
             if (teleport.isBlocked(config))
             {

@@ -74,14 +74,14 @@ public enum Minigame
         Map<String, Minigame> lookup = new HashMap<>();
         for (Minigame minigame : values())
         {
-            lookup.put(TeleportText.key(minigame.minigameName), minigame);
+            lookup.put(StripAndLowercase.of(minigame.minigameName), minigame);
         }
         return Collections.unmodifiableMap(lookup);
     }
 
     public static Minigame forName(String name)
     {
-        return name == null ? null : BY_NAME.get(TeleportText.key(name));
+        return name == null ? null : BY_NAME.get(StripAndLowercase.of(name));
     }
 
     public boolean isBlocked(TeleportBlockerConfig config)
@@ -93,5 +93,43 @@ public enum Minigame
     public String toString()
     {
         return minigameName;
+    }
+
+    /**
+     * The four destinations the rat pit dialogue offers, each paired with its
+     * option line and the toggle that blocks it. Cancel is not listed and is never
+     * touched.
+     */
+    public enum RatPit
+    {
+        ARDOUGNE("Ardougne (kittens)", TeleportBlockerConfig::ratPitsArdougne),
+        VARROCK("Varrock (grown cats)", TeleportBlockerConfig::ratPitsVarrock),
+        KELDAGRIM("Keldagrim (overgrown cats)", TeleportBlockerConfig::ratPitsKeldagrim),
+        PORT_SARIM("Port Sarim (wily cats)", TeleportBlockerConfig::ratPitsPortSarim);
+
+        private final String optionLine;
+        private final Predicate<TeleportBlockerConfig> blocked;
+
+        RatPit(String optionLine, Predicate<TeleportBlockerConfig> blocked)
+        {
+            this.optionLine = optionLine;
+            this.blocked = blocked;
+        }
+
+        public String getOptionLine()
+        {
+            return optionLine;
+        }
+
+        public boolean isBlocked(TeleportBlockerConfig config)
+        {
+            return blocked.test(config);
+        }
+
+        @Override
+        public String toString()
+        {
+            return optionLine;
+        }
     }
 }

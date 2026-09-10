@@ -27,13 +27,13 @@ package com.vividflash.teleportblocker;
 import java.util.Locale;
 
 /** Comparison key for option text, ignoring case and punctuation. */
-public final class TeleportText
+public final class StripAndLowercase
 {
-    private TeleportText()
+    private StripAndLowercase()
     {
     }
 
-    public static String key(String text)
+    public static String of(String text)
     {
         return text == null ? "" : text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
     }
