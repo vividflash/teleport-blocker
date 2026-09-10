@@ -26,7 +26,8 @@ package com.vividflash.teleportblocker.features;
 
 import com.vividflash.teleportblocker.AncientTeleportSpell;
 import com.vividflash.teleportblocker.CanoeDestination;
-import com.vividflash.teleportblocker.Jewellery;
+import com.vividflash.teleportblocker.JewelleryTeleport;
+import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.SoulWarsPortal;
@@ -124,7 +125,7 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<Integer> blockedComponents = new HashSet<>();
     private final Set<Minigame> blockedMinigames = EnumSet.noneOf(Minigame.class);
     private final Set<Minigame.RatPit> blockedRatPits = EnumSet.noneOf(Minigame.RatPit.class);
-    private final Set<Jewellery.Teleport> blockedJewellery = EnumSet.noneOf(Jewellery.Teleport.class);
+    private final Set<JewelleryTeleport> blockedJewellery = EnumSet.noneOf(JewelleryTeleport.class);
     private final Set<SoulWarsPortal> blockedPortals = EnumSet.noneOf(SoulWarsPortal.class);
     private final Set<CanoeDestination> blockedCanoes = EnumSet.noneOf(CanoeDestination.class);
     private final Set<Integer> blockedPortalObjects = new HashSet<>();
@@ -242,7 +243,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         String line = Text.removeTags(option).trim();
-        for (Jewellery.Teleport teleport : blockedJewellery)
+        for (JewelleryTeleport teleport : blockedJewellery)
         {
             if (teleport.getItem() == parent && teleport.matchesOption(line))
             {
@@ -390,7 +391,7 @@ public class TeleportBlockFeature implements KeyListener
             int count = 0;
             for (Widget line : lines)
             {
-                if (line != null && Jewellery.Teleport.matchesDialogueLine(candidate, plainText(line.getText())))
+                if (line != null && JewelleryTeleport.matchesDialogueLine(candidate, plainText(line.getText())))
                 {
                     count++;
                 }
@@ -463,7 +464,7 @@ public class TeleportBlockFeature implements KeyListener
                 }
             }
         }
-        return item != null && Jewellery.Teleport.matchesDialogueLine(item, line);
+        return item != null && JewelleryTeleport.matchesDialogueLine(item, line);
     }
 
     /** True when the text is a blocked line of the dialogue it was read from. */
@@ -492,7 +493,7 @@ public class TeleportBlockFeature implements KeyListener
                 }
             }
         }
-        for (Jewellery.Teleport teleport : blockedJewellery)
+        for (JewelleryTeleport teleport : blockedJewellery)
         {
             if (teleport.getItem() == item && teleport.matchesOption(line))
             {
@@ -691,7 +692,7 @@ public class TeleportBlockFeature implements KeyListener
         boolean bareOnInventory = itemName.isEmpty() && WidgetUtil.componentToInterface(component) == InterfaceID.INVENTORY;
 
         String line = Text.removeTags(option).trim();
-        for (Jewellery.Teleport teleport : blockedJewellery)
+        for (JewelleryTeleport teleport : blockedJewellery)
         {
             Jewellery item = teleport.getItem();
             if (!teleport.matchesOption(line))
@@ -788,7 +789,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         blockedJewellery.clear();
-        for (Jewellery.Teleport teleport : Jewellery.Teleport.values())
+        for (JewelleryTeleport teleport : JewelleryTeleport.values())
         {
             if (teleport.isBlocked(config))
             {
