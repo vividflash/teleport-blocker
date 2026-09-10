@@ -31,6 +31,7 @@ import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.RatPit;
+import com.vividflash.teleportblocker.SoulWarsEntryPortal;
 import com.vividflash.teleportblocker.SoulWarsPortal;
 import com.vividflash.teleportblocker.TeleportBlockerConfig;
 import com.vividflash.teleportblocker.TeleportSpell;
@@ -62,8 +63,9 @@ import net.runelite.client.util.Text;
 
 /**
  * Removes the menu entries pointing at blocked spellbook teleports, at
- * blocked rows of the Minigames window, at blocked canoe map destinations and
- * at blocked destinations on worn teleport jewellery, and consumes clicks and
+ * blocked rows of the Minigames window, at blocked canoe map destinations, at
+ * blocked portals into Soul Wars and at blocked destinations on worn teleport
+ * jewellery, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
  * Wars portal dialogues. The spell icons themselves are only touched through the minigame
  * master toggle.
@@ -102,6 +104,14 @@ public class TeleportBlockFeature implements KeyListener
         InterfaceID.Minigames.MINIGAME_20,
         InterfaceID.Minigames.MINIGAME_21)));
 
+    /** Every click option on a scene object, which leaves Examine out. */
+    private static final Set<MenuAction> OBJECT_OPTIONS = EnumSet.of(
+        MenuAction.GAME_OBJECT_FIRST_OPTION,
+        MenuAction.GAME_OBJECT_SECOND_OPTION,
+        MenuAction.GAME_OBJECT_THIRD_OPTION,
+        MenuAction.GAME_OBJECT_FOURTH_OPTION,
+        MenuAction.GAME_OBJECT_FIFTH_OPTION);
+
     @Inject
     private Client client;
 
@@ -120,6 +130,7 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<JewelleryTeleport> blockedJewellery = EnumSet.noneOf(JewelleryTeleport.class);
     private final Set<SoulWarsPortal> blockedPortals = EnumSet.noneOf(SoulWarsPortal.class);
     private final Set<CanoeDestination> blockedCanoes = EnumSet.noneOf(CanoeDestination.class);
+    private final Set<Integer> blockedPortalObjects = new HashSet<>();
 
     public void startUp()
     {
@@ -138,6 +149,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedJewellery.clear();
         blockedPortals.clear();
         blockedCanoes.clear();
+        blockedPortalObjects.clear();
     }
 
     @Subscribe
@@ -153,7 +165,7 @@ public class TeleportBlockFeature implements KeyListener
     public void onMenuEntryAdded(MenuEntryAdded event)
     {
         if (blockedComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
-            && blockedCanoes.isEmpty())
+            && blockedCanoes.isEmpty() && blockedPortalObjects.isEmpty())
         {
             return;
         }
@@ -162,7 +174,7 @@ public class TeleportBlockFeature implements KeyListener
         MenuEntry[] entries = menu.getMenuEntries();
         MenuEntry[] filtered = Arrays.stream(entries)
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
-                && !isBlockedCanoe(entry))
+                && !isBlockedCanoe(entry) && !isBlockedPortalObject(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -555,6 +567,15 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
+    // The portals into Soul Wars travel straight from Enter with no dialogue
+    // in between, so their options are removed from the menu.
+    private boolean isBlockedPortalObject(MenuEntry entry)
+    {
+        return !blockedPortalObjects.isEmpty()
+            && OBJECT_OPTIONS.contains(entry.getType())
+            && blockedPortalObjects.contains(entry.getIdentifier());
+    }
+
     private boolean isBlockedMinigame(MenuEntry entry)
     {
         if (blockedMinigames.isEmpty())
@@ -793,6 +814,15 @@ public class TeleportBlockFeature implements KeyListener
             if (destination.isBlocked(config))
             {
                 blockedCanoes.add(destination);
+            }
+        }
+
+        blockedPortalObjects.clear();
+        for (SoulWarsEntryPortal portal : SoulWarsEntryPortal.values())
+        {
+            if (portal.isBlocked(config))
+            {
+                blockedPortalObjects.add(portal.getObjectId());
             }
         }
     }

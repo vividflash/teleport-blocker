@@ -1486,7 +1486,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Soul Wars portal",
-        description = "One toggle per destination in the Soul Wars portal dialogue. Every one starts unblocked.",
+        description = "One toggle per Soul Wars portal route, into Soul Wars and out of it. Every one starts unblocked.",
         position = 128,
         closedByDefault = true
     )
@@ -1494,7 +1494,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "soulWarsPortalEdgeville",
-        name = "Edgeville",
+        name = "Soul Wars to Edgeville",
         description = "Blocks the Edgeville option in the Soul Wars portal dialogue.",
         position = 129,
         section = soulWarsPortalSection
@@ -1506,12 +1506,36 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "soulWarsPortalFeroxEnclave",
-        name = "Ferox Enclave",
+        name = "Soul Wars to Ferox Enclave",
         description = "Blocks the Ferox Enclave option in the Soul Wars portal dialogue.",
         position = 130,
         section = soulWarsPortalSection
     )
     default boolean soulWarsPortalFeroxEnclave()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "soulWarsEntryEdgeville",
+        name = "Edgeville to Soul Wars",
+        description = "Removes the Enter option from the Soul Wars portal in Edgeville.",
+        position = 131,
+        section = soulWarsPortalSection
+    )
+    default boolean soulWarsEntryEdgeville()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "soulWarsEntryFeroxEnclave",
+        name = "Ferox Enclave to Soul Wars",
+        description = "Removes the Enter option from the Soul Wars portal in the Ferox Enclave dungeon.",
+        position = 132,
+        section = soulWarsPortalSection
+    )
+    default boolean soulWarsEntryFeroxEnclave()
     {
         return false;
     }
