@@ -31,6 +31,7 @@ import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.SoulWarsPortal;
+import com.vividflash.teleportblocker.SpiritTree;
 import com.vividflash.teleportblocker.StripAndLowercase;
 import com.vividflash.teleportblocker.TeleportBlockerConfig;
 import com.vividflash.teleportblocker.TeleportSpell;
@@ -65,9 +66,11 @@ import net.runelite.client.util.Text;
  * Removes the menu entries pointing at blocked spellbook teleports, at
  * blocked rows of the Minigames window, at blocked canoe map destinations, at
  * blocked portals into Soul Wars, at blocked destinations on worn teleport
- * jewellery and at blocked options of the Wilderness levers, and consumes clicks and
+ * jewellery, at blocked options of the Wilderness levers, at blocked lines
+ * of the spirit tree list and at the trees' Last-destination option, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
- * Wars portal dialogues. The spell icons themselves are only touched through the minigame
+ * Wars portal dialogues, as well as shortcut key presses on blocked spirit
+ * tree lines. The spell icons themselves are only touched through the minigame
  * master toggle.
  */
 @Singleton
@@ -133,6 +136,8 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<SoulWarsPortal.Entry> blockedEntryPortals = EnumSet.noneOf(SoulWarsPortal.Entry.class);
     private final Set<WildernessLever.Entry> blockedLeverEntries = EnumSet.noneOf(WildernessLever.Entry.class);
     private final Set<WildernessLever.Destination> blockedLeverDestinations = EnumSet.noneOf(WildernessLever.Destination.class);
+    private final Set<SpiritTree.Destination> blockedSpiritTrees = EnumSet.noneOf(SpiritTree.Destination.class);
+    private boolean blockSpiritTreePrevious;
 
     public void startUp()
     {
@@ -154,6 +159,8 @@ public class TeleportBlockFeature implements KeyListener
         blockedEntryPortals.clear();
         blockedLeverEntries.clear();
         blockedLeverDestinations.clear();
+        blockedSpiritTrees.clear();
+        blockSpiritTreePrevious = false;
     }
 
     @Subscribe
@@ -170,7 +177,7 @@ public class TeleportBlockFeature implements KeyListener
     {
         if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
-            && blockedLeverDestinations.isEmpty())
+            && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious)
         {
             return;
         }
@@ -180,7 +187,8 @@ public class TeleportBlockFeature implements KeyListener
         MenuEntry[] filtered = Arrays.stream(entries)
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
                 && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry) && !isBlockedLeverEntry(entry)
-                && !isBlockedLeverDestination(entry))
+                && !isBlockedLeverDestination(entry) && !isBlockedSpiritTree(entry)
+                && !isBlockedSpiritTreePrevious(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -270,19 +278,22 @@ public class TeleportBlockFeature implements KeyListener
         }
     }
 
-    // The number keys pick a dialogue line without going through
+    // The number keys pick a dialogue line, and the number and letter keys a
+    // spirit tree line, without going through
     // MenuOptionClicked. The pressed key and the typed key arrive as separate
     // events, so consuming one does not suppress the other and both are taken.
     @Override
     public void keyPressed(KeyEvent e)
     {
         consumeIfBlockedDialogueDigit(e);
+        consumeIfBlockedSpiritTreeKey(e);
     }
 
     @Override
     public void keyTyped(KeyEvent e)
     {
         consumeIfBlockedDialogueDigit(e);
+        consumeIfBlockedSpiritTreeKey(e);
     }
 
     @Override
@@ -571,6 +582,135 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
         return false;
+    }
+
+    // Every spirit tree opens the same destination list on an interface that
+    // other lists share, so the title is checked before a line is read. The
+    // lines are made by script, so the destination is read from the line the
+    // entry sits on rather than from a fixed position.
+    private boolean isBlockedSpiritTree(MenuEntry entry)
+    {
+        if (blockedSpiritTrees.isEmpty() || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
+        {
+            return false;
+        }
+
+        Widget[] lines = spiritTreeLines();
+        int index = entry.getParam0();
+        if (lines == null || index < 0 || index >= lines.length || lines[index] == null)
+        {
+            return false;
+        }
+
+        return isBlockedSpiritTreeLine(plainText(lines[index].getText()));
+    }
+
+    // Each line prints its own shortcut, 1 to 9 and then letters, so the
+    // pressed key is compared with the shortcut the line prints. A list opened
+    // without shortcuts prints none and no key is taken.
+    private void consumeIfBlockedSpiritTreeKey(KeyEvent e)
+    {
+        if (blockedSpiritTrees.isEmpty())
+        {
+            return;
+        }
+
+        String key = keyLabel(e);
+        Widget[] lines = key == null ? null : spiritTreeLines();
+        if (lines == null)
+        {
+            return;
+        }
+
+        for (Widget line : lines)
+        {
+            if (line == null)
+            {
+                continue;
+            }
+
+            String text = plainText(line.getText());
+            if (key.equalsIgnoreCase(spiritTreeLabel(text)) && isBlockedSpiritTreeLine(text))
+            {
+                e.consume();
+                return;
+            }
+        }
+    }
+
+    /** The letter or digit a key press stands for, or null when it stands for none. */
+    private static String keyLabel(KeyEvent e)
+    {
+        char ch = e.getKeyChar();
+        if (Character.isLetterOrDigit(ch))
+        {
+            return String.valueOf(ch);
+        }
+
+        int digit = digitOf(e);
+        return digit > 0 ? String.valueOf(digit) : null;
+    }
+
+    /** The lines of the spirit tree list, or null when that list is not open. */
+    private Widget[] spiritTreeLines()
+    {
+        Widget list = client.getWidget(InterfaceID.Menu.LJ_LAYER1);
+        Widget frame = client.getWidget(InterfaceID.Menu.LJ_LAYER2);
+        if (list == null || list.isHidden() || frame == null)
+        {
+            return null;
+        }
+
+        Widget[] titles = frame.getDynamicChildren();
+        if (titles == null)
+        {
+            return null;
+        }
+
+        for (Widget title : titles)
+        {
+            if (title != null && matchesLine(SpiritTree.TITLE, plainText(title.getText())))
+            {
+                return list.getDynamicChildren();
+            }
+        }
+        return null;
+    }
+
+    /** The shortcut a spirit tree line prints before its destination, or null when it prints none. */
+    private static String spiritTreeLabel(String line)
+    {
+        int colon = line.indexOf(": ");
+        return colon > 0 ? line.substring(0, colon) : null;
+    }
+
+    private boolean isBlockedSpiritTreeLine(String line)
+    {
+        int colon = line.indexOf(": ");
+        String destination = colon > 0 ? line.substring(colon + 2) : line;
+        for (SpiritTree.Destination tree : blockedSpiritTrees)
+        {
+            if (tree.matchesLine(destination))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Last-destination travels straight to the tree used last, and its entry
+    // does not name that tree, so the option is removed whatever it points at.
+    // The object's name is checked so the same option elsewhere is left alone.
+    private boolean isBlockedSpiritTreePrevious(MenuEntry entry)
+    {
+        if (!blockSpiritTreePrevious || !OBJECT_OPTIONS.contains(entry.getType())
+            || !matchesLine(SpiritTree.PREVIOUS_OPTION, plainText(entry.getOption())))
+        {
+            return false;
+        }
+
+        ObjectComposition composition = client.getObjectDefinition(variantId(entry.getIdentifier()));
+        return composition != null && matchesLine(SpiritTree.OBJECT_NAME, plainText(composition.getName()));
     }
 
     // An object whose look depends on the player's progress reaches the menu
@@ -928,5 +1068,15 @@ public class TeleportBlockFeature implements KeyListener
                 blockedLeverDestinations.add(destination);
             }
         }
+
+        blockedSpiritTrees.clear();
+        for (SpiritTree.Destination tree : SpiritTree.Destination.values())
+        {
+            if (tree.isBlocked(config))
+            {
+                blockedSpiritTrees.add(tree);
+            }
+        }
+        blockSpiritTreePrevious = config.spiritTreePrevious();
     }
 }

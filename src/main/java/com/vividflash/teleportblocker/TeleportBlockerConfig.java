@@ -1588,4 +1588,192 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigSection(
+        name = "Spirit trees",
+        description = "One toggle per spirit tree destination, in list order. Every one starts unblocked.",
+        position = 137,
+        closedByDefault = true
+    )
+    String spiritTreeSection = "spiritTreeSection";
+
+    @ConfigItem(
+        keyName = "spiritTreeGnomeVillage",
+        name = "Tree Gnome Village",
+        description = "Blocks the Tree Gnome Village destination in the spirit tree list.",
+        position = 138,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeGnomeVillage()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeGnomeStronghold",
+        name = "Gnome Stronghold",
+        description = "Blocks the Gnome Stronghold destination in the spirit tree list.",
+        position = 139,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeGnomeStronghold()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeBattlefieldOfKhazard",
+        name = "Battlefield of Khazard",
+        description = "Blocks the Battlefield of Khazard destination in the spirit tree list.",
+        position = 140,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeBattlefieldOfKhazard()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeGrandExchange",
+        name = "Grand Exchange",
+        description = "Blocks the Grand Exchange destination in the spirit tree list.",
+        position = 141,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeGrandExchange()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeFeldipHills",
+        name = "Feldip Hills",
+        description = "Blocks the Feldip Hills destination in the spirit tree list.",
+        position = 142,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeFeldipHills()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreePrifddinas",
+        name = "Prifddinas",
+        description = "Blocks the Prifddinas destination in the spirit tree list.",
+        position = 143,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreePrifddinas()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreePortSarim",
+        name = "Port Sarim",
+        description = "Blocks the Port Sarim destination in the spirit tree list.",
+        position = 144,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreePortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeEtceteria",
+        name = "Etceteria",
+        description = "Blocks the Etceteria destination in the spirit tree list.",
+        position = 145,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeEtceteria()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeBrimhaven",
+        name = "Brimhaven",
+        description = "Blocks the Brimhaven destination in the spirit tree list.",
+        position = 146,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeBrimhaven()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeHosidius",
+        name = "Hosidius",
+        description = "Blocks the Hosidius destination in the spirit tree list.",
+        position = 147,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeHosidius()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeFarmingGuild",
+        name = "Farming Guild",
+        description = "Blocks the Farming Guild destination in the spirit tree list.",
+        position = 148,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeFarmingGuild()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeHouse",
+        name = "Your house",
+        description = "Blocks the player-owned house destination in the spirit tree list.",
+        position = 149,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeHouse()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreePoisonWaste",
+        name = "Poison Waste",
+        description = "Blocks the Poison Waste destination in the spirit tree list.",
+        position = 150,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreePoisonWaste()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreeLagunaAurorae",
+        name = "Laguna Aurorae",
+        description = "Blocks the Laguna Aurorae destination in the spirit tree list.",
+        position = 151,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreeLagunaAurorae()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "spiritTreePrevious",
+        name = "Previous destination",
+        description = "Removes the Last-destination option from spirit trees.",
+        position = 152,
+        section = spiritTreeSection
+    )
+    default boolean spiritTreePrevious()
+    {
+        return false;
+    }
+
 }
