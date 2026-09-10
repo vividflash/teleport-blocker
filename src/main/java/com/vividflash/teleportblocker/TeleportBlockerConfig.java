@@ -1880,4 +1880,216 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigSection(
+        name = "Quetzal transport",
+        description = "The Varrock quetzal route and one toggle per quetzal map landing site. Every one starts unblocked.",
+        position = 162,
+        closedByDefault = true
+    )
+    String quetzalSection = "quetzalSection";
+
+    @ConfigItem(
+        keyName = "quetzalVarrockToCivitas",
+        name = "Varrock to Civitas",
+        description = "Removes the options of the quetzal and its keeper at Varrock, which fly to Civitas.",
+        position = 163,
+        section = quetzalSection
+    )
+    default boolean quetzalVarrockToCivitas()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalCivitasToVarrock",
+        name = "Civitas to Varrock",
+        description = "Removes the options of the quetzal and its keeper at Civitas, which fly to Varrock.",
+        position = 164,
+        section = quetzalSection
+    )
+    default boolean quetzalCivitasToVarrock()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalPrevious",
+        name = "Previous destination",
+        description = "Removes the Last-destination option from quetzals and quetzal whistles.",
+        position = 165,
+        section = quetzalSection
+    )
+    default boolean quetzalPrevious()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalCivitas",
+        name = "Civitas",
+        description = "Blocks the Civitas landing site on the quetzal map.",
+        position = 166,
+        section = quetzalSection
+    )
+    default boolean quetzalCivitas()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalTheTeomat",
+        name = "The Teomat",
+        description = "Blocks The Teomat landing site on the quetzal map.",
+        position = 167,
+        section = quetzalSection
+    )
+    default boolean quetzalTheTeomat()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalSunsetCoast",
+        name = "Sunset Coast",
+        description = "Blocks the Sunset Coast landing site on the quetzal map.",
+        position = 168,
+        section = quetzalSection
+    )
+    default boolean quetzalSunsetCoast()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalHunterGuild",
+        name = "Hunter Guild",
+        description = "Blocks the Hunter Guild landing site on the quetzal map, and a whistle's Signal while it is set to fly there.",
+        position = 169,
+        section = quetzalSection
+    )
+    default boolean quetzalHunterGuild()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalCamTorumEntrance",
+        name = "Cam Torum Entrance",
+        description = "Blocks the Cam Torum Entrance landing site on the quetzal map.",
+        position = 170,
+        section = quetzalSection
+    )
+    default boolean quetzalCamTorumEntrance()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalColossalWyrmRemains",
+        name = "Colossal Wyrm Remains",
+        description = "Blocks the Colossal Wyrm Remains landing site on the quetzal map.",
+        position = 171,
+        section = quetzalSection
+    )
+    default boolean quetzalColossalWyrmRemains()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalOuterFortis",
+        name = "Outer Fortis",
+        description = "Blocks the Outer Fortis landing site on the quetzal map.",
+        position = 172,
+        section = quetzalSection
+    )
+    default boolean quetzalOuterFortis()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalFortisColosseum",
+        name = "Fortis Colosseum",
+        description = "Blocks the Fortis Colosseum landing site on the quetzal map.",
+        position = 173,
+        section = quetzalSection
+    )
+    default boolean quetzalFortisColosseum()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalAldarin",
+        name = "Aldarin",
+        description = "Blocks the Aldarin landing site on the quetzal map.",
+        position = 174,
+        section = quetzalSection
+    )
+    default boolean quetzalAldarin()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalQuetzacalliGorge",
+        name = "Quetzacalli Gorge",
+        description = "Blocks the Quetzacalli Gorge landing site on the quetzal map.",
+        position = 175,
+        section = quetzalSection
+    )
+    default boolean quetzalQuetzacalliGorge()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalSalvagerOverlook",
+        name = "Salvager Overlook",
+        description = "Blocks the Salvager Overlook landing site on the quetzal map.",
+        position = 176,
+        section = quetzalSection
+    )
+    default boolean quetzalSalvagerOverlook()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalTalTeklan",
+        name = "Tal Teklan",
+        description = "Blocks the Tal Teklan landing site on the quetzal map.",
+        position = 177,
+        section = quetzalSection
+    )
+    default boolean quetzalTalTeklan()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalAuburnvale",
+        name = "Auburnvale",
+        description = "Blocks the Auburnvale landing site on the quetzal map.",
+        position = 178,
+        section = quetzalSection
+    )
+    default boolean quetzalAuburnvale()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "quetzalKastori",
+        name = "Kastori",
+        description = "Blocks the Kastori landing site on the quetzal map.",
+        position = 179,
+        section = quetzalSection
+    )
+    default boolean quetzalKastori()
+    {
+        return false;
+    }
+
 }

@@ -31,6 +31,7 @@ import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
+import com.vividflash.teleportblocker.QuetzalTransport;
 import com.vividflash.teleportblocker.SoulWarsPortal;
 import com.vividflash.teleportblocker.SpiritTree;
 import com.vividflash.teleportblocker.StripAndLowercase;
@@ -43,6 +44,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.IntPredicate;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -56,6 +58,7 @@ import net.runelite.api.ObjectComposition;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.gameval.InterfaceID;
+import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetUtil;
 import net.runelite.client.eventbus.EventBus;
@@ -71,7 +74,10 @@ import net.runelite.client.util.Text;
  * blocked portals into Soul Wars, at blocked destinations on worn teleport
  * jewellery, at blocked options of the Wilderness levers, at blocked lines
  * of the spirit tree list and at the trees' Last-destination option, at
- * blocked glider map destinations and at the pilots' Glider option, and consumes clicks and
+ * blocked glider map destinations and at the pilots' Glider option, at
+ * blocked quetzal map landing sites and legs of the Varrock quetzal route,
+ * at the quetzals' and whistles' Last-destination option and at a whistle's
+ * Signal set to fly to a blocked Hunter Guild, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
  * Wars portal dialogues, as well as shortcut key presses on blocked spirit
  * tree lines. The spell icons themselves are only touched through the minigame
@@ -152,6 +158,9 @@ public class TeleportBlockFeature implements KeyListener
     private boolean blockSpiritTreePrevious;
     private final Set<GnomeGlider.Destination> blockedGliders = EnumSet.noneOf(GnomeGlider.Destination.class);
     private boolean blockGliderPrevious;
+    private final Set<QuetzalTransport.Destination> blockedQuetzalDestinations = EnumSet.noneOf(QuetzalTransport.Destination.class);
+    private final Set<QuetzalTransport.Route> blockedQuetzalRoutes = EnumSet.noneOf(QuetzalTransport.Route.class);
+    private boolean blockQuetzalPrevious;
 
     public void startUp()
     {
@@ -177,6 +186,9 @@ public class TeleportBlockFeature implements KeyListener
         blockSpiritTreePrevious = false;
         blockedGliders.clear();
         blockGliderPrevious = false;
+        blockedQuetzalDestinations.clear();
+        blockedQuetzalRoutes.clear();
+        blockQuetzalPrevious = false;
     }
 
     @Subscribe
@@ -194,7 +206,8 @@ public class TeleportBlockFeature implements KeyListener
         if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
             && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
-            && blockedGliders.isEmpty() && !blockGliderPrevious)
+            && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
+            && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious)
         {
             return;
         }
@@ -205,7 +218,9 @@ public class TeleportBlockFeature implements KeyListener
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
                 && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry) && !isBlockedLeverEntry(entry)
                 && !isBlockedLeverDestination(entry) && !isBlockedSpiritTree(entry)
-                && !isBlockedSpiritTreePrevious(entry) && !isBlockedGlider(entry) && !isBlockedGliderPrevious(entry))
+                && !isBlockedSpiritTreePrevious(entry) && !isBlockedGlider(entry) && !isBlockedGliderPrevious(entry)
+                && !isBlockedQuetzalMap(entry) && !isBlockedQuetzalRoute(entry) && !isBlockedQuetzalPrevious(entry)
+                && !isBlockedWhistleSignal(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -768,8 +783,7 @@ public class TeleportBlockFeature implements KeyListener
     // Glider flies straight to the pilot's last destination, and its entry
     // does not name that place, so the option is removed whatever it points
     // at. The pilot's id is checked so the same option elsewhere is left
-    // alone. A pilot whose look depends on the player's progress reaches the
-    // menu under its base id, so the id of the variant on screen is checked too.
+    // alone.
     private boolean isBlockedGliderPrevious(MenuEntry entry)
     {
         if (!blockGliderPrevious || !NPC_OPTIONS.contains(entry.getType())
@@ -778,6 +792,94 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
+        return npcMatches(entry, GnomeGlider::isPilot);
+    }
+
+    // A quetzal map icon carries one option, whose text is the name of its
+    // landing site, and one click on it flies. The quetzals' map and the
+    // whistle's map build their icons the same way, and the icon component
+    // belongs to those maps alone, so the entry type is not checked.
+    private boolean isBlockedQuetzalMap(MenuEntry entry)
+    {
+        if (blockedQuetzalDestinations.isEmpty() || !QuetzalTransport.isMapIcon(entry.getParam1()))
+        {
+            return false;
+        }
+
+        String option = plainText(entry.getOption());
+        for (QuetzalTransport.Destination destination : blockedQuetzalDestinations)
+        {
+            if (matchesLine(destination.getDestinationName(), option))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // The Varrock quetzal flies one fixed leg from each end, from the quetzal
+    // and from its keeper, whose chat leads to the same flight, so every
+    // option on them at a blocked end is removed, which leaves Examine.
+    private boolean isBlockedQuetzalRoute(MenuEntry entry)
+    {
+        if (blockedQuetzalRoutes.isEmpty() || !NPC_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        for (QuetzalTransport.Route route : blockedQuetzalRoutes)
+        {
+            if (npcMatches(entry, route::isRouteNpc))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Last-destination flies straight to the landing site used last, from a
+    // network quetzal and from a whistle, and its entry does not name that
+    // site, so the option is removed whatever it points at.
+    private boolean isBlockedQuetzalPrevious(MenuEntry entry)
+    {
+        if (!blockQuetzalPrevious || !matchesLine(QuetzalTransport.PREVIOUS_OPTION, plainText(entry.getOption())))
+        {
+            return false;
+        }
+
+        if (NPC_OPTIONS.contains(entry.getType()))
+        {
+            return npcMatches(entry, QuetzalTransport::isNetworkQuetzal);
+        }
+        return isWhistleOption(entry);
+    }
+
+    // A whistle set to fly straight to the Hunter Guild does so from Signal
+    // without opening the map, so Signal is removed while that site is
+    // blocked and the whistle is set that way.
+    private boolean isBlockedWhistleSignal(MenuEntry entry)
+    {
+        if (!blockedQuetzalDestinations.contains(QuetzalTransport.Destination.HUNTER_GUILD)
+            || !matchesLine(QuetzalTransport.SIGNAL_OPTION, plainText(entry.getOption()))
+            || !isWhistleOption(entry))
+        {
+            return false;
+        }
+
+        return client.getVarbitValue(VarbitID.SETTINGS_QUETZALWHISTLE_DEFAULT_TP) != 0;
+    }
+
+    private static boolean isWhistleOption(MenuEntry entry)
+    {
+        MenuAction action = entry.getType();
+        return (action == MenuAction.CC_OP || action == MenuAction.CC_OP_LOW_PRIORITY)
+            && QuetzalTransport.isWhistle(entry.getItemId());
+    }
+
+    // An NPC whose look depends on the player's progress reaches the menu
+    // under its base id, so the id of the variant on screen is checked too.
+    private static boolean npcMatches(MenuEntry entry, IntPredicate ids)
+    {
         NPC npc = entry.getNpc();
         if (npc == null)
         {
@@ -785,7 +887,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         NPCComposition variant = npc.getTransformedComposition();
-        return GnomeGlider.isPilot(npc.getId()) || (variant != null && GnomeGlider.isPilot(variant.getId()));
+        return ids.test(npc.getId()) || (variant != null && ids.test(variant.getId()));
     }
 
     // The portals into Soul Wars travel straight from Enter with no dialogue
@@ -1150,5 +1252,24 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
         blockGliderPrevious = config.gnomeGliderPrevious();
+
+        blockedQuetzalDestinations.clear();
+        for (QuetzalTransport.Destination destination : QuetzalTransport.Destination.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedQuetzalDestinations.add(destination);
+            }
+        }
+
+        blockedQuetzalRoutes.clear();
+        for (QuetzalTransport.Route route : QuetzalTransport.Route.values())
+        {
+            if (route.isBlocked(config))
+            {
+                blockedQuetzalRoutes.add(route);
+            }
+        }
+        blockQuetzalPrevious = config.quetzalPrevious();
     }
 }
