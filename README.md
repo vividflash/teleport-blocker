@@ -6,10 +6,10 @@ Blocker. <small><i>Available from all state of the art plugin hubs.</i></small>
 
 | Blocked Thing | Options you can individually block |
 | --- | --- |
-| Standard spellbook | Home, Varrock, Lumbridge, Falador, House, Camelot, Kourend Castle, Ardougne, Civitas illa Fortis, Watchtower, Trollheim, Ape Atoll |
+| Standard spellbook | Home, Minigame, Varrock, Lumbridge, Falador, House, Camelot, Kourend Castle, Ardougne, Civitas illa Fortis, Watchtower, Trollheim, Ape Atoll |
 | Minigames | Barbarian Assault, Blast Furnace, Bounty Hunter, Burthorpe Games Room, Castle Wars, Clan Wars, Fishing Trawler, Giants' Foundry, Guardians of the Rift, Last Man Standing, Mage Training Arena, Mastering Mixology, Nightmare Zone, Pest Control, Rat Pits (Ardougne, Varrock, Keldagrim, Port Sarim), Shades of Mort'ton, Sorceress's Garden, Soul Wars, Tithe Farm, Trouble Brewing, TzHaar Fight Pit |
-| Ancient spellbook | Home, Paddewwa, Senntisten, Kharyrll, Lassar, Dareeyak, Carrallanger, Annakarl, Ghorrock |
-| Lunar spellbook | Home, Moonclan, Ourania, Waterbirth, Barbarian, Khazard, Fishing Guild, Catherby, Ice Plateau |
+| Ancient spellbook | Home, Minigame, Paddewwa, Senntisten, Kharyrll, Lassar, Dareeyak, Carrallanger, Annakarl, Ghorrock |
+| Lunar spellbook | Home, Minigame, Moonclan, Ourania, Waterbirth, Barbarian, Khazard, Fishing Guild, Catherby, Ice Plateau |
 | Canoes | Lumbridge, Champions' Guild, Barbarian Village, Edgeville, Ferox Enclave, Wilderness Pond, Castle Wars, Tree Gnome Village, Clocktower, Chaos Druid Tower, Tree Gnome Stronghold |
 | Ring of dueling | Emir's Arena, Castle Wars, Ferox Enclave, Fortis Colosseum |
 | Games necklace | Burthorpe, Barbarian Outpost, Corporeal Beast, Tears of Guthix, Wintertodt Camp |

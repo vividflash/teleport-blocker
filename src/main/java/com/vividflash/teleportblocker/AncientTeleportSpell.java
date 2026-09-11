@@ -35,7 +35,7 @@ import net.runelite.api.gameval.InterfaceID;
 public enum AncientTeleportSpell
 {
     HOME("Home Teleport", InterfaceID.MagicSpellbook.TELEPORT_HOME_ZAROS, TeleportBlockerConfig::ancientHomeTeleport),
-    MINIGAME("Minigame Teleport", InterfaceID.MagicSpellbook.TELEPORT_MINIGAME_ANCIENT, TeleportBlockerConfig::blockAllMinigames),
+    MINIGAME("Minigame Teleport", InterfaceID.MagicSpellbook.TELEPORT_MINIGAME_ANCIENT, TeleportBlockerConfig::ancientMinigameTeleport),
     PADDEWWA("Paddewwa Teleport", InterfaceID.MagicSpellbook.ZAROSTELEPORT1, TeleportBlockerConfig::ancientPaddewwa),
     SENNTISTEN("Senntisten Teleport", InterfaceID.MagicSpellbook.ZAROSTELEPORT2, TeleportBlockerConfig::ancientSenntisten),
     KHARYRLL("Kharyrll Teleport", InterfaceID.MagicSpellbook.ZAROSTELEPORT3, TeleportBlockerConfig::ancientKharyrll),

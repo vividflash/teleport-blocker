@@ -1660,46 +1660,46 @@ public class TeleportBlockFeature implements KeyListener
 
     private void rebuildBlocked()
     {
+        // Invert makes every toggle allow instead of block.
+        boolean invert = config.invert();
+
         blockedSpellComponents.clear();
         for (TeleportSpell spell : TeleportSpell.values())
         {
-            if (spell.isBlocked(config))
+            if (spell.isBlocked(config) != invert)
             {
                 blockedSpellComponents.add(spell.getComponentId());
             }
         }
         for (AncientTeleportSpell spell : AncientTeleportSpell.values())
         {
-            if (spell.isBlocked(config))
+            if (spell.isBlocked(config) != invert)
             {
                 blockedSpellComponents.add(spell.getComponentId());
             }
         }
         for (LunarTeleportSpell spell : LunarTeleportSpell.values())
         {
-            if (spell.isBlocked(config))
+            if (spell.isBlocked(config) != invert)
             {
                 blockedSpellComponents.add(spell.getComponentId());
             }
         }
         blockedMinigames.clear();
-        if (!config.blockAllMinigames())
+        for (Minigame minigame : Minigame.values())
         {
-            for (Minigame minigame : Minigame.values())
+            if (minigame.isBlocked(config) != invert)
             {
-                if (minigame.isBlocked(config))
-                {
-                    blockedMinigames.add(minigame);
-                }
+                blockedMinigames.add(minigame);
             }
         }
 
         blockedRatPits.clear();
-        if (!config.blockAllMinigames() && !blockedMinigames.contains(Minigame.RAT_PITS))
+        if (!blockedMinigames.contains(Minigame.RAT_PITS))
         {
             for (Minigame.RatPit pit : Minigame.RatPit.values())
             {
-                if (pit.isBlocked(config))
+                if (pit.isBlocked(config) != invert)
                 {
                     blockedRatPits.add(pit);
                 }
@@ -1709,7 +1709,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedJewellery.clear();
         for (JewelleryTeleport teleport : JewelleryTeleport.values())
         {
-            if (teleport.isBlocked(config))
+            if (teleport.isBlocked(config) != invert)
             {
                 blockedJewellery.add(teleport);
             }
@@ -1718,7 +1718,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedPortals.clear();
         for (SoulWarsPortal destination : SoulWarsPortal.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedPortals.add(destination);
             }
@@ -1727,7 +1727,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedCanoes.clear();
         for (CanoeDestination destination : CanoeDestination.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedCanoes.add(destination);
             }
@@ -1736,7 +1736,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedEntryPortals.clear();
         for (SoulWarsPortal.Entry portal : SoulWarsPortal.Entry.values())
         {
-            if (portal.isBlocked(config))
+            if (portal.isBlocked(config) != invert)
             {
                 blockedEntryPortals.add(portal);
             }
@@ -1745,7 +1745,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedLeverEntries.clear();
         for (WildernessLever.Entry lever : WildernessLever.Entry.values())
         {
-            if (lever.isBlocked(config))
+            if (lever.isBlocked(config) != invert)
             {
                 blockedLeverEntries.add(lever);
             }
@@ -1754,7 +1754,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedLeverDestinations.clear();
         for (WildernessLever.Destination destination : WildernessLever.Destination.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedLeverDestinations.add(destination);
             }
@@ -1763,27 +1763,27 @@ public class TeleportBlockFeature implements KeyListener
         blockedSpiritTrees.clear();
         for (SpiritTree.Destination tree : SpiritTree.Destination.values())
         {
-            if (tree.isBlocked(config))
+            if (tree.isBlocked(config) != invert)
             {
                 blockedSpiritTrees.add(tree);
             }
         }
-        blockSpiritTreePrevious = config.spiritTreePrevious();
+        blockSpiritTreePrevious = config.spiritTreePrevious() != invert;
 
         blockedGliders.clear();
         for (GnomeGlider.Destination destination : GnomeGlider.Destination.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedGliders.add(destination);
             }
         }
-        blockGliderPrevious = config.gnomeGliderPrevious();
+        blockGliderPrevious = config.gnomeGliderPrevious() != invert;
 
         blockedQuetzalDestinations.clear();
         for (QuetzalTransport.Destination destination : QuetzalTransport.Destination.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedQuetzalDestinations.add(destination);
             }
@@ -1792,17 +1792,17 @@ public class TeleportBlockFeature implements KeyListener
         blockedQuetzalRoutes.clear();
         for (QuetzalTransport.Route route : QuetzalTransport.Route.values())
         {
-            if (route.isBlocked(config))
+            if (route.isBlocked(config) != invert)
             {
                 blockedQuetzalRoutes.add(route);
             }
         }
-        blockQuetzalPrevious = config.quetzalPrevious();
+        blockQuetzalPrevious = config.quetzalPrevious() != invert;
 
         blockedMinecartStations.clear();
         for (LovakengjMinecart.Station station : LovakengjMinecart.Station.values())
         {
-            if (station.isBlocked(config))
+            if (station.isBlocked(config) != invert)
             {
                 blockedMinecartStations.add(station);
             }
@@ -1811,17 +1811,17 @@ public class TeleportBlockFeature implements KeyListener
         blockedCharterPorts.clear();
         for (CharterShip.Port port : CharterShip.Port.values())
         {
-            if (port.isBlocked(config))
+            if (port.isBlocked(config) != invert)
             {
                 blockedCharterPorts.add(port);
             }
         }
-        blockCharterPrevious = config.charterPrevious();
+        blockCharterPrevious = config.charterPrevious() != invert;
 
         blockedShipLegs.clear();
         for (Ship.Leg leg : Ship.Leg.values())
         {
-            if (leg.isBlocked(config))
+            if (leg.isBlocked(config) != invert)
             {
                 blockedShipLegs.add(leg);
             }
@@ -1830,7 +1830,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedBoats.clear();
         for (Boat.Destination destination : Boat.Destination.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedBoats.add(destination);
             }
@@ -1839,7 +1839,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedFossilIsland.clear();
         for (FossilIsland.Destination destination : FossilIsland.Destination.values())
         {
-            if (destination.isBlocked(config))
+            if (destination.isBlocked(config) != invert)
             {
                 blockedFossilIsland.add(destination);
             }

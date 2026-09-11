@@ -33,12 +33,12 @@ import net.runelite.client.config.ConfigSection;
 public interface TeleportBlockerConfig extends Config
 {
     @ConfigItem(
-        keyName = "blockAllTeleports",
-        name = "Block all standard tp",
-        description = "",
+        keyName = "invert",
+        name = "Invert",
+        description = "Ticked toggles allow instead of block, and everything unticked is blocked.",
         position = 0
     )
-    default boolean blockAllTeleports()
+    default boolean invert()
     {
         return false;
     }
@@ -196,12 +196,13 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigItem(
-        keyName = "blockAllMinigames",
-        name = "Block all minigames",
-        description = "Removes the Minigame Teleport spell.",
-        position = 14
+        keyName = "minigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 14,
+        section = teleportsSection
     )
-    default boolean blockAllMinigames()
+    default boolean minigameTeleport()
     {
         return false;
     }
@@ -631,6 +632,18 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigItem(
+        keyName = "ancientMinigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 52,
+        section = ancientSection
+    )
+    default boolean ancientMinigameTeleport()
+    {
+        return false;
+    }
+
     @ConfigSection(
         name = "Lunar spellbook",
         description = "",
@@ -744,6 +757,18 @@ public interface TeleportBlockerConfig extends Config
         section = lunarSection
     )
     default boolean lunarIcePlateau()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "lunarMinigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 63,
+        section = lunarSection
+    )
+    default boolean lunarMinigameTeleport()
     {
         return false;
     }
