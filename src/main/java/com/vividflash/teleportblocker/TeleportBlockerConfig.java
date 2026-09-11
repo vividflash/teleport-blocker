@@ -2244,4 +2244,916 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigSection(
+        name = "Charter ships",
+        description = "One toggle per charter ship port, in list order. Every one starts unblocked.",
+        position = 193,
+        closedByDefault = true
+    )
+    String charterSection = "charterSection";
+
+    @ConfigItem(
+        keyName = "charterPortSarim",
+        name = "Port Sarim",
+        description = "Blocks the Port Sarim destination on the charter ship menu, and Charter-to Port Sarim.",
+        position = 194,
+        section = charterSection
+    )
+    default boolean charterPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterBrimhaven",
+        name = "Brimhaven",
+        description = "Blocks the Brimhaven destination on the charter ship menu, and Charter-to Brimhaven.",
+        position = 195,
+        section = charterSection
+    )
+    default boolean charterBrimhaven()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterCatherby",
+        name = "Catherby",
+        description = "Blocks the Catherby destination on the charter ship menu, and Charter-to Catherby.",
+        position = 196,
+        section = charterSection
+    )
+    default boolean charterCatherby()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterMosLeHarmless",
+        name = "Mos Le'Harmless",
+        description = "Blocks the Mos Le'Harmless destination on the charter ship menu, and Charter-to Mos Le'Harmless.",
+        position = 197,
+        section = charterSection
+    )
+    default boolean charterMosLeHarmless()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterMusaPoint",
+        name = "Musa Point",
+        description = "Blocks the Musa Point destination on the charter ship menu, and Charter-to Musa Point.",
+        position = 198,
+        section = charterSection
+    )
+    default boolean charterMusaPoint()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPortKhazard",
+        name = "Port Khazard",
+        description = "Blocks the Port Khazard destination on the charter ship menu, and Charter-to Port Khazard.",
+        position = 199,
+        section = charterSection
+    )
+    default boolean charterPortKhazard()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPortPhasmatys",
+        name = "Port Phasmatys",
+        description = "Blocks the Port Phasmatys destination on the charter ship menu, and Charter-to Port Phasmatys.",
+        position = 200,
+        section = charterSection
+    )
+    default boolean charterPortPhasmatys()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterKaramjaShipyard",
+        name = "Karamja Shipyard",
+        description = "Blocks the Karamja Shipyard destination on the charter ship menu, and Charter-to Karamja Shipyard.",
+        position = 201,
+        section = charterSection
+    )
+    default boolean charterKaramjaShipyard()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPortTyras",
+        name = "Port Tyras",
+        description = "Blocks the Port Tyras destination on the charter ship menu, and Charter-to Port Tyras.",
+        position = 202,
+        section = charterSection
+    )
+    default boolean charterPortTyras()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterCorsairCove",
+        name = "Corsair Cove",
+        description = "Blocks the Corsair Cove destination on the charter ship menu, and Charter-to Corsair Cove.",
+        position = 203,
+        section = charterSection
+    )
+    default boolean charterCorsairCove()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPrifddinas",
+        name = "Prifddinas",
+        description = "Blocks the Prifddinas destination on the charter ship menu, and Charter-to Prifddinas.",
+        position = 204,
+        section = charterSection
+    )
+    default boolean charterPrifddinas()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPortPiscarilius",
+        name = "Port Piscarilius",
+        description = "Blocks the Port Piscarilius destination on the charter ship menu, and Charter-to Port Piscarilius.",
+        position = 205,
+        section = charterSection
+    )
+    default boolean charterPortPiscarilius()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterLandsEnd",
+        name = "Land's End",
+        description = "Blocks the Land's End destination on the charter ship menu, and Charter-to Land's End.",
+        position = 206,
+        section = charterSection
+    )
+    default boolean charterLandsEnd()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterCivitasIllaFortis",
+        name = "Civitas illa Fortis",
+        description = "Blocks the Civitas illa Fortis destination on the charter ship menu, and Charter-to Civitas illa Fortis.",
+        position = 207,
+        section = charterSection
+    )
+    default boolean charterCivitasIllaFortis()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterAldarin",
+        name = "Aldarin",
+        description = "Blocks the Aldarin destination on the charter ship menu, and Charter-to Aldarin.",
+        position = 208,
+        section = charterSection
+    )
+    default boolean charterAldarin()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterSunsetCoast",
+        name = "Sunset Coast",
+        description = "Blocks the Sunset Coast destination on the charter ship menu, and Charter-to Sunset Coast.",
+        position = 209,
+        section = charterSection
+    )
+    default boolean charterSunsetCoast()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterThePandemonium",
+        name = "The Pandemonium",
+        description = "Blocks The Pandemonium destination on the charter ship menu, and Charter-to The Pandemonium.",
+        position = 210,
+        section = charterSection
+    )
+    default boolean charterThePandemonium()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterTheSummerShore",
+        name = "The Summer Shore",
+        description = "Blocks The Summer Shore destination on the charter ship menu, and Charter-to The Summer Shore.",
+        position = 211,
+        section = charterSection
+    )
+    default boolean charterTheSummerShore()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterRedRock",
+        name = "Red Rock",
+        description = "Blocks the Red Rock destination on the charter ship menu, and Charter-to Red Rock.",
+        position = 212,
+        section = charterSection
+    )
+    default boolean charterRedRock()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterDeepfinPoint",
+        name = "Deepfin Point",
+        description = "Blocks the Deepfin Point destination on the charter ship menu, and Charter-to Deepfin Point.",
+        position = 213,
+        section = charterSection
+    )
+    default boolean charterDeepfinPoint()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPortRoberts",
+        name = "Port Roberts",
+        description = "Blocks the Port Roberts destination on the charter ship menu, and Charter-to Port Roberts.",
+        position = 214,
+        section = charterSection
+    )
+    default boolean charterPortRoberts()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "charterPrevious",
+        name = "Previous destination",
+        description = "Removes the Charter-to option from charter ship crews.",
+        position = 215,
+        section = charterSection
+    )
+    default boolean charterPrevious()
+    {
+        return false;
+    }
+
+    @ConfigSection(
+        name = "Other ships",
+        description = "One toggle per ship leg outside the charter network, named by the port it sails from and to. Every one starts unblocked.",
+        position = 216,
+        closedByDefault = true
+    )
+    String shipSection = "shipSection";
+
+    @ConfigItem(
+        keyName = "shipBarnabyArdougne",
+        name = "Barnaby - Ardougne",
+        description = "Blocks Captain Barnaby's ship to Ardougne, from Brimhaven and from Rimmington.",
+        position = 217,
+        section = shipSection
+    )
+    default boolean shipBarnabyArdougne()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipBarnabyBrimhaven",
+        name = "Barnaby - Brimhaven",
+        description = "Blocks Captain Barnaby's ship to Brimhaven, from Ardougne and from Rimmington.",
+        position = 218,
+        section = shipSection
+    )
+    default boolean shipBarnabyBrimhaven()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipBarnabyRimmington",
+        name = "Barnaby - Rimmington",
+        description = "Blocks Captain Barnaby's ship to Rimmington, from Ardougne and from Brimhaven.",
+        position = 219,
+        section = shipSection
+    )
+    default boolean shipBarnabyRimmington()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortSarimVoidKnightsOutpost",
+        name = "Port Sarim - Void Knights' Outpost",
+        description = "Blocks the squire's ship from Port Sarim to the Void Knights' Outpost.",
+        position = 220,
+        section = shipSection
+    )
+    default boolean shipPortSarimVoidKnightsOutpost()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipVoidKnightsOutpostPortSarim",
+        name = "Void Knights' Outpost - Port Sarim",
+        description = "Blocks the squire's ship from the Void Knights' Outpost to Port Sarim.",
+        position = 221,
+        section = shipSection
+    )
+    default boolean shipVoidKnightsOutpostPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortSarimMusaPoint",
+        name = "Port Sarim - Musa Point",
+        description = "Blocks the ship from Port Sarim to Musa Point. Before the Pandemonium quest this also removes the crew's Talk-to.",
+        position = 222,
+        section = shipSection
+    )
+    default boolean shipPortSarimMusaPoint()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipMusaPointPortSarim",
+        name = "Musa Point - Port Sarim",
+        description = "Blocks the ship from Musa Point to Port Sarim. Before the Pandemonium quest this also removes the customs officer's Talk-to.",
+        position = 223,
+        section = shipSection
+    )
+    default boolean shipMusaPointPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortSarimPandemonium",
+        name = "Port Sarim - The Pandemonium",
+        description = "Blocks the ship from Port Sarim to The Pandemonium.",
+        position = 224,
+        section = shipSection
+    )
+    default boolean shipPortSarimPandemonium()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPandemoniumPortSarim",
+        name = "The Pandemonium - Port Sarim",
+        description = "Blocks the ship from The Pandemonium to Port Sarim.",
+        position = 225,
+        section = shipSection
+    )
+    default boolean shipPandemoniumPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipMusaPointPandemonium",
+        name = "Musa Point - The Pandemonium",
+        description = "Blocks the ship from Musa Point to The Pandemonium.",
+        position = 226,
+        section = shipSection
+    )
+    default boolean shipMusaPointPandemonium()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPandemoniumMusaPoint",
+        name = "The Pandemonium - Musa Point",
+        description = "Blocks the ship from The Pandemonium to Musa Point.",
+        position = 227,
+        section = shipSection
+    )
+    default boolean shipPandemoniumMusaPoint()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortSarimEntrana",
+        name = "Port Sarim - Entrana",
+        description = "Blocks the ship from Port Sarim to Entrana, including the monk's Talk-to.",
+        position = 228,
+        section = shipSection
+    )
+    default boolean shipPortSarimEntrana()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipEntranaPortSarim",
+        name = "Entrana - Port Sarim",
+        description = "Blocks the ship from Entrana to Port Sarim, including the monk's Talk-to.",
+        position = 229,
+        section = shipSection
+    )
+    default boolean shipEntranaPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortSarimPortPiscarilius",
+        name = "Port Sarim - Port Piscarilius",
+        description = "Blocks the ship from Port Sarim to Port Piscarilius.",
+        position = 230,
+        section = shipSection
+    )
+    default boolean shipPortSarimPortPiscarilius()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortPiscariliusPortSarim",
+        name = "Port Piscarilius - Port Sarim",
+        description = "Blocks the ship from Port Piscarilius to Port Sarim.",
+        position = 231,
+        section = shipSection
+    )
+    default boolean shipPortPiscariliusPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortSarimLandsEnd",
+        name = "Port Sarim - Land's End",
+        description = "Blocks the ship from Port Sarim to Land's End.",
+        position = 232,
+        section = shipSection
+    )
+    default boolean shipPortSarimLandsEnd()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipLandsEndPortSarim",
+        name = "Land's End - Port Sarim",
+        description = "Blocks the ship from Land's End to Port Sarim.",
+        position = 233,
+        section = shipSection
+    )
+    default boolean shipLandsEndPortSarim()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPortPiscariliusLandsEnd",
+        name = "Port Piscarilius - Land's End",
+        description = "Blocks the ship from Port Piscarilius to Land's End.",
+        position = 234,
+        section = shipSection
+    )
+    default boolean shipPortPiscariliusLandsEnd()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipLandsEndPortPiscarilius",
+        name = "Land's End - Port Piscarilius",
+        description = "Blocks the ship from Land's End to Port Piscarilius.",
+        position = 235,
+        section = shipSection
+    )
+    default boolean shipLandsEndPortPiscarilius()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipRellekkaWaterbirthIsland",
+        name = "Rellekka - Waterbirth Island",
+        description = "Blocks Jarvald's ship from Rellekka to Waterbirth Island, including his Talk-to there.",
+        position = 236,
+        section = shipSection
+    )
+    default boolean shipRellekkaWaterbirthIsland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipWaterbirthIslandRellekka",
+        name = "Waterbirth Island - Rellekka",
+        description = "Blocks Jarvald's ship from Waterbirth Island to Rellekka.",
+        position = 237,
+        section = shipSection
+    )
+    default boolean shipWaterbirthIslandRellekka()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipRellekkaPiratesCove",
+        name = "Rellekka - Pirates' Cove",
+        description = "Blocks Lokar Searunner's ship from Rellekka to Pirates' Cove, including his Talk-to there.",
+        position = 238,
+        section = shipSection
+    )
+    default boolean shipRellekkaPiratesCove()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipPiratesCoveRellekka",
+        name = "Pirates' Cove - Rellekka",
+        description = "Blocks Lokar Searunner's ship from Pirates' Cove to Rellekka.",
+        position = 239,
+        section = shipSection
+    )
+    default boolean shipPiratesCoveRellekka()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipRellekkaJatizso",
+        name = "Rellekka - Jatizso",
+        description = "Blocks the ferry from Rellekka to Jatizso.",
+        position = 240,
+        section = shipSection
+    )
+    default boolean shipRellekkaJatizso()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipJatizsoRellekka",
+        name = "Jatizso - Rellekka",
+        description = "Blocks the ferry from Jatizso to Rellekka.",
+        position = 241,
+        section = shipSection
+    )
+    default boolean shipJatizsoRellekka()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipRellekkaNeitiznot",
+        name = "Rellekka - Neitiznot",
+        description = "Blocks the ferry from Rellekka to Neitiznot.",
+        position = 242,
+        section = shipSection
+    )
+    default boolean shipRellekkaNeitiznot()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipNeitiznotRellekka",
+        name = "Neitiznot - Rellekka",
+        description = "Blocks the ferry from Neitiznot to Rellekka.",
+        position = 243,
+        section = shipSection
+    )
+    default boolean shipNeitiznotRellekka()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipRellekkaMiscellania",
+        name = "Rellekka - Miscellania",
+        description = "Blocks the sailor's ship from Rellekka to Miscellania, including his Talk-to there.",
+        position = 244,
+        section = shipSection
+    )
+    default boolean shipRellekkaMiscellania()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "shipMiscellaniaRellekka",
+        name = "Miscellania - Rellekka",
+        description = "Blocks the sailor's ship from Miscellania to Rellekka, including his Talk-to there.",
+        position = 245,
+        section = shipSection
+    )
+    default boolean shipMiscellaniaRellekka()
+    {
+        return false;
+    }
+
+    @ConfigSection(
+        name = "Boats",
+        description = "One toggle per boat trip, named by the boat and the place it goes to. Every one starts unblocked.",
+        position = 246,
+        closedByDefault = true
+    )
+    String boatSection = "boatSection";
+
+    @ConfigItem(
+        keyName = "boatFossilMuseumCamp",
+        name = "Fossil rowboat - Museum Camp",
+        description = "Blocks the Fossil Island rowboat trip to the Museum Camp.",
+        position = 247,
+        section = boatSection
+    )
+    default boolean boatFossilMuseumCamp()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatFossilNorth",
+        name = "Fossil rowboat - North",
+        description = "Blocks the Fossil Island rowboat trip to the north of the island.",
+        position = 248,
+        section = boatSection
+    )
+    default boolean boatFossilNorth()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatFossilBankIsland",
+        name = "Fossil rowboat - Bank island",
+        description = "Blocks the Fossil Island rowboat trip out to the small island with the bank.",
+        position = 249,
+        section = boatSection
+    )
+    default boolean boatFossilBankIsland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatFossilDigsite",
+        name = "Fossil rowboat - Digsite",
+        description = "Blocks the Fossil Island rowboat trip to the Digsite.",
+        position = 250,
+        section = boatSection
+    )
+    default boolean boatFossilDigsite()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatFossilLithkren",
+        name = "Fossil rowboat - Lithkren",
+        description = "Blocks the rowboat from Fossil Island to Lithkren.",
+        position = 251,
+        section = boatSection
+    )
+    default boolean boatFossilLithkren()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatFossilFossilIsland",
+        name = "Fossil rowboat - Fossil Island",
+        description = "Blocks the rowboat from Lithkren back to Fossil Island.",
+        position = 252,
+        section = boatSection
+    )
+    default boolean boatFossilFossilIsland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatBoatyMolchIsland",
+        name = "Boaty - Molch Island",
+        description = "Blocks Boaty's trip to Molch Island.",
+        position = 253,
+        section = boatSection
+    )
+    default boolean boatBoatyMolchIsland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatBoatyMolch",
+        name = "Boaty - Molch",
+        description = "Blocks Boaty's trip to Molch.",
+        position = 254,
+        section = boatSection
+    )
+    default boolean boatBoatyMolch()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatBoatyBattlefront",
+        name = "Boaty - Battlefront",
+        description = "Blocks Boaty's trip to the Battlefront.",
+        position = 255,
+        section = boatSection
+    )
+    default boolean boatBoatyBattlefront()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatBoatyShayzien",
+        name = "Boaty - Shayzien",
+        description = "Blocks Boaty's trip to Shayzien.",
+        position = 256,
+        section = boatSection
+    )
+    default boolean boatBoatyShayzien()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatLarryIceberg",
+        name = "Larry - Iceberg",
+        description = "Blocks the Iceberg option on Larry's boat.",
+        position = 257,
+        section = boatSection
+    )
+    default boolean boatLarryIceberg()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatLarryWeiss",
+        name = "Larry - Weiss",
+        description = "Blocks the Weiss option on Larry's boat.",
+        position = 258,
+        section = boatSection
+    )
+    default boolean boatLarryWeiss()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatLarryRellekka",
+        name = "Larry - Rellekka",
+        description = "Blocks the Travel option on Larry's boat at the Iceberg and at Weiss, which goes back to Rellekka.",
+        position = 259,
+        section = boatSection
+    )
+    default boolean boatLarryRellekka()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatMorytaniaBurghDeRott",
+        name = "Morytania rowboat - Burgh de Rott",
+        description = "Blocks the Morytania rowboat trip to Burgh de Rott.",
+        position = 260,
+        section = boatSection
+    )
+    default boolean boatMorytaniaBurghDeRott()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatMorytaniaMeiyerditch",
+        name = "Morytania rowboat - Meiyerditch",
+        description = "Blocks the Morytania rowboat trip to Meiyerditch.",
+        position = 261,
+        section = boatSection
+    )
+    default boolean boatMorytaniaMeiyerditch()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatMorytaniaIcyeneGraveyard",
+        name = "Morytania rowboat - Icyene Graveyard",
+        description = "Blocks the Morytania rowboat trip to the Icyene Graveyard.",
+        position = 262,
+        section = boatSection
+    )
+    default boolean boatMorytaniaIcyeneGraveyard()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatMorytaniaSlepe",
+        name = "Morytania rowboat - Slepe",
+        description = "Blocks the Morytania rowboat trip to Slepe.",
+        position = 263,
+        section = boatSection
+    )
+    default boolean boatMorytaniaSlepe()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatAchilkaTalTeklan",
+        name = "Achilka - Tal Teklan",
+        description = "Blocks Achilka's boat to Tal Teklan.",
+        position = 264,
+        section = boatSection
+    )
+    default boolean boatAchilkaTalTeklan()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatAchilkaGloomthornTrail",
+        name = "Achilka - Gloomthorn Trail",
+        description = "Blocks Achilka's boat to the Gloomthorn Trail.",
+        position = 265,
+        section = boatSection
+    )
+    default boolean boatAchilkaGloomthornTrail()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatAchilkaKastori",
+        name = "Achilka - Kastori",
+        description = "Blocks Achilka's boat to Kastori.",
+        position = 266,
+        section = boatSection
+    )
+    default boolean boatAchilkaKastori()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatConchSummerShore",
+        name = "Conch rowboat - Summer Shore",
+        description = "Blocks the Great Conch rowboat trip to The Summer Shore.",
+        position = 267,
+        section = boatSection
+    )
+    default boolean boatConchSummerShore()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatConchNorthCoast",
+        name = "Conch rowboat - North coast",
+        description = "Blocks the Great Conch rowboat trip to the north coast.",
+        position = 268,
+        section = boatSection
+    )
+    default boolean boatConchNorthCoast()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "boatConchEastCoast",
+        name = "Conch rowboat - East coast",
+        description = "Blocks the Great Conch rowboat trip to the east coast.",
+        position = 269,
+        section = boatSection
+    )
+    default boolean boatConchEastCoast()
+    {
+        return false;
+    }
+
 }

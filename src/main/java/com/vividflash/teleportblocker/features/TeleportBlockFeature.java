@@ -25,7 +25,9 @@
 package com.vividflash.teleportblocker.features;
 
 import com.vividflash.teleportblocker.AncientTeleportSpell;
+import com.vividflash.teleportblocker.Boat;
 import com.vividflash.teleportblocker.CanoeDestination;
+import com.vividflash.teleportblocker.CharterShip;
 import com.vividflash.teleportblocker.GnomeGlider;
 import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
@@ -33,6 +35,7 @@ import com.vividflash.teleportblocker.LovakengjMinecart;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.QuetzalTransport;
+import com.vividflash.teleportblocker.Ship;
 import com.vividflash.teleportblocker.SoulWarsPortal;
 import com.vividflash.teleportblocker.SpiritTree;
 import com.vividflash.teleportblocker.StripAndLowercase;
@@ -60,6 +63,8 @@ import net.runelite.api.NPCComposition;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.WidgetClosed;
+import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
@@ -80,11 +85,14 @@ import net.runelite.client.util.Text;
  * blocked glider map destinations and at the pilots' Glider option, at
  * blocked quetzal map landing sites and legs of the Varrock quetzal route,
  * at the quetzals' and whistles' Last-destination option and at a whistle's
- * Signal set to fly to a blocked Hunter Guild and at blocked lines of the
- * Lovakengj minecart station list, and consumes clicks and
+ * Signal set to fly to a blocked Hunter Guild, at blocked lines of the
+ * Lovakengj minecart station list, at blocked charter ports and the crews'
+ * Charter-to option, at the options of blocked ship legs and boat trips and
+ * at blocked lines of a boat picker, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
- * Wars portal dialogues, as well as shortcut key presses on blocked spirit
- * tree and minecart lines. The spell icons themselves are only touched
+ * Wars portal dialogues, of the charter confirm dialogue, of ship chats and
+ * of boat pickers, as well as shortcut key presses on blocked spirit tree,
+ * minecart, charter and boat picker lines. The spell icons themselves are only touched
  * through the minigame master toggle.
  */
 @Singleton
@@ -166,6 +174,17 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<QuetzalTransport.Route> blockedQuetzalRoutes = EnumSet.noneOf(QuetzalTransport.Route.class);
     private boolean blockQuetzalPrevious;
     private final Set<LovakengjMinecart.Station> blockedMinecartStations = EnumSet.noneOf(LovakengjMinecart.Station.class);
+    private final Set<CharterShip.Port> blockedCharterPorts = EnumSet.noneOf(CharterShip.Port.class);
+    private boolean blockCharterPrevious;
+    private final Set<Ship.Leg> blockedShipLegs = EnumSet.noneOf(Ship.Leg.class);
+    private final Set<Boat.Destination> blockedBoats = EnumSet.noneOf(Boat.Destination.class);
+
+    /** The legs of the ship NPC clicked last, whose chat lines are read until the next click outside a dialogue. */
+    private final Set<Ship.Leg> talkLegs = EnumSet.noneOf(Ship.Leg.class);
+    /** The boat whose picker or chat was opened last, or null. */
+    private Boat.Network pickerNetwork;
+    /** True once the remembered boat's picker has opened, so its closing forgets the boat. */
+    private boolean pickerOpened;
 
     public void startUp()
     {
@@ -195,6 +214,13 @@ public class TeleportBlockFeature implements KeyListener
         blockedQuetzalRoutes.clear();
         blockQuetzalPrevious = false;
         blockedMinecartStations.clear();
+        blockedCharterPorts.clear();
+        blockCharterPrevious = false;
+        blockedShipLegs.clear();
+        blockedBoats.clear();
+        talkLegs.clear();
+        pickerNetwork = null;
+        pickerOpened = false;
     }
 
     @Subscribe
@@ -213,7 +239,8 @@ public class TeleportBlockFeature implements KeyListener
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
             && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
             && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
-            && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty())
+            && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty()
+            && blockedCharterPorts.isEmpty() && !blockCharterPrevious && blockedShipLegs.isEmpty() && blockedBoats.isEmpty())
         {
             return;
         }
@@ -226,7 +253,9 @@ public class TeleportBlockFeature implements KeyListener
                 && !isBlockedLeverDestination(entry) && !isBlockedSpiritTree(entry)
                 && !isBlockedSpiritTreePrevious(entry) && !isBlockedGlider(entry) && !isBlockedGliderPrevious(entry)
                 && !isBlockedQuetzalMap(entry) && !isBlockedQuetzalRoute(entry) && !isBlockedQuetzalPrevious(entry)
-                && !isBlockedWhistleSignal(entry) && !isBlockedMinecart(entry))
+                && !isBlockedWhistleSignal(entry) && !isBlockedMinecart(entry) && !isBlockedCharter(entry)
+                && !isBlockedCharterPrevious(entry) && !isBlockedShip(entry) && !isBlockedBoat(entry)
+                && !isBlockedBoatList(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -314,10 +343,97 @@ public class TeleportBlockFeature implements KeyListener
         {
             event.consume();
         }
+        rememberTransport(event.getMenuEntry());
+    }
+
+    // The chat of a ship NPC and the picker of a boat do not say who opened
+    // them, so the NPC or boat clicked last is remembered until the next click
+    // outside a dialogue, and a boat also until its picker closes.
+    private void rememberTransport(MenuEntry entry)
+    {
+        if (isDialogueAction(entry))
+        {
+            return;
+        }
+
+        talkLegs.clear();
+        pickerNetwork = null;
+        pickerOpened = false;
+
+        MenuAction action = entry.getType();
+        if (NPC_OPTIONS.contains(action))
+        {
+            if (!blockedShipLegs.isEmpty())
+            {
+                for (Ship.Leg leg : Ship.Leg.values())
+                {
+                    if (npcMatches(entry, leg::isLegNpc))
+                    {
+                        talkLegs.add(leg);
+                    }
+                }
+            }
+            if (!blockedBoats.isEmpty())
+            {
+                for (Boat.Network network : Boat.Network.values())
+                {
+                    if (npcMatches(entry, network::isTalkNpc))
+                    {
+                        pickerNetwork = network;
+                    }
+                }
+            }
+        }
+        else if (OBJECT_OPTIONS.contains(action) && !blockedBoats.isEmpty())
+        {
+            int objectId = entry.getIdentifier();
+            int variantId = variantId(objectId);
+            String option = plainText(entry.getOption());
+            for (Boat.Network network : Boat.Network.values())
+            {
+                if (network.opensPicker(objectId, option) || network.opensPicker(variantId, option))
+                {
+                    pickerNetwork = network;
+                }
+            }
+        }
+    }
+
+    private static boolean isDialogueAction(MenuEntry entry)
+    {
+        return entry.getType() == MenuAction.WIDGET_CONTINUE
+            || entry.getParam1() == InterfaceID.Chatmenu.OPTIONS
+            || entry.getParam1() == InterfaceID.Menu.LJ_LAYER1;
+    }
+
+    // A click on the boat can close an older dialogue before the picker opens,
+    // so only a close that follows the picker's opening forgets the boat.
+    @Subscribe
+    public void onWidgetLoaded(WidgetLoaded event)
+    {
+        if (pickerNetwork != null && pickerNetwork.hasPicker() && isPickerGroup(event.getGroupId()))
+        {
+            pickerOpened = true;
+        }
+    }
+
+    @Subscribe
+    public void onWidgetClosed(WidgetClosed event)
+    {
+        if (pickerOpened && isPickerGroup(event.getGroupId()))
+        {
+            pickerNetwork = null;
+            pickerOpened = false;
+        }
+    }
+
+    private static boolean isPickerGroup(int groupId)
+    {
+        return groupId == InterfaceID.CHATMENU || groupId == InterfaceID.MENU;
     }
 
     // The number keys pick a dialogue line, and the number and letter keys a
-    // spirit tree or minecart line, without going through
+    // spirit tree, minecart, charter or boat picker line, without going through
     // MenuOptionClicked. The pressed key and the typed key arrive as separate
     // events, so consuming one does not suppress the other and both are taken.
     @Override
@@ -326,6 +442,8 @@ public class TeleportBlockFeature implements KeyListener
         consumeIfBlockedDialogueDigit(e);
         consumeIfBlockedSpiritTreeKey(e);
         consumeIfBlockedMinecartKey(e);
+        consumeIfBlockedCharterKey(e);
+        consumeIfBlockedBoatKey(e);
     }
 
     @Override
@@ -334,6 +452,8 @@ public class TeleportBlockFeature implements KeyListener
         consumeIfBlockedDialogueDigit(e);
         consumeIfBlockedSpiritTreeKey(e);
         consumeIfBlockedMinecartKey(e);
+        consumeIfBlockedCharterKey(e);
+        consumeIfBlockedBoatKey(e);
     }
 
     @Override
@@ -349,7 +469,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         int digit = digitOf(e);
-        if (digit > 0 && isBlockedDialogueDigit(digit))
+        if (digit > 0 && (isBlockedDialogueDigit(digit) || isBlockedTransportDigit(digit)))
         {
             e.consume();
         }
@@ -357,7 +477,8 @@ public class TeleportBlockFeature implements KeyListener
 
     private boolean isDialogueBlocking()
     {
-        return !blockedRatPits.isEmpty() || !blockedJewellery.isEmpty() || !blockedPortals.isEmpty();
+        return !blockedRatPits.isEmpty() || !blockedJewellery.isEmpty() || !blockedPortals.isEmpty()
+            || !blockedCharterPorts.isEmpty() || !blockedShipLegs.isEmpty() || !blockedBoats.isEmpty();
     }
 
     private static int digitOf(KeyEvent e)
@@ -763,7 +884,7 @@ public class TeleportBlockFeature implements KeyListener
     private static String listLabel(String line)
     {
         int colon = line.indexOf(": ");
-        return colon > 0 ? line.substring(0, colon) : null;
+        return colon > 0 ? line.substring(0, colon).trim() : null;
     }
 
     /** The text a list line prints after its shortcut. */
@@ -1197,7 +1318,300 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        return isBlockedDialogueLine(dialogueItem(lines), isPortalDialogue(lines), lines[index].getText());
+        return isBlockedDialogueLine(dialogueItem(lines), isPortalDialogue(lines), lines[index].getText())
+            || isBlockedTransportLine(lines, lines[index].getText());
+    }
+
+    // The chartering menu carries one pin per port on its map and one line
+    // per port in its list, each with one option named after the port, so the
+    // option text names the place. The pins are made by script when the menu
+    // opens, so an option is also read as the menu's while the menu is open.
+    private boolean isBlockedCharter(MenuEntry entry)
+    {
+        if (blockedCharterPorts.isEmpty())
+        {
+            return false;
+        }
+
+        MenuAction action = entry.getType();
+        if (action != MenuAction.CC_OP && action != MenuAction.CC_OP_LOW_PRIORITY)
+        {
+            return false;
+        }
+
+        if (WidgetUtil.componentToInterface(entry.getParam1()) != InterfaceID.CHARTERING_MENU_SIDE && !isCharterMenuOpen())
+        {
+            return false;
+        }
+        return isBlockedCharterPort(plainText(entry.getOption()));
+    }
+
+    private boolean isCharterMenuOpen()
+    {
+        Widget menu = client.getWidget(InterfaceID.CharteringMenuSide.UNIVERSE);
+        return menu != null && !menu.isHidden();
+    }
+
+    private boolean isBlockedCharterPort(String name)
+    {
+        for (CharterShip.Port port : blockedCharterPorts)
+        {
+            if (port.matchesName(name))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Charter-to sails straight to the last port chartered to and names that
+    // port after the option, so it is removed while that port is blocked, and
+    // whatever it names while the previous destination is blocked. The crews'
+    // ids are checked so the same option elsewhere is left alone.
+    private boolean isBlockedCharterPrevious(MenuEntry entry)
+    {
+        if ((blockedCharterPorts.isEmpty() && !blockCharterPrevious) || !NPC_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        String port = CharterShip.previousPort(plainText(entry.getOption()));
+        if (port == null || !npcMatches(entry, CharterShip::isCrew))
+        {
+            return false;
+        }
+        return blockCharterPrevious || isBlockedCharterPort(port);
+    }
+
+    // The chartering list prints each line's shortcut the way the spirit tree
+    // list does, with a space before the colon, so its keys are read the same
+    // way.
+    private void consumeIfBlockedCharterKey(KeyEvent e)
+    {
+        if (!blockedCharterPorts.isEmpty())
+        {
+            consumeIfBlockedListKey(e, this::charterLines, line -> isBlockedCharterPort(listText(line)));
+        }
+    }
+
+    /** The lines of the chartering list, or null when the chartering menu is not open. */
+    private Widget[] charterLines()
+    {
+        Widget list = client.getWidget(InterfaceID.CharteringMenuSide.LIST_CONTENT);
+        return list == null || list.isHidden() ? null : list.getDynamicChildren();
+    }
+
+    // A ship NPC sails a leg from a click option named after the destination
+    // or from Travel, so the option is removed from the NPCs at the leg's
+    // start. A ferryman whose chat reaches its one leg only through a line any
+    // dialogue could carry loses Talk-to there as well.
+    private boolean isBlockedShip(MenuEntry entry)
+    {
+        if (blockedShipLegs.isEmpty() || !NPC_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        String option = plainText(entry.getOption());
+        boolean talk = matchesLine(Ship.TALK_OPTION, option);
+        for (Ship.Leg leg : blockedShipLegs)
+        {
+            if ((leg.matchesOption(option) && npcMatches(entry, leg::isLegNpc))
+                || (talk && npcMatches(entry, leg::removesTalk)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Larry's boat, Achilka and the Lithkren rowboat offer each destination
+    // as a click option of its own, so the option is removed from the boats
+    // and NPCs that carry it.
+    private boolean isBlockedBoat(MenuEntry entry)
+    {
+        if (blockedBoats.isEmpty())
+        {
+            return false;
+        }
+
+        MenuAction action = entry.getType();
+        boolean onObject = OBJECT_OPTIONS.contains(action);
+        if (!onObject && !NPC_OPTIONS.contains(action))
+        {
+            return false;
+        }
+
+        String option = plainText(entry.getOption());
+        for (Boat.Destination destination : blockedBoats)
+        {
+            if (!destination.matchesOption(option))
+            {
+                continue;
+            }
+
+            if (onObject)
+            {
+                int objectId = entry.getIdentifier();
+                if (destination.isOptionObject(objectId) || destination.isOptionObject(variantId(objectId)))
+                {
+                    return true;
+                }
+            }
+            else if (npcMatches(entry, destination::isOptionNpc))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // A boat picker drawn on the shared list interface is read like the
+    // spirit tree list, but only while the picker of the boat just used may
+    // be open, since its title is not known.
+    private boolean isBlockedBoatList(MenuEntry entry)
+    {
+        if (pickerNetwork == null || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
+        {
+            return false;
+        }
+
+        String line = entryLine(entry, boatPickerLines());
+        return line != null && isBlockedBoatLine(listText(line));
+    }
+
+    private void consumeIfBlockedBoatKey(KeyEvent e)
+    {
+        if (pickerNetwork != null)
+        {
+            consumeIfBlockedListKey(e, this::boatPickerLines, line -> isBlockedBoatLine(listText(line)));
+        }
+    }
+
+    /** The lines of the shared list interface while the remembered boat's picker may be on it, or null. */
+    private Widget[] boatPickerLines()
+    {
+        Boat.Network network = pickerNetwork;
+        return network == null || !network.hasPicker() ? null : listLines(title -> true);
+    }
+
+    /**
+     * True when the given 1-based digit currently picks a blocked line of the
+     * charter confirm dialogue, of a ship NPC's chat or of a boat picker. The
+     * option lines are the children that carry a click option, which leaves
+     * the title out.
+     */
+    private boolean isBlockedTransportDigit(int digit)
+    {
+        Widget options = client.getWidget(InterfaceID.Chatmenu.OPTIONS);
+        if (options == null)
+        {
+            return false;
+        }
+
+        Widget[] lines = options.getDynamicChildren();
+        if (lines == null)
+        {
+            return false;
+        }
+
+        int count = 0;
+        for (Widget line : lines)
+        {
+            if (line != null && hasOption(line) && ++count == digit)
+            {
+                return isBlockedTransportLine(lines, line.getText());
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasOption(Widget widget)
+    {
+        String[] actions = widget.getActions();
+        if (actions == null)
+        {
+            return false;
+        }
+
+        for (String action : actions)
+        {
+            if (action != null && !action.isEmpty())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** True when the text is a blocked line of the charter confirm dialogue, of a ship NPC's chat or of a boat picker. */
+    private boolean isBlockedTransportLine(Widget[] lines, String text)
+    {
+        String line = plainText(text);
+        if (line.isEmpty())
+        {
+            return false;
+        }
+        return isBlockedCharterConfirm(lines, line) || isBlockedShipLine(line) || isBlockedBoatLine(line);
+    }
+
+    // The confirm dialogue names the port in its title, so Okay is blocked
+    // while that port is blocked. It catches a port the menu let through.
+    private boolean isBlockedCharterConfirm(Widget[] lines, String line)
+    {
+        if (blockedCharterPorts.isEmpty() || !matchesLine(CharterShip.CONFIRM_OPTION, line))
+        {
+            return false;
+        }
+
+        for (Widget title : lines)
+        {
+            String port = title == null ? null : CharterShip.confirmPort(plainText(title.getText()));
+            if (port != null)
+            {
+                return isBlockedCharterPort(port);
+            }
+        }
+        return false;
+    }
+
+    // A chat line that picks a leg is only read while the chat belongs to one
+    // of that leg's NPCs, so the same words from anyone else are left alone.
+    private boolean isBlockedShipLine(String line)
+    {
+        for (Ship.Leg leg : talkLegs)
+        {
+            if (blockedShipLegs.contains(leg) && leg.matchesLine(line))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // A picker line is read by the place words it contains, and a chat line
+    // of Larry's by its exact text, both only for the boat used last.
+    private boolean isBlockedBoatLine(String line)
+    {
+        Boat.Network network = pickerNetwork;
+        if (network == null)
+        {
+            return false;
+        }
+
+        Boat.Destination picked = Boat.Destination.forPickerLine(network, line);
+        if (picked != null)
+        {
+            return blockedBoats.contains(picked);
+        }
+        for (Boat.Destination destination : blockedBoats)
+        {
+            if (destination.getNetwork() == network && destination.matchesTalkLine(line))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void rebuildBlocked()
@@ -1347,6 +1761,34 @@ public class TeleportBlockFeature implements KeyListener
             if (station.isBlocked(config))
             {
                 blockedMinecartStations.add(station);
+            }
+        }
+
+        blockedCharterPorts.clear();
+        for (CharterShip.Port port : CharterShip.Port.values())
+        {
+            if (port.isBlocked(config))
+            {
+                blockedCharterPorts.add(port);
+            }
+        }
+        blockCharterPrevious = config.charterPrevious();
+
+        blockedShipLegs.clear();
+        for (Ship.Leg leg : Ship.Leg.values())
+        {
+            if (leg.isBlocked(config))
+            {
+                blockedShipLegs.add(leg);
+            }
+        }
+
+        blockedBoats.clear();
+        for (Boat.Destination destination : Boat.Destination.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedBoats.add(destination);
             }
         }
     }
