@@ -28,15 +28,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.NpcID;
 import net.runelite.api.gameval.ObjectID;
 
 /**
- * The boats: the Fossil Island rowboats, Boaty on Lake Molch, Larry's boat,
- * the Morytania rowboat, Achilka's boats and the Great Conch rowboats. Some
+ * The boats: Boaty on Lake Molch, Larry's boat, the Morytania rowboat,
+ * Achilka's boats and the Great Conch rowboats. Some
  * offer their destinations as click options, the others open a picker whose
  * lines are not known word for word, so a picker line is read by the place
  * names it contains, and only while the picker of the boat just used is open.
@@ -57,12 +56,6 @@ public final class Boat
         return Collections.unmodifiableList(Arrays.asList(texts));
     }
 
-    /** The words of a text, lowercased, between single spaces and with a space at both ends. */
-    private static String words(String text)
-    {
-        return " " + text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", " ").trim() + " ";
-    }
-
     /**
      * The boats, each paired with the objects whose option opens its picker and
      * the NPCs whose chat can pick one of its destinations. A boat with neither
@@ -70,7 +63,6 @@ public final class Boat
      */
     public enum Network
     {
-        FOSSIL_ROWBOAT(ids(ObjectID.FOSSIL_ROWBOAT_CAMP, ObjectID.FOSSIL_ROWBOAT_NORTH, ObjectID.FOSSIL_ROWBOAT_DIVING), "Travel", ids()),
         BOATY(ids(ObjectID.AERIAL_FISHING_BOAT), "Board", ids()),
         LARRY(ids(), null, ids(NpcID.PENG_LARRY_RELL)),
         MORYTANIA_ROWBOAT(ids(ObjectID.MYQ5_BOAT_VIS, ObjectID.MYQ5_SLEPE_BOAT), "Board", ids()),
@@ -112,21 +104,10 @@ public final class Boat
      * away with the objects or NPCs that carry it, and the toggle that blocks
      * it. On a boat with a picker the lines are the place words a picker line
      * naming it contains, and on a boat reached through chat they are the
-     * chat lines themselves. The Fossil Island Dive option is not a trip and
-     * is never touched.
+     * chat lines themselves.
      */
     public enum Destination
     {
-        FOSSIL_MUSEUM_CAMP(Network.FOSSIL_ROWBOAT, texts("camp"), TeleportBlockerConfig::boatFossilMuseumCamp),
-        FOSSIL_NORTH(Network.FOSSIL_ROWBOAT, texts("north"), TeleportBlockerConfig::boatFossilNorth),
-        FOSSIL_BANK_ISLAND(Network.FOSSIL_ROWBOAT, texts("sea", "bank"), TeleportBlockerConfig::boatFossilBankIsland),
-        FOSSIL_DIGSITE(Network.FOSSIL_ROWBOAT, texts("digsite", "dig site", "barge"), TeleportBlockerConfig::boatFossilDigsite),
-        FOSSIL_LITHKREN(Network.FOSSIL_ROWBOAT, texts("lithkren"), "Travel",
-            ids(ObjectID.FOSSIL_ROWBOAT_LITHKREN, ObjectID.FOSSIL_ROWBOAT_LITHKREN_BUILT), ids(),
-            TeleportBlockerConfig::boatFossilLithkren),
-        FOSSIL_FOSSIL_ISLAND(Network.FOSSIL_ROWBOAT, texts(), "Travel",
-            ids(ObjectID.LITHKREN_ROWBOAT), ids(),
-            TeleportBlockerConfig::boatFossilFossilIsland),
         BOATY_MOLCH_ISLAND(Network.BOATY, texts("molch island"), TeleportBlockerConfig::boatBoatyMolchIsland),
         BOATY_MOLCH(Network.BOATY, texts("molch"), TeleportBlockerConfig::boatBoatyMolch),
         BOATY_BATTLEFRONT(Network.BOATY, texts("battlefront"), TeleportBlockerConfig::boatBoatyBattlefront),
@@ -237,7 +218,7 @@ public final class Boat
                 return null;
             }
 
-            String line = words(text);
+            String line = StripAndLowercase.words(text);
             Destination best = null;
             int longest = 0;
             for (Destination destination : values())
@@ -248,7 +229,7 @@ public final class Boat
                 }
                 for (String word : destination.lines)
                 {
-                    if (word.length() > longest && line.contains(words(word)))
+                    if (word.length() > longest && line.contains(StripAndLowercase.words(word)))
                     {
                         best = destination;
                         longest = word.length();

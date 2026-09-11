@@ -41,8 +41,8 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 @PluginDescriptor(
     name = "Teleport Blocker",
-    description = "Teleport Option Removal: Minigames, Spells, Jewellery",
-    tags = {"teleport", "block", "spellbook", "chunk", "locked", "restriction", "minigame"}
+    description = "Teleport Removal Options for most things",
+    tags = {"teleport", "block", "chunk", "locked", "transport", "ship", "spell", "boat", "misclick"}
 )
 public class TeleportBlockerPlugin extends Plugin
 {
@@ -52,9 +52,9 @@ public class TeleportBlockerPlugin extends Plugin
     private static final String LAST_SEEN_VERSION_KEY = "lastSeenVersion";
 
     /** The release the notice below belongs to, not the packaged version. */
-    private static final String VERSION = "1.3";
+    private static final String VERSION = "1.4";
     private static final String UPDATE_MESSAGE =
-        "Teleport Blocker v1.3: Added both ways for the Soul Wars portal.";
+        "Teleport Blocker v1.4: Added most transport systems.";
 
     /** Dark red, for legibility against the opaque chatbox background. */
     private static final Color NOTICE_COLOR = new Color(0x480000);

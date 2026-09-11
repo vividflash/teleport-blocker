@@ -35,17 +35,17 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "blockAllTeleports",
         name = "Block all standard tp",
-        description = "Blocks every teleport in the section below, whatever its own toggle says.",
+        description = "",
         position = 0
     )
     default boolean blockAllTeleports()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Teleports",
-        description = "One toggle per standard spellbook teleport.",
+        description = "",
         position = 1,
         closedByDefault = true
     )
@@ -54,7 +54,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "homeTeleport",
         name = "Home Teleport",
-        description = "Removes the click options from Home Teleport.",
+        description = "",
         position = 2,
         section = teleportsSection
     )
@@ -66,7 +66,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "varrockTeleport",
         name = "Varrock Teleport",
-        description = "Removes the click options from Varrock Teleport, including the Configure option for the Grand Exchange destination.",
+        description = "",
         position = 3,
         section = teleportsSection
     )
@@ -78,7 +78,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lumbridgeTeleport",
         name = "Lumbridge Teleport",
-        description = "Removes the click options from Lumbridge Teleport.",
+        description = "",
         position = 4,
         section = teleportsSection
     )
@@ -90,7 +90,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "faladorTeleport",
         name = "Falador Teleport",
-        description = "Removes the click options from Falador Teleport.",
+        description = "",
         position = 5,
         section = teleportsSection
     )
@@ -102,7 +102,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "houseTeleport",
         name = "Teleport to House",
-        description = "Removes the click options from Teleport to House, including Outside, Inside and the Group entries.",
+        description = "",
         position = 6,
         section = teleportsSection
     )
@@ -114,7 +114,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "camelotTeleport",
         name = "Camelot Teleport",
-        description = "Removes the click options from Camelot Teleport, including the Toggle-location option for the Seers' Village destination.",
+        description = "",
         position = 7,
         section = teleportsSection
     )
@@ -126,7 +126,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "kourendTeleport",
         name = "Kourend Castle Teleport",
-        description = "Removes the click options from Kourend Castle Teleport.",
+        description = "",
         position = 8,
         section = teleportsSection
     )
@@ -138,7 +138,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ardougneTeleport",
         name = "Ardougne Teleport",
-        description = "Removes the click options from Ardougne Teleport.",
+        description = "",
         position = 9,
         section = teleportsSection
     )
@@ -150,7 +150,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "fortisTeleport",
         name = "Civitas illa Fortis Teleport",
-        description = "Removes the click options from Civitas illa Fortis Teleport.",
+        description = "",
         position = 10,
         section = teleportsSection
     )
@@ -162,7 +162,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "watchtowerTeleport",
         name = "Watchtower Teleport",
-        description = "Removes the click options from Watchtower Teleport, including the toggle for the Yanille destination.",
+        description = "",
         position = 11,
         section = teleportsSection
     )
@@ -174,7 +174,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "trollheimTeleport",
         name = "Trollheim Teleport",
-        description = "Removes the click options from Trollheim Teleport.",
+        description = "",
         position = 12,
         section = teleportsSection
     )
@@ -186,7 +186,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "apeAtollTeleport",
         name = "Ape Atoll Teleport",
-        description = "Removes the click options from Ape Atoll Teleport.",
+        description = "",
         position = 13,
         section = teleportsSection
     )
@@ -198,17 +198,17 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "blockAllMinigames",
         name = "Block all minigames",
-        description = "Removes the click options from Minigame Teleport, so the Minigames window never opens. Untick to keep the spell and pick destinations below.",
+        description = "Removes the Minigame Teleport spell.",
         position = 14
     )
     default boolean blockAllMinigames()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Minigames",
-        description = "One toggle per row of the Minigames window, used when the spell itself is not blocked.",
+        description = "",
         position = 15,
         closedByDefault = true
     )
@@ -217,7 +217,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "barbarianAssault",
         name = "Barbarian Assault",
-        description = "Removes the Select option from Barbarian Assault.",
+        description = "",
         position = 16,
         section = minigamesSection
     )
@@ -229,7 +229,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "blastFurnace",
         name = "Blast Furnace",
-        description = "Removes the Select option from Blast Furnace.",
+        description = "",
         position = 17,
         section = minigamesSection
     )
@@ -241,7 +241,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "bountyHunter",
         name = "Bounty Hunter",
-        description = "Removes the Select option from Bounty Hunter.",
+        description = "",
         position = 18,
         section = minigamesSection
     )
@@ -253,7 +253,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "burthorpeGamesRoom",
         name = "Burthorpe Games Room",
-        description = "Removes the Select option from Burthorpe Games Room.",
+        description = "",
         position = 19,
         section = minigamesSection
     )
@@ -265,7 +265,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "castleWars",
         name = "Castle Wars",
-        description = "Removes the Select option from Castle Wars.",
+        description = "",
         position = 20,
         section = minigamesSection
     )
@@ -277,7 +277,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "clanWars",
         name = "Clan Wars",
-        description = "Removes the Select option from Clan Wars.",
+        description = "",
         position = 21,
         section = minigamesSection
     )
@@ -289,7 +289,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "fishingTrawler",
         name = "Fishing Trawler",
-        description = "Removes the Select option from Fishing Trawler.",
+        description = "",
         position = 22,
         section = minigamesSection
     )
@@ -301,7 +301,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "giantsFoundry",
         name = "Giants' Foundry",
-        description = "Removes the Select option from Giants' Foundry.",
+        description = "",
         position = 23,
         section = minigamesSection
     )
@@ -313,7 +313,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "guardiansOfTheRift",
         name = "Guardians of the Rift",
-        description = "Removes the Select option from Guardians of the Rift.",
+        description = "",
         position = 24,
         section = minigamesSection
     )
@@ -325,7 +325,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lastManStanding",
         name = "Last Man Standing",
-        description = "Removes the Select option from Last Man Standing.",
+        description = "",
         position = 25,
         section = minigamesSection
     )
@@ -337,7 +337,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "mageTrainingArena",
         name = "Mage Training Arena",
-        description = "Removes the Select option from Mage Training Arena.",
+        description = "",
         position = 26,
         section = minigamesSection
     )
@@ -349,7 +349,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "masteringMixology",
         name = "Mastering Mixology",
-        description = "Removes the Select option from Mastering Mixology.",
+        description = "",
         position = 27,
         section = minigamesSection
     )
@@ -361,7 +361,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "nightmareZone",
         name = "Nightmare Zone",
-        description = "Removes the Select option from Nightmare Zone.",
+        description = "",
         position = 28,
         section = minigamesSection
     )
@@ -373,7 +373,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "pestControl",
         name = "Pest Control",
-        description = "Removes the Select option from Pest Control.",
+        description = "",
         position = 29,
         section = minigamesSection
     )
@@ -385,7 +385,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ratPits",
         name = "Rat Pits",
-        description = "Removes the Select option from Rat Pits, so the destination dialogue never opens.",
+        description = "",
         position = 30,
         section = minigamesSection
     )
@@ -397,7 +397,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ratPitsArdougne",
         name = "Rat Pits: Ardougne (kittens)",
-        description = "Blocks the Ardougne option in the rat pit dialogue.",
+        description = "",
         position = 31,
         section = minigamesSection
     )
@@ -409,7 +409,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ratPitsVarrock",
         name = "Rat Pits: Varrock (grown cats)",
-        description = "Blocks the Varrock option in the rat pit dialogue.",
+        description = "",
         position = 32,
         section = minigamesSection
     )
@@ -421,7 +421,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ratPitsKeldagrim",
         name = "Rat Pits: Keldagrim (overgrown cats)",
-        description = "Blocks the Keldagrim option in the rat pit dialogue.",
+        description = "",
         position = 33,
         section = minigamesSection
     )
@@ -433,7 +433,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ratPitsPortSarim",
         name = "Rat Pits: Port Sarim (wily cats)",
-        description = "Blocks the Port Sarim option in the rat pit dialogue.",
+        description = "",
         position = 34,
         section = minigamesSection
     )
@@ -445,7 +445,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shadesOfMortton",
         name = "Shades of Mort'ton",
-        description = "Removes the Select option from Shades of Mort'ton.",
+        description = "",
         position = 35,
         section = minigamesSection
     )
@@ -457,7 +457,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "sorceressGarden",
         name = "Sorceress's Garden",
-        description = "Removes the Select option from Sorceress's Garden.",
+        description = "",
         position = 36,
         section = minigamesSection
     )
@@ -469,7 +469,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "soulWars",
         name = "Soul Wars",
-        description = "Removes the Select option from Soul Wars.",
+        description = "",
         position = 37,
         section = minigamesSection
     )
@@ -481,7 +481,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "titheFarm",
         name = "Tithe Farm",
-        description = "Removes the Select option from Tithe Farm.",
+        description = "",
         position = 38,
         section = minigamesSection
     )
@@ -493,7 +493,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "troubleBrewing",
         name = "Trouble Brewing",
-        description = "Removes the Select option from Trouble Brewing.",
+        description = "",
         position = 39,
         section = minigamesSection
     )
@@ -505,7 +505,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "tzhaarFightPit",
         name = "TzHaar Fight Pit",
-        description = "Removes the Select option from TzHaar Fight Pit.",
+        description = "",
         position = 40,
         section = minigamesSection
     )
@@ -516,7 +516,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Ancient spellbook",
-        description = "One toggle per ancient spellbook teleport. Every one starts unblocked.",
+        description = "",
         position = 41,
         closedByDefault = true
     )
@@ -525,7 +525,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientHomeTeleport",
         name = "Home Teleport",
-        description = "Removes the click options from the ancient Home Teleport.",
+        description = "",
         position = 42,
         section = ancientSection
     )
@@ -538,7 +538,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientPaddewwa",
         name = "Paddewwa Teleport",
-        description = "Removes the click options from Paddewwa Teleport.",
+        description = "",
         position = 44,
         section = ancientSection
     )
@@ -550,7 +550,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientSenntisten",
         name = "Senntisten Teleport",
-        description = "Removes the click options from Senntisten Teleport.",
+        description = "",
         position = 45,
         section = ancientSection
     )
@@ -562,7 +562,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientKharyrll",
         name = "Kharyrll Teleport",
-        description = "Removes the click options from Kharyrll Teleport.",
+        description = "",
         position = 46,
         section = ancientSection
     )
@@ -574,7 +574,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientLassar",
         name = "Lassar Teleport",
-        description = "Removes the click options from Lassar Teleport.",
+        description = "",
         position = 47,
         section = ancientSection
     )
@@ -586,7 +586,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientDareeyak",
         name = "Dareeyak Teleport",
-        description = "Removes the click options from Dareeyak Teleport.",
+        description = "",
         position = 48,
         section = ancientSection
     )
@@ -598,7 +598,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientCarrallanger",
         name = "Carrallanger Teleport",
-        description = "Removes the click options from Carrallanger Teleport.",
+        description = "",
         position = 49,
         section = ancientSection
     )
@@ -610,7 +610,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientAnnakarl",
         name = "Annakarl Teleport",
-        description = "Removes the click options from Annakarl Teleport.",
+        description = "",
         position = 50,
         section = ancientSection
     )
@@ -622,7 +622,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ancientGhorrock",
         name = "Ghorrock Teleport",
-        description = "Removes the click options from Ghorrock Teleport.",
+        description = "",
         position = 51,
         section = ancientSection
     )
@@ -633,7 +633,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Lunar spellbook",
-        description = "One toggle per lunar spellbook teleport, Tele Group aside. Every one starts unblocked.",
+        description = "",
         position = 52,
         closedByDefault = true
     )
@@ -642,7 +642,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarHomeTeleport",
         name = "Home Teleport",
-        description = "Removes the click options from the lunar Home Teleport.",
+        description = "",
         position = 53,
         section = lunarSection
     )
@@ -655,7 +655,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarMoonclan",
         name = "Moonclan Teleport",
-        description = "Removes the click options from Moonclan Teleport.",
+        description = "",
         position = 55,
         section = lunarSection
     )
@@ -667,7 +667,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarOurania",
         name = "Ourania Teleport",
-        description = "Removes the click options from Ourania Teleport.",
+        description = "",
         position = 56,
         section = lunarSection
     )
@@ -679,7 +679,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarWaterbirth",
         name = "Waterbirth Teleport",
-        description = "Removes the click options from Waterbirth Teleport.",
+        description = "",
         position = 57,
         section = lunarSection
     )
@@ -691,7 +691,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarBarbarian",
         name = "Barbarian Teleport",
-        description = "Removes the click options from Barbarian Teleport.",
+        description = "",
         position = 58,
         section = lunarSection
     )
@@ -703,7 +703,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarKhazard",
         name = "Khazard Teleport",
-        description = "Removes the click options from Khazard Teleport.",
+        description = "",
         position = 59,
         section = lunarSection
     )
@@ -715,7 +715,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarFishingGuild",
         name = "Fishing Guild Teleport",
-        description = "Removes the click options from Fishing Guild Teleport.",
+        description = "",
         position = 60,
         section = lunarSection
     )
@@ -727,7 +727,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarCatherby",
         name = "Catherby Teleport",
-        description = "Removes the click options from Catherby Teleport.",
+        description = "",
         position = 61,
         section = lunarSection
     )
@@ -739,7 +739,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "lunarIcePlateau",
         name = "Ice Plateau Teleport",
-        description = "Removes the click options from Ice Plateau Teleport.",
+        description = "",
         position = 62,
         section = lunarSection
     )
@@ -750,7 +750,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Canoes",
-        description = "One toggle per canoe destination, River Lum first. Every one starts unblocked.",
+        description = "",
         position = 63,
         closedByDefault = true
     )
@@ -759,7 +759,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeLumbridge",
         name = "Lumbridge",
-        description = "Blocks the Lumbridge destination on the canoe map.",
+        description = "",
         position = 64,
         section = canoeSection
     )
@@ -771,7 +771,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeChampionsGuild",
         name = "Champions' Guild",
-        description = "Blocks the Champions' Guild destination on the canoe map.",
+        description = "",
         position = 65,
         section = canoeSection
     )
@@ -783,7 +783,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeBarbarianVillage",
         name = "Barbarian Village",
-        description = "Blocks the Barbarian Village destination on the canoe map.",
+        description = "",
         position = 66,
         section = canoeSection
     )
@@ -795,7 +795,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeEdgeville",
         name = "Edgeville",
-        description = "Blocks the Edgeville destination on the canoe map.",
+        description = "",
         position = 67,
         section = canoeSection
     )
@@ -807,7 +807,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeFeroxEnclave",
         name = "Ferox Enclave",
-        description = "Blocks the Ferox Enclave destination on the canoe map.",
+        description = "",
         position = 68,
         section = canoeSection
     )
@@ -819,7 +819,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeWildernessPond",
         name = "Wilderness Pond",
-        description = "Blocks the Wilderness Pond destination on the canoe map.",
+        description = "",
         position = 69,
         section = canoeSection
     )
@@ -831,7 +831,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeCastleWars",
         name = "Castle Wars",
-        description = "Blocks the Castle Wars destination on the canoe map.",
+        description = "",
         position = 70,
         section = canoeSection
     )
@@ -843,7 +843,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeTreeGnomeVillage",
         name = "Tree Gnome Village",
-        description = "Blocks the Tree Gnome Village destination on the canoe map.",
+        description = "",
         position = 71,
         section = canoeSection
     )
@@ -855,7 +855,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeClocktower",
         name = "Clocktower",
-        description = "Blocks the Clocktower destination on the canoe map.",
+        description = "",
         position = 72,
         section = canoeSection
     )
@@ -867,7 +867,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeChaosDruidTower",
         name = "Chaos Druid Tower",
-        description = "Blocks the Chaos Druid Tower destination on the canoe map.",
+        description = "",
         position = 73,
         section = canoeSection
     )
@@ -879,7 +879,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "canoeTreeGnomeStronghold",
         name = "Tree Gnome Stronghold",
-        description = "Blocks the Tree Gnome Stronghold destination on the canoe map.",
+        description = "",
         position = 74,
         section = canoeSection
     )
@@ -890,7 +890,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Ring of dueling",
-        description = "One toggle per Ring of dueling destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 75,
         closedByDefault = true
     )
@@ -899,54 +899,54 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "duelingEmirsArena",
         name = "Emir's Arena",
-        description = "Blocks the Emir's Arena option on the Ring of dueling.",
+        description = "",
         position = 76,
         section = duelingSection
     )
     default boolean duelingEmirsArena()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "duelingCastleWars",
         name = "Castle Wars",
-        description = "Blocks the Castle Wars option on the Ring of dueling.",
+        description = "",
         position = 77,
         section = duelingSection
     )
     default boolean duelingCastleWars()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "duelingFeroxEnclave",
         name = "Ferox Enclave",
-        description = "Blocks the Ferox Enclave option on the Ring of dueling.",
+        description = "",
         position = 78,
         section = duelingSection
     )
     default boolean duelingFeroxEnclave()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "duelingFortisColosseum",
         name = "Fortis Colosseum",
-        description = "Blocks the Fortis Colosseum option on the Ring of dueling.",
+        description = "",
         position = 79,
         section = duelingSection
     )
     default boolean duelingFortisColosseum()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Games necklace",
-        description = "One toggle per Games necklace destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 80,
         closedByDefault = true
     )
@@ -955,66 +955,66 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gamesBurthorpe",
         name = "Burthorpe",
-        description = "Blocks the Burthorpe option on the Games necklace.",
+        description = "",
         position = 81,
         section = gamesNecklaceSection
     )
     default boolean gamesBurthorpe()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gamesBarbarianOutpost",
         name = "Barbarian Outpost",
-        description = "Blocks the Barbarian Outpost option on the Games necklace.",
+        description = "",
         position = 82,
         section = gamesNecklaceSection
     )
     default boolean gamesBarbarianOutpost()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gamesCorporealBeast",
         name = "Corporeal Beast",
-        description = "Blocks the Corporeal Beast option on the Games necklace.",
+        description = "",
         position = 83,
         section = gamesNecklaceSection
     )
     default boolean gamesCorporealBeast()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gamesTearsOfGuthix",
         name = "Tears of Guthix",
-        description = "Blocks the Tears of Guthix option on the Games necklace.",
+        description = "",
         position = 84,
         section = gamesNecklaceSection
     )
     default boolean gamesTearsOfGuthix()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gamesWintertodtCamp",
         name = "Wintertodt Camp",
-        description = "Blocks the Wintertodt Camp option on the Games necklace.",
+        description = "",
         position = 85,
         section = gamesNecklaceSection
     )
     default boolean gamesWintertodtCamp()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Amulet of glory",
-        description = "One toggle per Amulet of glory destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 86,
         closedByDefault = true
     )
@@ -1023,54 +1023,54 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gloryEdgeville",
         name = "Edgeville",
-        description = "Blocks the Edgeville option on the Amulet of glory.",
+        description = "",
         position = 87,
         section = glorySection
     )
     default boolean gloryEdgeville()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gloryKaramja",
         name = "Karamja",
-        description = "Blocks the Karamja option on the Amulet of glory.",
+        description = "",
         position = 88,
         section = glorySection
     )
     default boolean gloryKaramja()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gloryDraynorVillage",
         name = "Draynor Village",
-        description = "Blocks the Draynor Village option on the Amulet of glory.",
+        description = "",
         position = 89,
         section = glorySection
     )
     default boolean gloryDraynorVillage()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "gloryAlKharid",
         name = "Al Kharid",
-        description = "Blocks the Al Kharid option on the Amulet of glory.",
+        description = "",
         position = 90,
         section = glorySection
     )
     default boolean gloryAlKharid()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Ring of wealth",
-        description = "One toggle per Ring of wealth destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 91,
         closedByDefault = true
     )
@@ -1079,54 +1079,54 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "wealthMiscellania",
         name = "Miscellania",
-        description = "Blocks the Miscellania option on the Ring of wealth.",
+        description = "",
         position = 92,
         section = wealthSection
     )
     default boolean wealthMiscellania()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "wealthGrandExchange",
         name = "Grand Exchange",
-        description = "Blocks the Grand Exchange option on the Ring of wealth.",
+        description = "",
         position = 93,
         section = wealthSection
     )
     default boolean wealthGrandExchange()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "wealthFaladorPark",
         name = "Falador Park",
-        description = "Blocks the Falador Park option on the Ring of wealth.",
+        description = "",
         position = 94,
         section = wealthSection
     )
     default boolean wealthFaladorPark()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "wealthDondakan",
         name = "Dondakan",
-        description = "Blocks the Dondakan option on the Ring of wealth.",
+        description = "",
         position = 95,
         section = wealthSection
     )
     default boolean wealthDondakan()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Necklace of passage",
-        description = "One toggle per Necklace of passage destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 96,
         closedByDefault = true
     )
@@ -1135,54 +1135,54 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "passageWizardsTower",
         name = "Wizards' Tower",
-        description = "Blocks the Wizards' Tower option on the Necklace of passage.",
+        description = "",
         position = 97,
         section = passageSection
     )
     default boolean passageWizardsTower()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "passageTheOutpost",
         name = "The Outpost",
-        description = "Blocks the The Outpost option on the Necklace of passage.",
+        description = "",
         position = 98,
         section = passageSection
     )
     default boolean passageTheOutpost()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "passageEaglesEyrie",
         name = "Eagles' Eyrie",
-        description = "Blocks the Eagles' Eyrie option on the Necklace of passage.",
+        description = "",
         position = 99,
         section = passageSection
     )
     default boolean passageEaglesEyrie()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "passageWyrmscraig",
         name = "Wyrmscraig",
-        description = "Blocks the Wyrmscraig option on the Necklace of passage.",
+        description = "",
         position = 100,
         section = passageSection
     )
     default boolean passageWyrmscraig()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Combat bracelet",
-        description = "One toggle per Combat bracelet destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 101,
         closedByDefault = true
     )
@@ -1191,54 +1191,54 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "combatWarriorsGuild",
         name = "Warriors' Guild",
-        description = "Blocks the Warriors' Guild option on the Combat bracelet.",
+        description = "",
         position = 102,
         section = combatBraceletSection
     )
     default boolean combatWarriorsGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "combatChampionsGuild",
         name = "Champions' Guild",
-        description = "Blocks the Champions' Guild option on the Combat bracelet.",
+        description = "",
         position = 103,
         section = combatBraceletSection
     )
     default boolean combatChampionsGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "combatMonastery",
         name = "Monastery",
-        description = "Blocks the Monastery option on the Combat bracelet.",
+        description = "",
         position = 104,
         section = combatBraceletSection
     )
     default boolean combatMonastery()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "combatRangingGuild",
         name = "Ranging Guild",
-        description = "Blocks the Ranging Guild option on the Combat bracelet.",
+        description = "",
         position = 105,
         section = combatBraceletSection
     )
     default boolean combatRangingGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Skills necklace",
-        description = "One toggle per Skills necklace destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 106,
         closedByDefault = true
     )
@@ -1247,78 +1247,78 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "skillsFishingGuild",
         name = "Fishing Guild",
-        description = "Blocks the Fishing Guild option on the Skills necklace.",
+        description = "",
         position = 107,
         section = skillsNecklaceSection
     )
     default boolean skillsFishingGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "skillsMiningGuild",
         name = "Mining Guild",
-        description = "Blocks the Mining Guild option on the Skills necklace.",
+        description = "",
         position = 108,
         section = skillsNecklaceSection
     )
     default boolean skillsMiningGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "skillsCraftingGuild",
         name = "Crafting Guild",
-        description = "Blocks the Crafting Guild option on the Skills necklace.",
+        description = "",
         position = 109,
         section = skillsNecklaceSection
     )
     default boolean skillsCraftingGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "skillsCookingGuild",
         name = "Cooking Guild",
-        description = "Blocks the Cooking Guild option on the Skills necklace.",
+        description = "",
         position = 110,
         section = skillsNecklaceSection
     )
     default boolean skillsCookingGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "skillsWoodcuttingGuild",
         name = "Woodcutting Guild",
-        description = "Blocks the Woodcutting Guild option on the Skills necklace.",
+        description = "",
         position = 111,
         section = skillsNecklaceSection
     )
     default boolean skillsWoodcuttingGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "skillsFarmingGuild",
         name = "Farming Guild",
-        description = "Blocks the Farming Guild option on the Skills necklace.",
+        description = "",
         position = 112,
         section = skillsNecklaceSection
     )
     default boolean skillsFarmingGuild()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Slayer ring",
-        description = "One toggle per Slayer ring destination, listed in the teleport dialogue the ring opens.",
+        description = "",
         position = 113,
         closedByDefault = true
     )
@@ -1327,78 +1327,78 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "slayerStrongholdSlayerCave",
         name = "Stronghold Slayer Cave",
-        description = "Blocks the Gnome Stronghold Caves option on the Slayer ring.",
+        description = "Listed as Gnome Stronghold Caves.",
         position = 114,
         section = slayerRingSection
     )
     default boolean slayerStrongholdSlayerCave()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "slayerSlayerTower",
         name = "Slayer Tower",
-        description = "Blocks the Slayer Tower option on the Slayer ring.",
+        description = "",
         position = 115,
         section = slayerRingSection
     )
     default boolean slayerSlayerTower()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "slayerFremennikSlayerDungeon",
         name = "Fremennik Slayer Dungeon",
-        description = "Blocks the Rellekka Caves option on the Slayer ring.",
+        description = "Listed as Rellekka Caves.",
         position = 116,
         section = slayerRingSection
     )
     default boolean slayerFremennikSlayerDungeon()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "slayerTarnsLair",
         name = "Tarn's Lair",
-        description = "Blocks the Haunted Mine option on the Slayer ring.",
+        description = "Listed as Haunted Mine.",
         position = 117,
         section = slayerRingSection
     )
     default boolean slayerTarnsLair()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "slayerDarkBeasts",
         name = "Dark Beasts",
-        description = "Blocks the ME2 Caves option on the Slayer ring.",
+        description = "Listed as ME2 Caves.",
         position = 118,
         section = slayerRingSection
     )
     default boolean slayerDarkBeasts()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "slayerWyrmscraigCavern",
         name = "Wyrmscraig Cavern",
-        description = "Blocks the Wyrmscraig Cavern option on the Slayer ring.",
+        description = "",
         position = 119,
         section = slayerRingSection
     )
     default boolean slayerWyrmscraigCavern()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Digsite pendant",
-        description = "One toggle per Digsite pendant destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 120,
         closedByDefault = true
     )
@@ -1407,42 +1407,42 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "digsiteDigsite",
         name = "Digsite",
-        description = "Blocks the Digsite option on the Digsite pendant.",
+        description = "",
         position = 121,
         section = digsitePendantSection
     )
     default boolean digsiteDigsite()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "digsiteFossilIsland",
         name = "Fossil Island",
-        description = "Blocks the Fossil Island option on the Digsite pendant.",
+        description = "",
         position = 122,
         section = digsitePendantSection
     )
     default boolean digsiteFossilIsland()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "digsiteLithkren",
         name = "Lithkren Dungeon",
-        description = "Blocks the Lithkren Dungeon option on the Digsite pendant.",
+        description = "",
         position = 123,
         section = digsitePendantSection
     )
     default boolean digsiteLithkren()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Burning amulet",
-        description = "One toggle per Burning amulet destination, on the worn menu and in the rub dialogue.",
+        description = "",
         position = 124,
         closedByDefault = true
     )
@@ -1451,42 +1451,42 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "burningChaosTemple",
         name = "Chaos Temple",
-        description = "Blocks the Chaos Temple option on the Burning amulet.",
+        description = "",
         position = 125,
         section = burningAmuletSection
     )
     default boolean burningChaosTemple()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "burningBanditCamp",
         name = "Bandit Camp",
-        description = "Blocks the Bandit Camp option on the Burning amulet.",
+        description = "",
         position = 126,
         section = burningAmuletSection
     )
     default boolean burningBanditCamp()
     {
-        return true;
+        return false;
     }
 
     @ConfigItem(
         keyName = "burningLavaMaze",
         name = "Lava Maze",
-        description = "Blocks the Lava Maze option on the Burning amulet.",
+        description = "",
         position = 127,
         section = burningAmuletSection
     )
     default boolean burningLavaMaze()
     {
-        return true;
+        return false;
     }
 
     @ConfigSection(
         name = "Soul Wars portal and Edgeville lever",
-        description = "One toggle per Soul Wars portal route, into Soul Wars and out of it, plus the Wilderness lever routes at Edgeville, Ardougne and the Deserted Keep. Every one starts unblocked.",
+        description = "",
         position = 128,
         closedByDefault = true
     )
@@ -1495,7 +1495,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "soulWarsPortalEdgeville",
         name = "Soul Wars to Edgeville",
-        description = "Blocks the Edgeville option in the Soul Wars portal dialogue.",
+        description = "",
         position = 129,
         section = soulWarsPortalSection
     )
@@ -1507,7 +1507,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "soulWarsPortalFeroxEnclave",
         name = "Soul Wars to Ferox Enclave",
-        description = "Blocks the Ferox Enclave option in the Soul Wars portal dialogue.",
+        description = "",
         position = 130,
         section = soulWarsPortalSection
     )
@@ -1519,7 +1519,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "soulWarsEntryEdgeville",
         name = "Edgeville to Soul Wars",
-        description = "Removes the Enter option from the Soul Wars portal in Edgeville.",
+        description = "",
         position = 131,
         section = soulWarsPortalSection
     )
@@ -1531,7 +1531,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "soulWarsEntryFeroxEnclave",
         name = "Ferox Enclave to Soul Wars",
-        description = "Removes the Enter option from the Soul Wars portal in the Ferox Enclave dungeon.",
+        description = "",
         position = 132,
         section = soulWarsPortalSection
     )
@@ -1543,7 +1543,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "edgevilleLeverToWilderness",
         name = "Edgeville lever to Wilderness",
-        description = "Removes the Pull option from the lever in Edgeville.",
+        description = "",
         position = 133,
         section = soulWarsPortalSection
     )
@@ -1555,7 +1555,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "ardougneLeverToWilderness",
         name = "Ardougne lever to Wilderness",
-        description = "Removes the Pull option from the lever in Ardougne.",
+        description = "",
         position = 134,
         section = soulWarsPortalSection
     )
@@ -1567,7 +1567,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "wildernessLeverToEdgeville",
         name = "Wilderness lever to Edgeville",
-        description = "Blocks the Edgeville option on the Deserted Keep lever.",
+        description = "",
         position = 135,
         section = soulWarsPortalSection
     )
@@ -1579,7 +1579,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "wildernessLeverToArdougne",
         name = "Wilderness lever to Ardougne",
-        description = "Blocks the Ardougne option on the Deserted Keep lever, or its Pull option before the Wilderness Easy Diary.",
+        description = "Also Pull before the Wilderness Easy Diary.",
         position = 136,
         section = soulWarsPortalSection
     )
@@ -1590,7 +1590,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Spirit trees",
-        description = "One toggle per spirit tree destination, in list order. Every one starts unblocked.",
+        description = "",
         position = 137,
         closedByDefault = true
     )
@@ -1599,7 +1599,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeGnomeVillage",
         name = "Tree Gnome Village",
-        description = "Blocks the Tree Gnome Village destination in the spirit tree list.",
+        description = "",
         position = 138,
         section = spiritTreeSection
     )
@@ -1611,7 +1611,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeGnomeStronghold",
         name = "Gnome Stronghold",
-        description = "Blocks the Gnome Stronghold destination in the spirit tree list.",
+        description = "",
         position = 139,
         section = spiritTreeSection
     )
@@ -1623,7 +1623,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeBattlefieldOfKhazard",
         name = "Battlefield of Khazard",
-        description = "Blocks the Battlefield of Khazard destination in the spirit tree list.",
+        description = "",
         position = 140,
         section = spiritTreeSection
     )
@@ -1635,7 +1635,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeGrandExchange",
         name = "Grand Exchange",
-        description = "Blocks the Grand Exchange destination in the spirit tree list.",
+        description = "",
         position = 141,
         section = spiritTreeSection
     )
@@ -1647,7 +1647,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeFeldipHills",
         name = "Feldip Hills",
-        description = "Blocks the Feldip Hills destination in the spirit tree list.",
+        description = "",
         position = 142,
         section = spiritTreeSection
     )
@@ -1659,7 +1659,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreePrifddinas",
         name = "Prifddinas",
-        description = "Blocks the Prifddinas destination in the spirit tree list.",
+        description = "",
         position = 143,
         section = spiritTreeSection
     )
@@ -1671,7 +1671,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreePortSarim",
         name = "Port Sarim",
-        description = "Blocks the Port Sarim destination in the spirit tree list.",
+        description = "",
         position = 144,
         section = spiritTreeSection
     )
@@ -1683,7 +1683,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeEtceteria",
         name = "Etceteria",
-        description = "Blocks the Etceteria destination in the spirit tree list.",
+        description = "",
         position = 145,
         section = spiritTreeSection
     )
@@ -1695,7 +1695,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeBrimhaven",
         name = "Brimhaven",
-        description = "Blocks the Brimhaven destination in the spirit tree list.",
+        description = "",
         position = 146,
         section = spiritTreeSection
     )
@@ -1707,7 +1707,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeHosidius",
         name = "Hosidius",
-        description = "Blocks the Hosidius destination in the spirit tree list.",
+        description = "",
         position = 147,
         section = spiritTreeSection
     )
@@ -1719,7 +1719,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeFarmingGuild",
         name = "Farming Guild",
-        description = "Blocks the Farming Guild destination in the spirit tree list.",
+        description = "",
         position = 148,
         section = spiritTreeSection
     )
@@ -1731,7 +1731,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeHouse",
         name = "Your house",
-        description = "Blocks the player-owned house destination in the spirit tree list.",
+        description = "",
         position = 149,
         section = spiritTreeSection
     )
@@ -1743,7 +1743,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreePoisonWaste",
         name = "Poison Waste",
-        description = "Blocks the Poison Waste destination in the spirit tree list.",
+        description = "",
         position = 150,
         section = spiritTreeSection
     )
@@ -1755,7 +1755,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreeLagunaAurorae",
         name = "Laguna Aurorae",
-        description = "Blocks the Laguna Aurorae destination in the spirit tree list.",
+        description = "",
         position = 151,
         section = spiritTreeSection
     )
@@ -1767,7 +1767,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "spiritTreePrevious",
         name = "Previous destination",
-        description = "Removes the Last-destination option from spirit trees.",
+        description = "",
         position = 152,
         section = spiritTreeSection
     )
@@ -1778,7 +1778,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Gnome gliders",
-        description = "One toggle per glider map destination. Every one starts unblocked.",
+        description = "",
         position = 153,
         closedByDefault = true
     )
@@ -1787,7 +1787,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderGrandTree",
         name = "Grand Tree",
-        description = "Blocks the Ta Quir Priw (Grand Tree) destination on the glider map.",
+        description = "",
         position = 154,
         section = gnomeGliderSection
     )
@@ -1799,7 +1799,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderKaramja",
         name = "Karamja",
-        description = "Blocks the Gandius (Karamja) destination on the glider map.",
+        description = "",
         position = 155,
         section = gnomeGliderSection
     )
@@ -1811,7 +1811,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderAlKharid",
         name = "Al Kharid",
-        description = "Blocks the Kar-Hewo (Al Kharid) destination on the glider map.",
+        description = "",
         position = 156,
         section = gnomeGliderSection
     )
@@ -1823,7 +1823,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderWhiteWolfMountain",
         name = "White Wolf Mountain",
-        description = "Blocks the Sindarpos (White Wolf Mountain) destination on the glider map.",
+        description = "",
         position = 157,
         section = gnomeGliderSection
     )
@@ -1835,7 +1835,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderDigsite",
         name = "Digsite",
-        description = "Blocks the Lemanto Andra (Digsite) destination on the glider map.",
+        description = "",
         position = 158,
         section = gnomeGliderSection
     )
@@ -1847,7 +1847,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderFeldipHills",
         name = "Feldip Hills",
-        description = "Blocks the Lemantolly Undri (Feldip Hills) destination on the glider map.",
+        description = "",
         position = 159,
         section = gnomeGliderSection
     )
@@ -1859,7 +1859,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderApeAtoll",
         name = "Ape Atoll",
-        description = "Blocks the Ookookolly Undri (Ape Atoll) destination on the glider map.",
+        description = "",
         position = 160,
         section = gnomeGliderSection
     )
@@ -1871,7 +1871,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "gnomeGliderPrevious",
         name = "Previous destination",
-        description = "Removes the Glider option from glider pilots.",
+        description = "The pilots' Glider option.",
         position = 161,
         section = gnomeGliderSection
     )
@@ -1882,7 +1882,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Quetzal transport",
-        description = "The Varrock quetzal route and one toggle per quetzal map landing site. Every one starts unblocked.",
+        description = "",
         position = 162,
         closedByDefault = true
     )
@@ -1891,7 +1891,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalVarrockToCivitas",
         name = "Varrock to Civitas",
-        description = "Removes the options of the quetzal and its keeper at Varrock, which fly to Civitas.",
+        description = "",
         position = 163,
         section = quetzalSection
     )
@@ -1903,7 +1903,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalCivitasToVarrock",
         name = "Civitas to Varrock",
-        description = "Removes the options of the quetzal and its keeper at Civitas, which fly to Varrock.",
+        description = "",
         position = 164,
         section = quetzalSection
     )
@@ -1915,7 +1915,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalPrevious",
         name = "Previous destination",
-        description = "Removes the Last-destination option from quetzals and quetzal whistles.",
+        description = "Also on quetzal whistles.",
         position = 165,
         section = quetzalSection
     )
@@ -1927,7 +1927,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalCivitas",
         name = "Civitas",
-        description = "Blocks the Civitas landing site on the quetzal map.",
+        description = "",
         position = 166,
         section = quetzalSection
     )
@@ -1939,7 +1939,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalTheTeomat",
         name = "The Teomat",
-        description = "Blocks The Teomat landing site on the quetzal map.",
+        description = "",
         position = 167,
         section = quetzalSection
     )
@@ -1951,7 +1951,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalSunsetCoast",
         name = "Sunset Coast",
-        description = "Blocks the Sunset Coast landing site on the quetzal map.",
+        description = "",
         position = 168,
         section = quetzalSection
     )
@@ -1963,7 +1963,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalHunterGuild",
         name = "Hunter Guild",
-        description = "Blocks the Hunter Guild landing site on the quetzal map, and a whistle's Signal while it is set to fly there.",
+        description = "Also the whistle's Signal while set to it.",
         position = 169,
         section = quetzalSection
     )
@@ -1975,7 +1975,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalCamTorumEntrance",
         name = "Cam Torum Entrance",
-        description = "Blocks the Cam Torum Entrance landing site on the quetzal map.",
+        description = "",
         position = 170,
         section = quetzalSection
     )
@@ -1987,7 +1987,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalColossalWyrmRemains",
         name = "Colossal Wyrm Remains",
-        description = "Blocks the Colossal Wyrm Remains landing site on the quetzal map.",
+        description = "",
         position = 171,
         section = quetzalSection
     )
@@ -1999,7 +1999,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalOuterFortis",
         name = "Outer Fortis",
-        description = "Blocks the Outer Fortis landing site on the quetzal map.",
+        description = "",
         position = 172,
         section = quetzalSection
     )
@@ -2011,7 +2011,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalFortisColosseum",
         name = "Fortis Colosseum",
-        description = "Blocks the Fortis Colosseum landing site on the quetzal map.",
+        description = "",
         position = 173,
         section = quetzalSection
     )
@@ -2023,7 +2023,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalAldarin",
         name = "Aldarin",
-        description = "Blocks the Aldarin landing site on the quetzal map.",
+        description = "",
         position = 174,
         section = quetzalSection
     )
@@ -2035,7 +2035,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalQuetzacalliGorge",
         name = "Quetzacalli Gorge",
-        description = "Blocks the Quetzacalli Gorge landing site on the quetzal map.",
+        description = "",
         position = 175,
         section = quetzalSection
     )
@@ -2047,7 +2047,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalSalvagerOverlook",
         name = "Salvager Overlook",
-        description = "Blocks the Salvager Overlook landing site on the quetzal map.",
+        description = "",
         position = 176,
         section = quetzalSection
     )
@@ -2059,7 +2059,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalTalTeklan",
         name = "Tal Teklan",
-        description = "Blocks the Tal Teklan landing site on the quetzal map.",
+        description = "",
         position = 177,
         section = quetzalSection
     )
@@ -2071,7 +2071,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalAuburnvale",
         name = "Auburnvale",
-        description = "Blocks the Auburnvale landing site on the quetzal map.",
+        description = "",
         position = 178,
         section = quetzalSection
     )
@@ -2083,7 +2083,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "quetzalKastori",
         name = "Kastori",
-        description = "Blocks the Kastori landing site on the quetzal map.",
+        description = "",
         position = 179,
         section = quetzalSection
     )
@@ -2094,7 +2094,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Lovakengj minecarts",
-        description = "One toggle per minecart station, in list order. Every one starts unblocked.",
+        description = "",
         position = 180,
         closedByDefault = true
     )
@@ -2103,7 +2103,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartArceuus",
         name = "Arceuus",
-        description = "Blocks the Arceuus station in the minecart list.",
+        description = "",
         position = 181,
         section = minecartSection
     )
@@ -2115,7 +2115,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartFarmingGuild",
         name = "Farming Guild",
-        description = "Blocks the Farming Guild station in the minecart list.",
+        description = "",
         position = 182,
         section = minecartSection
     )
@@ -2127,7 +2127,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartHosidiusSouth",
         name = "Hosidius South",
-        description = "Blocks the Hosidius South station in the minecart list.",
+        description = "",
         position = 183,
         section = minecartSection
     )
@@ -2139,7 +2139,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartHosidiusWest",
         name = "Hosidius West",
-        description = "Blocks the Hosidius West station in the minecart list.",
+        description = "",
         position = 184,
         section = minecartSection
     )
@@ -2151,7 +2151,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartKingstown",
         name = "Kingstown",
-        description = "Blocks the Kingstown station in the minecart list.",
+        description = "",
         position = 185,
         section = minecartSection
     )
@@ -2163,7 +2163,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartKourendWoodland",
         name = "Kourend Woodland",
-        description = "Blocks the Kourend Woodland station in the minecart list.",
+        description = "",
         position = 186,
         section = minecartSection
     )
@@ -2175,7 +2175,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartLovakengj",
         name = "Lovakengj",
-        description = "Blocks the Lovakengj station in the minecart list.",
+        description = "",
         position = 187,
         section = minecartSection
     )
@@ -2187,7 +2187,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartMountQuidamortem",
         name = "Mount Quidamortem",
-        description = "Blocks the Mount Quidamortem station in the minecart list.",
+        description = "",
         position = 188,
         section = minecartSection
     )
@@ -2199,7 +2199,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartNorthernTundras",
         name = "Northern Tundras",
-        description = "Blocks the Northern Tundras station in the minecart list.",
+        description = "",
         position = 189,
         section = minecartSection
     )
@@ -2211,7 +2211,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartPortPiscarilius",
         name = "Port Piscarilius",
-        description = "Blocks the Port Piscarilius station in the minecart list.",
+        description = "",
         position = 190,
         section = minecartSection
     )
@@ -2223,7 +2223,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartShayzienEast",
         name = "Shayzien East",
-        description = "Blocks the Shayzien East station in the minecart list.",
+        description = "",
         position = 191,
         section = minecartSection
     )
@@ -2235,7 +2235,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "minecartShayzienWest",
         name = "Shayzien West",
-        description = "Blocks the Shayzien West station in the minecart list.",
+        description = "",
         position = 192,
         section = minecartSection
     )
@@ -2246,7 +2246,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Charter ships",
-        description = "One toggle per charter ship port, in list order. Every one starts unblocked.",
+        description = "Each port also removes Charter-to that port.",
         position = 193,
         closedByDefault = true
     )
@@ -2255,7 +2255,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPortSarim",
         name = "Port Sarim",
-        description = "Blocks the Port Sarim destination on the charter ship menu, and Charter-to Port Sarim.",
+        description = "",
         position = 194,
         section = charterSection
     )
@@ -2267,7 +2267,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterBrimhaven",
         name = "Brimhaven",
-        description = "Blocks the Brimhaven destination on the charter ship menu, and Charter-to Brimhaven.",
+        description = "",
         position = 195,
         section = charterSection
     )
@@ -2279,7 +2279,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterCatherby",
         name = "Catherby",
-        description = "Blocks the Catherby destination on the charter ship menu, and Charter-to Catherby.",
+        description = "",
         position = 196,
         section = charterSection
     )
@@ -2291,7 +2291,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterMosLeHarmless",
         name = "Mos Le'Harmless",
-        description = "Blocks the Mos Le'Harmless destination on the charter ship menu, and Charter-to Mos Le'Harmless.",
+        description = "",
         position = 197,
         section = charterSection
     )
@@ -2303,7 +2303,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterMusaPoint",
         name = "Musa Point",
-        description = "Blocks the Musa Point destination on the charter ship menu, and Charter-to Musa Point.",
+        description = "",
         position = 198,
         section = charterSection
     )
@@ -2315,7 +2315,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPortKhazard",
         name = "Port Khazard",
-        description = "Blocks the Port Khazard destination on the charter ship menu, and Charter-to Port Khazard.",
+        description = "",
         position = 199,
         section = charterSection
     )
@@ -2327,7 +2327,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPortPhasmatys",
         name = "Port Phasmatys",
-        description = "Blocks the Port Phasmatys destination on the charter ship menu, and Charter-to Port Phasmatys.",
+        description = "",
         position = 200,
         section = charterSection
     )
@@ -2339,7 +2339,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterKaramjaShipyard",
         name = "Karamja Shipyard",
-        description = "Blocks the Karamja Shipyard destination on the charter ship menu, and Charter-to Karamja Shipyard.",
+        description = "",
         position = 201,
         section = charterSection
     )
@@ -2351,7 +2351,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPortTyras",
         name = "Port Tyras",
-        description = "Blocks the Port Tyras destination on the charter ship menu, and Charter-to Port Tyras.",
+        description = "",
         position = 202,
         section = charterSection
     )
@@ -2363,7 +2363,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterCorsairCove",
         name = "Corsair Cove",
-        description = "Blocks the Corsair Cove destination on the charter ship menu, and Charter-to Corsair Cove.",
+        description = "",
         position = 203,
         section = charterSection
     )
@@ -2375,7 +2375,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPrifddinas",
         name = "Prifddinas",
-        description = "Blocks the Prifddinas destination on the charter ship menu, and Charter-to Prifddinas.",
+        description = "",
         position = 204,
         section = charterSection
     )
@@ -2387,7 +2387,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPortPiscarilius",
         name = "Port Piscarilius",
-        description = "Blocks the Port Piscarilius destination on the charter ship menu, and Charter-to Port Piscarilius.",
+        description = "",
         position = 205,
         section = charterSection
     )
@@ -2399,7 +2399,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterLandsEnd",
         name = "Land's End",
-        description = "Blocks the Land's End destination on the charter ship menu, and Charter-to Land's End.",
+        description = "",
         position = 206,
         section = charterSection
     )
@@ -2411,7 +2411,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterCivitasIllaFortis",
         name = "Civitas illa Fortis",
-        description = "Blocks the Civitas illa Fortis destination on the charter ship menu, and Charter-to Civitas illa Fortis.",
+        description = "",
         position = 207,
         section = charterSection
     )
@@ -2423,7 +2423,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterAldarin",
         name = "Aldarin",
-        description = "Blocks the Aldarin destination on the charter ship menu, and Charter-to Aldarin.",
+        description = "",
         position = 208,
         section = charterSection
     )
@@ -2435,7 +2435,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterSunsetCoast",
         name = "Sunset Coast",
-        description = "Blocks the Sunset Coast destination on the charter ship menu, and Charter-to Sunset Coast.",
+        description = "",
         position = 209,
         section = charterSection
     )
@@ -2447,7 +2447,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterThePandemonium",
         name = "The Pandemonium",
-        description = "Blocks The Pandemonium destination on the charter ship menu, and Charter-to The Pandemonium.",
+        description = "",
         position = 210,
         section = charterSection
     )
@@ -2459,7 +2459,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterTheSummerShore",
         name = "The Summer Shore",
-        description = "Blocks The Summer Shore destination on the charter ship menu, and Charter-to The Summer Shore.",
+        description = "",
         position = 211,
         section = charterSection
     )
@@ -2471,7 +2471,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterRedRock",
         name = "Red Rock",
-        description = "Blocks the Red Rock destination on the charter ship menu, and Charter-to Red Rock.",
+        description = "",
         position = 212,
         section = charterSection
     )
@@ -2483,7 +2483,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterDeepfinPoint",
         name = "Deepfin Point",
-        description = "Blocks the Deepfin Point destination on the charter ship menu, and Charter-to Deepfin Point.",
+        description = "",
         position = 213,
         section = charterSection
     )
@@ -2495,7 +2495,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPortRoberts",
         name = "Port Roberts",
-        description = "Blocks the Port Roberts destination on the charter ship menu, and Charter-to Port Roberts.",
+        description = "",
         position = 214,
         section = charterSection
     )
@@ -2507,7 +2507,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "charterPrevious",
         name = "Previous destination",
-        description = "Removes the Charter-to option from charter ship crews.",
+        description = "The crews' Charter-to option.",
         position = 215,
         section = charterSection
     )
@@ -2518,7 +2518,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Other ships",
-        description = "One toggle per ship leg outside the charter network, named by the port it sails from and to. Every one starts unblocked.",
+        description = "",
         position = 216,
         closedByDefault = true
     )
@@ -2527,7 +2527,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipBarnabyArdougne",
         name = "Barnaby - Ardougne",
-        description = "Blocks Captain Barnaby's ship to Ardougne, from Brimhaven and from Rimmington.",
+        description = "",
         position = 217,
         section = shipSection
     )
@@ -2539,7 +2539,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipBarnabyBrimhaven",
         name = "Barnaby - Brimhaven",
-        description = "Blocks Captain Barnaby's ship to Brimhaven, from Ardougne and from Rimmington.",
+        description = "",
         position = 218,
         section = shipSection
     )
@@ -2551,7 +2551,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipBarnabyRimmington",
         name = "Barnaby - Rimmington",
-        description = "Blocks Captain Barnaby's ship to Rimmington, from Ardougne and from Brimhaven.",
+        description = "",
         position = 219,
         section = shipSection
     )
@@ -2562,8 +2562,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "shipPortSarimVoidKnightsOutpost",
-        name = "Port Sarim - Void Knights' Outpost",
-        description = "Blocks the squire's ship from Port Sarim to the Void Knights' Outpost.",
+        name = "Port Sarim - Void Knights",
+        description = "",
         position = 220,
         section = shipSection
     )
@@ -2574,8 +2574,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "shipVoidKnightsOutpostPortSarim",
-        name = "Void Knights' Outpost - Port Sarim",
-        description = "Blocks the squire's ship from the Void Knights' Outpost to Port Sarim.",
+        name = "Void Knights - Port Sarim",
+        description = "",
         position = 221,
         section = shipSection
     )
@@ -2587,7 +2587,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortSarimMusaPoint",
         name = "Port Sarim - Musa Point",
-        description = "Blocks the ship from Port Sarim to Musa Point. Before the Pandemonium quest this also removes the crew's Talk-to.",
+        description = "Also the crew's Talk-to before the Pandemonium quest.",
         position = 222,
         section = shipSection
     )
@@ -2599,7 +2599,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipMusaPointPortSarim",
         name = "Musa Point - Port Sarim",
-        description = "Blocks the ship from Musa Point to Port Sarim. Before the Pandemonium quest this also removes the customs officer's Talk-to.",
+        description = "Also the customs officer's Talk-to before the Pandemonium quest.",
         position = 223,
         section = shipSection
     )
@@ -2611,7 +2611,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortSarimPandemonium",
         name = "Port Sarim - The Pandemonium",
-        description = "Blocks the ship from Port Sarim to The Pandemonium.",
+        description = "",
         position = 224,
         section = shipSection
     )
@@ -2623,7 +2623,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPandemoniumPortSarim",
         name = "The Pandemonium - Port Sarim",
-        description = "Blocks the ship from The Pandemonium to Port Sarim.",
+        description = "",
         position = 225,
         section = shipSection
     )
@@ -2635,7 +2635,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipMusaPointPandemonium",
         name = "Musa Point - The Pandemonium",
-        description = "Blocks the ship from Musa Point to The Pandemonium.",
+        description = "",
         position = 226,
         section = shipSection
     )
@@ -2647,7 +2647,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPandemoniumMusaPoint",
         name = "The Pandemonium - Musa Point",
-        description = "Blocks the ship from The Pandemonium to Musa Point.",
+        description = "",
         position = 227,
         section = shipSection
     )
@@ -2659,7 +2659,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortSarimEntrana",
         name = "Port Sarim - Entrana",
-        description = "Blocks the ship from Port Sarim to Entrana, including the monk's Talk-to.",
+        description = "Also the monk's Talk-to.",
         position = 228,
         section = shipSection
     )
@@ -2671,7 +2671,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipEntranaPortSarim",
         name = "Entrana - Port Sarim",
-        description = "Blocks the ship from Entrana to Port Sarim, including the monk's Talk-to.",
+        description = "Also the monk's Talk-to.",
         position = 229,
         section = shipSection
     )
@@ -2683,7 +2683,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortSarimPortPiscarilius",
         name = "Port Sarim - Port Piscarilius",
-        description = "Blocks the ship from Port Sarim to Port Piscarilius.",
+        description = "",
         position = 230,
         section = shipSection
     )
@@ -2695,7 +2695,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortPiscariliusPortSarim",
         name = "Port Piscarilius - Port Sarim",
-        description = "Blocks the ship from Port Piscarilius to Port Sarim.",
+        description = "",
         position = 231,
         section = shipSection
     )
@@ -2707,7 +2707,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortSarimLandsEnd",
         name = "Port Sarim - Land's End",
-        description = "Blocks the ship from Port Sarim to Land's End.",
+        description = "",
         position = 232,
         section = shipSection
     )
@@ -2719,7 +2719,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipLandsEndPortSarim",
         name = "Land's End - Port Sarim",
-        description = "Blocks the ship from Land's End to Port Sarim.",
+        description = "",
         position = 233,
         section = shipSection
     )
@@ -2731,7 +2731,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPortPiscariliusLandsEnd",
         name = "Port Piscarilius - Land's End",
-        description = "Blocks the ship from Port Piscarilius to Land's End.",
+        description = "",
         position = 234,
         section = shipSection
     )
@@ -2743,7 +2743,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipLandsEndPortPiscarilius",
         name = "Land's End - Port Piscarilius",
-        description = "Blocks the ship from Land's End to Port Piscarilius.",
+        description = "",
         position = 235,
         section = shipSection
     )
@@ -2754,8 +2754,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "shipRellekkaWaterbirthIsland",
-        name = "Rellekka - Waterbirth Island",
-        description = "Blocks Jarvald's ship from Rellekka to Waterbirth Island, including his Talk-to there.",
+        name = "Rellekka - Waterbirth",
+        description = "Also Jarvald's Talk-to in Rellekka.",
         position = 236,
         section = shipSection
     )
@@ -2766,8 +2766,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "shipWaterbirthIslandRellekka",
-        name = "Waterbirth Island - Rellekka",
-        description = "Blocks Jarvald's ship from Waterbirth Island to Rellekka.",
+        name = "Waterbirth - Rellekka",
+        description = "",
         position = 237,
         section = shipSection
     )
@@ -2779,7 +2779,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipRellekkaPiratesCove",
         name = "Rellekka - Pirates' Cove",
-        description = "Blocks Lokar Searunner's ship from Rellekka to Pirates' Cove, including his Talk-to there.",
+        description = "Also Lokar's Talk-to in Rellekka.",
         position = 238,
         section = shipSection
     )
@@ -2791,7 +2791,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipPiratesCoveRellekka",
         name = "Pirates' Cove - Rellekka",
-        description = "Blocks Lokar Searunner's ship from Pirates' Cove to Rellekka.",
+        description = "",
         position = 239,
         section = shipSection
     )
@@ -2803,7 +2803,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipRellekkaJatizso",
         name = "Rellekka - Jatizso",
-        description = "Blocks the ferry from Rellekka to Jatizso.",
+        description = "",
         position = 240,
         section = shipSection
     )
@@ -2815,7 +2815,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipJatizsoRellekka",
         name = "Jatizso - Rellekka",
-        description = "Blocks the ferry from Jatizso to Rellekka.",
+        description = "",
         position = 241,
         section = shipSection
     )
@@ -2827,7 +2827,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipRellekkaNeitiznot",
         name = "Rellekka - Neitiznot",
-        description = "Blocks the ferry from Rellekka to Neitiznot.",
+        description = "",
         position = 242,
         section = shipSection
     )
@@ -2839,7 +2839,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipNeitiznotRellekka",
         name = "Neitiznot - Rellekka",
-        description = "Blocks the ferry from Neitiznot to Rellekka.",
+        description = "",
         position = 243,
         section = shipSection
     )
@@ -2851,7 +2851,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipRellekkaMiscellania",
         name = "Rellekka - Miscellania",
-        description = "Blocks the sailor's ship from Rellekka to Miscellania, including his Talk-to there.",
+        description = "Also the sailor's Talk-to.",
         position = 244,
         section = shipSection
     )
@@ -2863,7 +2863,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "shipMiscellaniaRellekka",
         name = "Miscellania - Rellekka",
-        description = "Blocks the sailor's ship from Miscellania to Rellekka, including his Talk-to there.",
+        description = "Also the sailor's Talk-to.",
         position = 245,
         section = shipSection
     )
@@ -2874,88 +2874,16 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigSection(
         name = "Boats",
-        description = "One toggle per boat trip, named by the boat and the place it goes to. Every one starts unblocked.",
+        description = "",
         position = 246,
         closedByDefault = true
     )
     String boatSection = "boatSection";
 
     @ConfigItem(
-        keyName = "boatFossilMuseumCamp",
-        name = "Fossil rowboat - Museum Camp",
-        description = "Blocks the Fossil Island rowboat trip to the Museum Camp.",
-        position = 247,
-        section = boatSection
-    )
-    default boolean boatFossilMuseumCamp()
-    {
-        return false;
-    }
-
-    @ConfigItem(
-        keyName = "boatFossilNorth",
-        name = "Fossil rowboat - North",
-        description = "Blocks the Fossil Island rowboat trip to the north of the island.",
-        position = 248,
-        section = boatSection
-    )
-    default boolean boatFossilNorth()
-    {
-        return false;
-    }
-
-    @ConfigItem(
-        keyName = "boatFossilBankIsland",
-        name = "Fossil rowboat - Bank island",
-        description = "Blocks the Fossil Island rowboat trip out to the small island with the bank.",
-        position = 249,
-        section = boatSection
-    )
-    default boolean boatFossilBankIsland()
-    {
-        return false;
-    }
-
-    @ConfigItem(
-        keyName = "boatFossilDigsite",
-        name = "Fossil rowboat - Digsite",
-        description = "Blocks the Fossil Island rowboat trip to the Digsite.",
-        position = 250,
-        section = boatSection
-    )
-    default boolean boatFossilDigsite()
-    {
-        return false;
-    }
-
-    @ConfigItem(
-        keyName = "boatFossilLithkren",
-        name = "Fossil rowboat - Lithkren",
-        description = "Blocks the rowboat from Fossil Island to Lithkren.",
-        position = 251,
-        section = boatSection
-    )
-    default boolean boatFossilLithkren()
-    {
-        return false;
-    }
-
-    @ConfigItem(
-        keyName = "boatFossilFossilIsland",
-        name = "Fossil rowboat - Fossil Island",
-        description = "Blocks the rowboat from Lithkren back to Fossil Island.",
-        position = 252,
-        section = boatSection
-    )
-    default boolean boatFossilFossilIsland()
-    {
-        return false;
-    }
-
-    @ConfigItem(
         keyName = "boatBoatyMolchIsland",
         name = "Boaty - Molch Island",
-        description = "Blocks Boaty's trip to Molch Island.",
+        description = "",
         position = 253,
         section = boatSection
     )
@@ -2967,7 +2895,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatBoatyMolch",
         name = "Boaty - Molch",
-        description = "Blocks Boaty's trip to Molch.",
+        description = "",
         position = 254,
         section = boatSection
     )
@@ -2979,7 +2907,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatBoatyBattlefront",
         name = "Boaty - Battlefront",
-        description = "Blocks Boaty's trip to the Battlefront.",
+        description = "",
         position = 255,
         section = boatSection
     )
@@ -2991,7 +2919,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatBoatyShayzien",
         name = "Boaty - Shayzien",
-        description = "Blocks Boaty's trip to Shayzien.",
+        description = "",
         position = 256,
         section = boatSection
     )
@@ -3003,7 +2931,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatLarryIceberg",
         name = "Larry - Iceberg",
-        description = "Blocks the Iceberg option on Larry's boat.",
+        description = "",
         position = 257,
         section = boatSection
     )
@@ -3015,7 +2943,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatLarryWeiss",
         name = "Larry - Weiss",
-        description = "Blocks the Weiss option on Larry's boat.",
+        description = "",
         position = 258,
         section = boatSection
     )
@@ -3027,7 +2955,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatLarryRellekka",
         name = "Larry - Rellekka",
-        description = "Blocks the Travel option on Larry's boat at the Iceberg and at Weiss, which goes back to Rellekka.",
+        description = "",
         position = 259,
         section = boatSection
     )
@@ -3038,8 +2966,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatMorytaniaBurghDeRott",
-        name = "Morytania rowboat - Burgh de Rott",
-        description = "Blocks the Morytania rowboat trip to Burgh de Rott.",
+        name = "Morytania - Burgh de Rott",
+        description = "",
         position = 260,
         section = boatSection
     )
@@ -3050,8 +2978,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatMorytaniaMeiyerditch",
-        name = "Morytania rowboat - Meiyerditch",
-        description = "Blocks the Morytania rowboat trip to Meiyerditch.",
+        name = "Morytania - Meiyerditch",
+        description = "",
         position = 261,
         section = boatSection
     )
@@ -3062,8 +2990,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatMorytaniaIcyeneGraveyard",
-        name = "Morytania rowboat - Icyene Graveyard",
-        description = "Blocks the Morytania rowboat trip to the Icyene Graveyard.",
+        name = "Morytania - Icyene Graveyard",
+        description = "",
         position = 262,
         section = boatSection
     )
@@ -3074,8 +3002,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatMorytaniaSlepe",
-        name = "Morytania rowboat - Slepe",
-        description = "Blocks the Morytania rowboat trip to Slepe.",
+        name = "Morytania - Slepe",
+        description = "",
         position = 263,
         section = boatSection
     )
@@ -3087,7 +3015,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatAchilkaTalTeklan",
         name = "Achilka - Tal Teklan",
-        description = "Blocks Achilka's boat to Tal Teklan.",
+        description = "",
         position = 264,
         section = boatSection
     )
@@ -3099,7 +3027,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatAchilkaGloomthornTrail",
         name = "Achilka - Gloomthorn Trail",
-        description = "Blocks Achilka's boat to the Gloomthorn Trail.",
+        description = "",
         position = 265,
         section = boatSection
     )
@@ -3111,7 +3039,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigItem(
         keyName = "boatAchilkaKastori",
         name = "Achilka - Kastori",
-        description = "Blocks Achilka's boat to Kastori.",
+        description = "",
         position = 266,
         section = boatSection
     )
@@ -3122,8 +3050,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatConchSummerShore",
-        name = "Conch rowboat - Summer Shore",
-        description = "Blocks the Great Conch rowboat trip to The Summer Shore.",
+        name = "Great Conch - Summer Shore",
+        description = "",
         position = 267,
         section = boatSection
     )
@@ -3134,8 +3062,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatConchNorthCoast",
-        name = "Conch rowboat - North coast",
-        description = "Blocks the Great Conch rowboat trip to the north coast.",
+        name = "Great Conch - North coast",
+        description = "",
         position = 268,
         section = boatSection
     )
@@ -3146,12 +3074,92 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatConchEastCoast",
-        name = "Conch rowboat - East coast",
-        description = "Blocks the Great Conch rowboat trip to the east coast.",
+        name = "Great Conch - East coast",
+        description = "",
         position = 269,
         section = boatSection
     )
     default boolean boatConchEastCoast()
+    {
+        return false;
+    }
+
+    @ConfigSection(
+        name = "Fossil Island",
+        description = "",
+        position = 270,
+        closedByDefault = true
+    )
+    String fossilIslandSection = "fossilIslandSection";
+
+    @ConfigItem(
+        keyName = "fossilIslandMuseumCamp",
+        name = "Museum Camp",
+        description = "",
+        position = 271,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandMuseumCamp()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandNorth",
+        name = "North",
+        description = "",
+        position = 272,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandNorth()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandBankIsland",
+        name = "Bank island",
+        description = "",
+        position = 273,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandBankIsland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandDigsite",
+        name = "Digsite",
+        description = "",
+        position = 274,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandDigsite()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandLithkren",
+        name = "Lithkren",
+        description = "",
+        position = 275,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandLithkren()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandFossilIsland",
+        name = "Fossil Island",
+        description = "",
+        position = 276,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandFossilIsland()
     {
         return false;
     }

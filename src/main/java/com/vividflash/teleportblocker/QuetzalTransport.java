@@ -51,11 +51,8 @@ public final class QuetzalTransport
         InterfaceID.QuetzalMenu.ICONS,
         InterfaceID.QuetzalwhistleMenu.ICONS)));
 
-    /** The network quetzals, at every landing site and in every colour. */
+    /** The network quetzals: Renu in each of her colours, and the quetzal at every landing site. */
     private static final Set<Integer> NETWORK_QUETZAL_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-        NpcID.HG_QUETZAL,
-        NpcID.QUETZAL_CHILD_GREEN_NOOP,
-        NpcID.QUETZAL_CHILD_GREEN_FEED,
         NpcID.QUETZAL_CHILD_GREEN,
         NpcID.QUETZAL_CHILD_ORANGE,
         NpcID.QUETZAL_CHILD_BLUE,

@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
-import net.runelite.api.gameval.NpcID;
 
 /**
  * The gnome glider network. Every pilot opens the same map, which carries one
@@ -41,69 +40,22 @@ public final class GnomeGlider
     /** The pilot option that flies straight to the last destination used. */
     public static final String PREVIOUS_OPTION = "Glider";
 
-    /**
-     * The glider pilots, including every form a pilot takes as the player's
-     * progress and last destination change.
-     */
-    private static final Set<Integer> PILOT_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-        NpcID.PILOT_GRAND_TREE,
-        NpcID.PILOT_GRAND_TREE_BASE,
-        NpcID.PILOT_GRAND_TREE_KARAMJA,
-        NpcID.PILOT_GRAND_TREE_AL_KHARID,
-        NpcID.PILOT_GRAND_TREE_VARROCK,
-        NpcID.PILOT_GRAND_TREE_WHITEWOLF,
-        NpcID.PILOT_GRAND_TREE_OGRE,
-        NpcID.PILOT_GRAND_TREE_APE,
-        NpcID.PILOT_KARAMJA,
-        NpcID.PILOT_KARAMJA_BASE,
-        NpcID.PILOT_KARAMJA_GRANDTREE,
-        NpcID.PILOT_KARAMJA_AL_KHARID,
-        NpcID.PILOT_KARAMJA_VARROCK,
-        NpcID.PILOT_KARAMJA_WHITEWOLF,
-        NpcID.PILOT_KARAMJA_OGRE,
-        NpcID.PILOT_KARAMJA_APE,
-        NpcID.PILOT_AL_KHARID,
-        NpcID.PILOT_AL_KHARID_BASE,
-        NpcID.PILOT_AL_KHARID_GRANDTREE,
-        NpcID.PILOT_AL_KHARID_KARAMJA,
-        NpcID.PILOT_AL_KHARID_VARROCK,
-        NpcID.PILOT_AL_KHARID_WHITEWOLF,
-        NpcID.PILOT_AL_KHARID_OGRE,
-        NpcID.PILOT_AL_KHARID_APE,
-        NpcID.PILOT_WHITE_WOLF,
-        NpcID.PILOT_WHITE_WOLF_BASE,
-        NpcID.PILOT_WHITE_WOLF_GRANDTREE,
-        NpcID.PILOT_WHITE_WOLF_KARAMJA,
-        NpcID.PILOT_WHITE_WOLF_AL_KHARID,
-        NpcID.PILOT_WHITE_WOLF_VARROCK,
-        NpcID.PILOT_WHITE_WOLF_OGRE,
-        NpcID.PILOT_WHITE_WOLF_APE,
-        NpcID.PILOT_DIGSITE,
-        NpcID.GNORMADIUM_AVLAFRIM,
-        NpcID.GNORMADIUM_AVLAFRIM_TALK,
-        NpcID.GNORMADIUM_AVLAFRIM_GLIDER,
-        NpcID.GNORMADIUM_AVLAFRIM_GRANDTREE,
-        NpcID.GNORMADIUM_AVLAFRIM_KARAMJA,
-        NpcID.GNORMADIUM_AVLAFRIM_AL_KHARID,
-        NpcID.GNORMADIUM_AVLAFRIM_VARROCK,
-        NpcID.GNORMADIUM_AVLAFRIM_WHITEWOLF,
-        NpcID.GNORMADIUM_AVLAFRIM_APE,
-        NpcID.PILOT_APEATOLL,
-        NpcID.PILOT_APEATOLL_MODEL,
-        NpcID.PILOT_APEATOLL_GRANDTREE,
-        NpcID.PILOT_APEATOLL_KARAMJA,
-        NpcID.PILOT_APEATOLL_AL_KHARID,
-        NpcID.PILOT_APEATOLL_VARROCK,
-        NpcID.PILOT_APEATOLL_WHITEWOLF,
-        NpcID.PILOT_APEATOLL_OGRE)));
+    /** The six glider pilots, by the name their menu entries show. */
+    private static final Set<String> PILOT_NAMES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        StripAndLowercase.of("Captain Errdo"),
+        StripAndLowercase.of("Captain Klemfoodle"),
+        StripAndLowercase.of("Captain Dalbur"),
+        StripAndLowercase.of("Captain Bleemadge"),
+        StripAndLowercase.of("Gnormadium Avlafrim"),
+        StripAndLowercase.of("Captain Shoracks"))));
 
     private GnomeGlider()
     {
     }
 
-    public static boolean isPilot(int npcId)
+    public static boolean isPilot(String name)
     {
-        return PILOT_IDS.contains(npcId);
+        return PILOT_NAMES.contains(StripAndLowercase.of(name));
     }
 
     /**

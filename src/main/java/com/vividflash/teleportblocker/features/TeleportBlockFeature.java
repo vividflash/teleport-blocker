@@ -28,6 +28,7 @@ import com.vividflash.teleportblocker.AncientTeleportSpell;
 import com.vividflash.teleportblocker.Boat;
 import com.vividflash.teleportblocker.CanoeDestination;
 import com.vividflash.teleportblocker.CharterShip;
+import com.vividflash.teleportblocker.FossilIsland;
 import com.vividflash.teleportblocker.GnomeGlider;
 import com.vividflash.teleportblocker.JewelleryTeleport;
 import com.vividflash.teleportblocker.JewelleryTeleport.Jewellery;
@@ -178,11 +179,14 @@ public class TeleportBlockFeature implements KeyListener
     private boolean blockCharterPrevious;
     private final Set<Ship.Leg> blockedShipLegs = EnumSet.noneOf(Ship.Leg.class);
     private final Set<Boat.Destination> blockedBoats = EnumSet.noneOf(Boat.Destination.class);
+    private final Set<FossilIsland.Destination> blockedFossilIsland = EnumSet.noneOf(FossilIsland.Destination.class);
 
     /** The legs of the ship NPC clicked last, whose chat lines are read until the next click outside a dialogue. */
     private final Set<Ship.Leg> talkLegs = EnumSet.noneOf(Ship.Leg.class);
     /** The boat whose picker or chat was opened last, or null. */
     private Boat.Network pickerNetwork;
+    /** True when a Fossil Island rowboat's picker was opened last. */
+    private boolean fossilPicker;
     /** True once the remembered boat's picker has opened, so its closing forgets the boat. */
     private boolean pickerOpened;
 
@@ -218,8 +222,10 @@ public class TeleportBlockFeature implements KeyListener
         blockCharterPrevious = false;
         blockedShipLegs.clear();
         blockedBoats.clear();
+        blockedFossilIsland.clear();
         talkLegs.clear();
         pickerNetwork = null;
+        fossilPicker = false;
         pickerOpened = false;
     }
 
@@ -240,7 +246,8 @@ public class TeleportBlockFeature implements KeyListener
             && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
             && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
             && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty()
-            && blockedCharterPorts.isEmpty() && !blockCharterPrevious && blockedShipLegs.isEmpty() && blockedBoats.isEmpty())
+            && blockedCharterPorts.isEmpty() && !blockCharterPrevious && blockedShipLegs.isEmpty() && blockedBoats.isEmpty()
+            && blockedFossilIsland.isEmpty())
         {
             return;
         }
@@ -255,7 +262,7 @@ public class TeleportBlockFeature implements KeyListener
                 && !isBlockedQuetzalMap(entry) && !isBlockedQuetzalRoute(entry) && !isBlockedQuetzalPrevious(entry)
                 && !isBlockedWhistleSignal(entry) && !isBlockedMinecart(entry) && !isBlockedCharter(entry)
                 && !isBlockedCharterPrevious(entry) && !isBlockedShip(entry) && !isBlockedBoat(entry)
-                && !isBlockedBoatList(entry))
+                && !isBlockedBoatList(entry) && !isBlockedFossilIsland(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
@@ -358,6 +365,7 @@ public class TeleportBlockFeature implements KeyListener
 
         talkLegs.clear();
         pickerNetwork = null;
+        fossilPicker = false;
         pickerOpened = false;
 
         MenuAction action = entry.getType();
@@ -384,7 +392,7 @@ public class TeleportBlockFeature implements KeyListener
                 }
             }
         }
-        else if (OBJECT_OPTIONS.contains(action) && !blockedBoats.isEmpty())
+        else if (OBJECT_OPTIONS.contains(action) && (!blockedBoats.isEmpty() || !blockedFossilIsland.isEmpty()))
         {
             int objectId = entry.getIdentifier();
             int variantId = variantId(objectId);
@@ -396,6 +404,7 @@ public class TeleportBlockFeature implements KeyListener
                     pickerNetwork = network;
                 }
             }
+            fossilPicker = FossilIsland.opensPicker(objectId, option) || FossilIsland.opensPicker(variantId, option);
         }
     }
 
@@ -411,7 +420,7 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onWidgetLoaded(WidgetLoaded event)
     {
-        if (pickerNetwork != null && pickerNetwork.hasPicker() && isPickerGroup(event.getGroupId()))
+        if (remembersPicker() && isPickerGroup(event.getGroupId()))
         {
             pickerOpened = true;
         }
@@ -423,8 +432,16 @@ public class TeleportBlockFeature implements KeyListener
         if (pickerOpened && isPickerGroup(event.getGroupId()))
         {
             pickerNetwork = null;
+            fossilPicker = false;
             pickerOpened = false;
         }
+    }
+
+    /** True when the boat clicked last opens a picker, which may be on the shared list interface. */
+    private boolean remembersPicker()
+    {
+        Boat.Network network = pickerNetwork;
+        return fossilPicker || (network != null && network.hasPicker());
     }
 
     private static boolean isPickerGroup(int groupId)
@@ -478,7 +495,8 @@ public class TeleportBlockFeature implements KeyListener
     private boolean isDialogueBlocking()
     {
         return !blockedRatPits.isEmpty() || !blockedJewellery.isEmpty() || !blockedPortals.isEmpty()
-            || !blockedCharterPorts.isEmpty() || !blockedShipLegs.isEmpty() || !blockedBoats.isEmpty();
+            || !blockedCharterPorts.isEmpty() || !blockedShipLegs.isEmpty() || !blockedBoats.isEmpty()
+            || !blockedFossilIsland.isEmpty();
     }
 
     private static int digitOf(KeyEvent e)
@@ -972,7 +990,7 @@ public class TeleportBlockFeature implements KeyListener
 
     // Glider flies straight to the pilot's last destination, and its entry
     // does not name that place, so the option is removed whatever it points
-    // at. The pilot's id is checked so the same option elsewhere is left
+    // at. The pilot's name is checked so the same option elsewhere is left
     // alone.
     private boolean isBlockedGliderPrevious(MenuEntry entry)
     {
@@ -982,7 +1000,7 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
-        return npcMatches(entry, GnomeGlider::isPilot);
+        return GnomeGlider.isPilot(plainText(entry.getTarget()));
     }
 
     // A quetzal map icon carries one option, whose text is the name of its
@@ -1425,9 +1443,8 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
-    // Larry's boat, Achilka and the Lithkren rowboat offer each destination
-    // as a click option of its own, so the option is removed from the boats
-    // and NPCs that carry it.
+    // Larry's boat and Achilka offer each destination as a click option of its
+    // own, so the option is removed from the boats and NPCs that carry it.
     private boolean isBlockedBoat(MenuEntry entry)
     {
         if (blockedBoats.isEmpty())
@@ -1471,7 +1488,7 @@ public class TeleportBlockFeature implements KeyListener
     // be open, since its title is not known.
     private boolean isBlockedBoatList(MenuEntry entry)
     {
-        if (pickerNetwork == null || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
+        if (!remembersPicker() || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
         {
             return false;
         }
@@ -1482,7 +1499,7 @@ public class TeleportBlockFeature implements KeyListener
 
     private void consumeIfBlockedBoatKey(KeyEvent e)
     {
-        if (pickerNetwork != null)
+        if (remembersPicker())
         {
             consumeIfBlockedListKey(e, this::boatPickerLines, line -> isBlockedBoatLine(listText(line)));
         }
@@ -1491,8 +1508,29 @@ public class TeleportBlockFeature implements KeyListener
     /** The lines of the shared list interface while the remembered boat's picker may be on it, or null. */
     private Widget[] boatPickerLines()
     {
-        Boat.Network network = pickerNetwork;
-        return network == null || !network.hasPicker() ? null : listLines(title -> true);
+        return remembersPicker() ? listLines(title -> true) : null;
+    }
+
+    // The rowboats to Lithkren and back travel straight from Travel, so the
+    // option is removed from the rowboat that carries it.
+    private boolean isBlockedFossilIsland(MenuEntry entry)
+    {
+        if (blockedFossilIsland.isEmpty() || !OBJECT_OPTIONS.contains(entry.getType()))
+        {
+            return false;
+        }
+
+        int objectId = entry.getIdentifier();
+        int variantId = variantId(objectId);
+        String option = plainText(entry.getOption());
+        for (FossilIsland.Destination destination : blockedFossilIsland)
+        {
+            if (destination.travelsFrom(objectId, option) || destination.travelsFrom(variantId, option))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -1593,6 +1631,12 @@ public class TeleportBlockFeature implements KeyListener
     // of Larry's by its exact text, both only for the boat used last.
     private boolean isBlockedBoatLine(String line)
     {
+        if (fossilPicker)
+        {
+            FossilIsland.Destination picked = FossilIsland.Destination.forPickerLine(line);
+            return picked != null && blockedFossilIsland.contains(picked);
+        }
+
         Boat.Network network = pickerNetwork;
         if (network == null)
         {
@@ -1789,6 +1833,15 @@ public class TeleportBlockFeature implements KeyListener
             if (destination.isBlocked(config))
             {
                 blockedBoats.add(destination);
+            }
+        }
+
+        blockedFossilIsland.clear();
+        for (FossilIsland.Destination destination : FossilIsland.Destination.values())
+        {
+            if (destination.isBlocked(config))
+            {
+                blockedFossilIsland.add(destination);
             }
         }
     }

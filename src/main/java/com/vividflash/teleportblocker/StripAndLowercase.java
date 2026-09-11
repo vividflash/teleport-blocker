@@ -37,4 +37,10 @@ public final class StripAndLowercase
     {
         return text == null ? "" : text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
     }
+
+    /** The words of a text, lowercased, between single spaces and with a space at both ends. */
+    public static String words(String text)
+    {
+        return " " + text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", " ").trim() + " ";
+    }
 }
