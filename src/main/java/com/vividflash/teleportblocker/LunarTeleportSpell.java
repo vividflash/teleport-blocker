@@ -36,7 +36,7 @@ import net.runelite.api.gameval.InterfaceID;
 public enum LunarTeleportSpell
 {
     HOME("Home Teleport", InterfaceID.MagicSpellbook.TELEPORT_HOME_LUNAR, TeleportBlockerConfig::lunarHomeTeleport),
-    MINIGAME("Minigame Teleport", InterfaceID.MagicSpellbook.TELEPORT_MINIGAME_LUNAR, TeleportBlockerConfig::blockAllMinigames),
+    MINIGAME("Minigame Teleport", InterfaceID.MagicSpellbook.TELEPORT_MINIGAME_LUNAR, TeleportBlockerConfig::lunarMinigameTeleport),
     MOONCLAN("Moonclan Teleport", InterfaceID.MagicSpellbook.TELE_MOONCLAN, TeleportBlockerConfig::lunarMoonclan),
     OURANIA("Ourania Teleport", InterfaceID.MagicSpellbook.OURANIA_TELEPORT, TeleportBlockerConfig::lunarOurania),
     WATERBIRTH("Waterbirth Teleport", InterfaceID.MagicSpellbook.TELE_WATERBIRTH, TeleportBlockerConfig::lunarWaterbirth),

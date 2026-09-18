@@ -52,9 +52,9 @@ public class TeleportBlockerPlugin extends Plugin
     private static final String LAST_SEEN_VERSION_KEY = "lastSeenVersion";
 
     /** The release the notice below belongs to, not the packaged version. */
-    private static final String VERSION = "1.4";
+    private static final String VERSION = "1.5";
     private static final String UPDATE_MESSAGE =
-        "Teleport Blocker v1.4: Added most transport systems.";
+        "Teleport Blocker v1.5: Added Toggle to allow-list instead of block, added Mountain Guides, removed the block-all switches.";
 
     /** Dark red, for legibility against the opaque chatbox background. */
     private static final Color NOTICE_COLOR = new Color(0x480000);

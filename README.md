@@ -1,15 +1,17 @@
 # Teleport Blocker
 
-Oops, accidentally teleported away again? Misclicked the wrong teleport option
+**Oops**, accidentally teleported away again? Misclicked the wrong teleport option
 of your item? Went outside of your chunks? Introducing the cure: Teleport
-Blocker. <small><i>Available from all state of the art plugin hubs.</i></small>
+Blocker. <small><i>Available from your local plugin hub.</i></small>
+
+Set "Checked means" to Allow to allow only the checked options and block everything else.
 
 | Blocked Thing | Options you can individually block |
 | --- | --- |
-| Standard spellbook | Home, Varrock, Lumbridge, Falador, House, Camelot, Kourend Castle, Ardougne, Civitas illa Fortis, Watchtower, Trollheim, Ape Atoll |
+| Standard spellbook | Home, Minigame, Varrock, Lumbridge, Falador, House, Camelot, Kourend Castle, Ardougne, Civitas illa Fortis, Watchtower, Trollheim, Ape Atoll |
 | Minigames | Barbarian Assault, Blast Furnace, Bounty Hunter, Burthorpe Games Room, Castle Wars, Clan Wars, Fishing Trawler, Giants' Foundry, Guardians of the Rift, Last Man Standing, Mage Training Arena, Mastering Mixology, Nightmare Zone, Pest Control, Rat Pits (Ardougne, Varrock, Keldagrim, Port Sarim), Shades of Mort'ton, Sorceress's Garden, Soul Wars, Tithe Farm, Trouble Brewing, TzHaar Fight Pit |
-| Ancient spellbook | Home, Paddewwa, Senntisten, Kharyrll, Lassar, Dareeyak, Carrallanger, Annakarl, Ghorrock |
-| Lunar spellbook | Home, Moonclan, Ourania, Waterbirth, Barbarian, Khazard, Fishing Guild, Catherby, Ice Plateau |
+| Ancient spellbook | Home, Minigame, Paddewwa, Senntisten, Kharyrll, Lassar, Dareeyak, Carrallanger, Annakarl, Ghorrock |
+| Lunar spellbook | Home, Minigame, Moonclan, Ourania, Waterbirth, Barbarian, Khazard, Fishing Guild, Catherby, Ice Plateau |
 | Canoes | Lumbridge, Champions' Guild, Barbarian Village, Edgeville, Ferox Enclave, Wilderness Pond, Castle Wars, Tree Gnome Village, Clocktower, Chaos Druid Tower, Tree Gnome Stronghold |
 | Ring of dueling | Emir's Arena, Castle Wars, Ferox Enclave, Fortis Colosseum |
 | Games necklace | Burthorpe, Barbarian Outpost, Corporeal Beast, Tears of Guthix, Wintertodt Camp |
@@ -30,7 +32,4 @@ Blocker. <small><i>Available from all state of the art plugin hubs.</i></small>
 | Other ships | Barnaby - Ardougne, Barnaby - Brimhaven, Barnaby - Rimmington, Port Sarim - Void Knights, Void Knights - Port Sarim, Port Sarim - Musa Point, Musa Point - Port Sarim, Port Sarim - The Pandemonium, The Pandemonium - Port Sarim, Musa Point - The Pandemonium, The Pandemonium - Musa Point, Port Sarim - Entrana, Entrana - Port Sarim, Port Sarim - Port Piscarilius, Port Piscarilius - Port Sarim, Port Sarim - Land's End, Land's End - Port Sarim, Port Piscarilius - Land's End, Land's End - Port Piscarilius, Rellekka - Waterbirth, Waterbirth - Rellekka, Rellekka - Pirates' Cove, Pirates' Cove - Rellekka, Rellekka - Jatizso, Jatizso - Rellekka, Rellekka - Neitiznot, Neitiznot - Rellekka, Rellekka - Miscellania, Miscellania - Rellekka |
 | Boats | Boaty - Molch Island, Boaty - Molch, Boaty - Battlefront, Boaty - Shayzien, Larry - Iceberg, Larry - Weiss, Larry - Rellekka, Morytania - Burgh de Rott, Morytania - Meiyerditch, Morytania - Icyene Graveyard, Morytania - Slepe, Achilka - Tal Teklan, Achilka - Gloomthorn Trail, Achilka - Kastori, Great Conch - Summer Shore, Great Conch - North coast, Great Conch - East coast |
 | Fossil Island | Museum Camp, North, Bank island, Digsite, Lithkren, Fossil Island |
-
-## License
-
-BSD 2-Clause. See [LICENSE](LICENSE).
+| Other | M. Guide - Shayzien Outpost, M. Guide - Mount Quidamortem, M. Guide - South of Quidamortem, M. Guide - Quetzacalli Gorge, M. Guide - Nemus Retreat |

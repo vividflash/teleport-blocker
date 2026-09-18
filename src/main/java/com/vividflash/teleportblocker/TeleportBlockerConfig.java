@@ -32,15 +32,34 @@ import net.runelite.client.config.ConfigSection;
 @ConfigGroup("teleportblocker")
 public interface TeleportBlockerConfig extends Config
 {
+    enum CheckedMeans
+    {
+        ALLOW("Allow"),
+        BLOCK("Block");
+
+        private final String label;
+
+        CheckedMeans(String label)
+        {
+            this.label = label;
+        }
+
+        @Override
+        public String toString()
+        {
+            return label;
+        }
+    }
+
     @ConfigItem(
-        keyName = "blockAllTeleports",
-        name = "Block all standard tp",
+        keyName = "checkedMeans",
+        name = "Checked means",
         description = "",
         position = 0
     )
-    default boolean blockAllTeleports()
+    default CheckedMeans checkedMeans()
     {
-        return false;
+        return CheckedMeans.BLOCK;
     }
 
     @ConfigSection(
@@ -196,12 +215,13 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigItem(
-        keyName = "blockAllMinigames",
-        name = "Block all minigames",
-        description = "Removes the Minigame Teleport spell.",
-        position = 14
+        keyName = "minigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 14,
+        section = teleportsSection
     )
-    default boolean blockAllMinigames()
+    default boolean minigameTeleport()
     {
         return false;
     }
@@ -631,6 +651,18 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigItem(
+        keyName = "ancientMinigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 52,
+        section = ancientSection
+    )
+    default boolean ancientMinigameTeleport()
+    {
+        return false;
+    }
+
     @ConfigSection(
         name = "Lunar spellbook",
         description = "",
@@ -744,6 +776,18 @@ public interface TeleportBlockerConfig extends Config
         section = lunarSection
     )
     default boolean lunarIcePlateau()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "lunarMinigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 63,
+        section = lunarSection
+    )
+    default boolean lunarMinigameTeleport()
     {
         return false;
     }
@@ -3164,4 +3208,71 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigSection(
+        name = "Other",
+        description = "",
+        position = 280,
+        closedByDefault = true
+    )
+    String otherSection = "otherSection";
+
+    @ConfigItem(
+        keyName = "mountainGuideShayzienOutpost",
+        name = "M. Guide - Shayzien Outpost",
+        description = "",
+        position = 281,
+        section = otherSection
+    )
+    default boolean mountainGuideShayzienOutpost()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "mountainGuideMountQuidamortem",
+        name = "M. Guide - Mount Quidamortem",
+        description = "",
+        position = 282,
+        section = otherSection
+    )
+    default boolean mountainGuideMountQuidamortem()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "mountainGuideSouthOfQuidamortem",
+        name = "M. Guide - South of Quidamortem",
+        description = "",
+        position = 283,
+        section = otherSection
+    )
+    default boolean mountainGuideSouthOfQuidamortem()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "mountainGuideQuetzacalliGorge",
+        name = "M. Guide - Quetzacalli Gorge",
+        description = "",
+        position = 284,
+        section = otherSection
+    )
+    default boolean mountainGuideQuetzacalliGorge()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "mountainGuideNemusRetreat",
+        name = "M. Guide - Nemus Retreat",
+        description = "",
+        position = 285,
+        section = otherSection
+    )
+    default boolean mountainGuideNemusRetreat()
+    {
+        return false;
+    }
 }
