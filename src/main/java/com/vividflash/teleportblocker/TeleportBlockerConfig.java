@@ -1540,7 +1540,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "soulWarsPortalEdgeville",
         name = "Soul Wars to Edgeville",
         description = "",
-        position = 129,
+        position = 133,
         section = soulWarsPortalSection
     )
     default boolean soulWarsPortalEdgeville()
@@ -1552,7 +1552,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "soulWarsPortalFeroxEnclave",
         name = "Soul Wars to Ferox Enclave",
         description = "",
-        position = 130,
+        position = 134,
         section = soulWarsPortalSection
     )
     default boolean soulWarsPortalFeroxEnclave()
@@ -1588,7 +1588,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "edgevilleLeverToWilderness",
         name = "Edgeville lever to Wilderness",
         description = "",
-        position = 133,
+        position = 130,
         section = soulWarsPortalSection
     )
     default boolean edgevilleLeverToWilderness()
@@ -1600,7 +1600,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "ardougneLeverToWilderness",
         name = "Ardougne lever to Wilderness",
         description = "",
-        position = 134,
+        position = 129,
         section = soulWarsPortalSection
     )
     default boolean ardougneLeverToWilderness()
@@ -1612,7 +1612,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "wildernessLeverToEdgeville",
         name = "Wilderness lever to Edgeville",
         description = "",
-        position = 135,
+        position = 136,
         section = soulWarsPortalSection
     )
     default boolean wildernessLeverToEdgeville()
@@ -1624,7 +1624,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "wildernessLeverToArdougne",
         name = "Wilderness lever to Ardougne",
         description = "Also Pull before the Wilderness Easy Diary.",
-        position = 136,
+        position = 135,
         section = soulWarsPortalSection
     )
     default boolean wildernessLeverToArdougne()
@@ -1832,7 +1832,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderGrandTree",
         name = "Grand Tree",
         description = "",
-        position = 154,
+        position = 158,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderGrandTree()
@@ -1844,7 +1844,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderKaramja",
         name = "Karamja",
         description = "",
-        position = 155,
+        position = 159,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderKaramja()
@@ -1856,7 +1856,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderAlKharid",
         name = "Al Kharid",
         description = "",
-        position = 156,
+        position = 154,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderAlKharid()
@@ -1868,7 +1868,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderWhiteWolfMountain",
         name = "White Wolf Mountain",
         description = "",
-        position = 157,
+        position = 160,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderWhiteWolfMountain()
@@ -1880,7 +1880,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderDigsite",
         name = "Digsite",
         description = "",
-        position = 158,
+        position = 156,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderDigsite()
@@ -1892,7 +1892,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderFeldipHills",
         name = "Feldip Hills",
         description = "",
-        position = 159,
+        position = 157,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderFeldipHills()
@@ -1904,7 +1904,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "gnomeGliderApeAtoll",
         name = "Ape Atoll",
         description = "",
-        position = 160,
+        position = 155,
         section = gnomeGliderSection
     )
     default boolean gnomeGliderApeAtoll()
@@ -1936,7 +1936,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalVarrockToCivitas",
         name = "Varrock to Civitas",
         description = "",
-        position = 163,
+        position = 178,
         section = quetzalSection
     )
     default boolean quetzalVarrockToCivitas()
@@ -1948,7 +1948,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalCivitasToVarrock",
         name = "Civitas to Varrock",
         description = "",
-        position = 164,
+        position = 167,
         section = quetzalSection
     )
     default boolean quetzalCivitasToVarrock()
@@ -1960,7 +1960,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalPrevious",
         name = "Previous destination",
         description = "Also on quetzal whistles.",
-        position = 165,
+        position = 179,
         section = quetzalSection
     )
     default boolean quetzalPrevious()
@@ -1984,7 +1984,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalTheTeomat",
         name = "The Teomat",
         description = "",
-        position = 167,
+        position = 177,
         section = quetzalSection
     )
     default boolean quetzalTheTeomat()
@@ -1996,7 +1996,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalSunsetCoast",
         name = "Sunset Coast",
         description = "",
-        position = 168,
+        position = 175,
         section = quetzalSection
     )
     default boolean quetzalSunsetCoast()
@@ -2008,7 +2008,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalHunterGuild",
         name = "Hunter Guild",
         description = "Also the whistle's Signal while set to it.",
-        position = 169,
+        position = 170,
         section = quetzalSection
     )
     default boolean quetzalHunterGuild()
@@ -2020,7 +2020,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalCamTorumEntrance",
         name = "Cam Torum Entrance",
         description = "",
-        position = 170,
+        position = 165,
         section = quetzalSection
     )
     default boolean quetzalCamTorumEntrance()
@@ -2032,7 +2032,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalColossalWyrmRemains",
         name = "Colossal Wyrm Remains",
         description = "",
-        position = 171,
+        position = 168,
         section = quetzalSection
     )
     default boolean quetzalColossalWyrmRemains()
@@ -2056,7 +2056,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalFortisColosseum",
         name = "Fortis Colosseum",
         description = "",
-        position = 173,
+        position = 169,
         section = quetzalSection
     )
     default boolean quetzalFortisColosseum()
@@ -2068,7 +2068,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalAldarin",
         name = "Aldarin",
         description = "",
-        position = 174,
+        position = 163,
         section = quetzalSection
     )
     default boolean quetzalAldarin()
@@ -2080,7 +2080,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalQuetzacalliGorge",
         name = "Quetzacalli Gorge",
         description = "",
-        position = 175,
+        position = 173,
         section = quetzalSection
     )
     default boolean quetzalQuetzacalliGorge()
@@ -2092,7 +2092,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalSalvagerOverlook",
         name = "Salvager Overlook",
         description = "",
-        position = 176,
+        position = 174,
         section = quetzalSection
     )
     default boolean quetzalSalvagerOverlook()
@@ -2104,7 +2104,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalTalTeklan",
         name = "Tal Teklan",
         description = "",
-        position = 177,
+        position = 176,
         section = quetzalSection
     )
     default boolean quetzalTalTeklan()
@@ -2116,7 +2116,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalAuburnvale",
         name = "Auburnvale",
         description = "",
-        position = 178,
+        position = 164,
         section = quetzalSection
     )
     default boolean quetzalAuburnvale()
@@ -2128,7 +2128,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "quetzalKastori",
         name = "Kastori",
         description = "",
-        position = 179,
+        position = 171,
         section = quetzalSection
     )
     default boolean quetzalKastori()
@@ -2300,7 +2300,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPortSarim",
         name = "Port Sarim",
         description = "",
-        position = 194,
+        position = 208,
         section = charterSection
     )
     default boolean charterPortSarim()
@@ -2336,7 +2336,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterMosLeHarmless",
         name = "Mos Le'Harmless",
         description = "",
-        position = 197,
+        position = 202,
         section = charterSection
     )
     default boolean charterMosLeHarmless()
@@ -2348,7 +2348,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterMusaPoint",
         name = "Musa Point",
         description = "",
-        position = 198,
+        position = 203,
         section = charterSection
     )
     default boolean charterMusaPoint()
@@ -2360,7 +2360,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPortKhazard",
         name = "Port Khazard",
         description = "",
-        position = 199,
+        position = 204,
         section = charterSection
     )
     default boolean charterPortKhazard()
@@ -2372,7 +2372,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPortPhasmatys",
         name = "Port Phasmatys",
         description = "",
-        position = 200,
+        position = 205,
         section = charterSection
     )
     default boolean charterPortPhasmatys()
@@ -2384,7 +2384,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterKaramjaShipyard",
         name = "Karamja Shipyard",
         description = "",
-        position = 201,
+        position = 200,
         section = charterSection
     )
     default boolean charterKaramjaShipyard()
@@ -2396,7 +2396,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPortTyras",
         name = "Port Tyras",
         description = "",
-        position = 202,
+        position = 209,
         section = charterSection
     )
     default boolean charterPortTyras()
@@ -2408,7 +2408,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterCorsairCove",
         name = "Corsair Cove",
         description = "",
-        position = 203,
+        position = 198,
         section = charterSection
     )
     default boolean charterCorsairCove()
@@ -2420,7 +2420,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPrifddinas",
         name = "Prifddinas",
         description = "",
-        position = 204,
+        position = 210,
         section = charterSection
     )
     default boolean charterPrifddinas()
@@ -2432,7 +2432,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPortPiscarilius",
         name = "Port Piscarilius",
         description = "",
-        position = 205,
+        position = 206,
         section = charterSection
     )
     default boolean charterPortPiscarilius()
@@ -2444,7 +2444,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterLandsEnd",
         name = "Land's End",
         description = "",
-        position = 206,
+        position = 201,
         section = charterSection
     )
     default boolean charterLandsEnd()
@@ -2456,7 +2456,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterCivitasIllaFortis",
         name = "Civitas illa Fortis",
         description = "",
-        position = 207,
+        position = 197,
         section = charterSection
     )
     default boolean charterCivitasIllaFortis()
@@ -2468,7 +2468,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterAldarin",
         name = "Aldarin",
         description = "",
-        position = 208,
+        position = 194,
         section = charterSection
     )
     default boolean charterAldarin()
@@ -2480,7 +2480,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterSunsetCoast",
         name = "Sunset Coast",
         description = "",
-        position = 209,
+        position = 212,
         section = charterSection
     )
     default boolean charterSunsetCoast()
@@ -2492,7 +2492,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterThePandemonium",
         name = "The Pandemonium",
         description = "",
-        position = 210,
+        position = 213,
         section = charterSection
     )
     default boolean charterThePandemonium()
@@ -2504,7 +2504,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterTheSummerShore",
         name = "The Summer Shore",
         description = "",
-        position = 211,
+        position = 214,
         section = charterSection
     )
     default boolean charterTheSummerShore()
@@ -2516,7 +2516,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterRedRock",
         name = "Red Rock",
         description = "",
-        position = 212,
+        position = 211,
         section = charterSection
     )
     default boolean charterRedRock()
@@ -2528,7 +2528,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterDeepfinPoint",
         name = "Deepfin Point",
         description = "",
-        position = 213,
+        position = 199,
         section = charterSection
     )
     default boolean charterDeepfinPoint()
@@ -2540,7 +2540,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "charterPortRoberts",
         name = "Port Roberts",
         description = "",
-        position = 214,
+        position = 207,
         section = charterSection
     )
     default boolean charterPortRoberts()
@@ -2608,7 +2608,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortSarimVoidKnightsOutpost",
         name = "Port Sarim - Void Knights",
         description = "",
-        position = 220,
+        position = 236,
         section = shipSection
     )
     default boolean shipPortSarimVoidKnightsOutpost()
@@ -2620,7 +2620,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipVoidKnightsOutpostPortSarim",
         name = "Void Knights - Port Sarim",
         description = "",
-        position = 221,
+        position = 244,
         section = shipSection
     )
     default boolean shipVoidKnightsOutpostPortSarim()
@@ -2632,7 +2632,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortSarimMusaPoint",
         name = "Port Sarim - Musa Point",
         description = "Also the crew's Talk-to before the Pandemonium quest.",
-        position = 222,
+        position = 233,
         section = shipSection
     )
     default boolean shipPortSarimMusaPoint()
@@ -2644,7 +2644,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipMusaPointPortSarim",
         name = "Musa Point - Port Sarim",
         description = "Also the customs officer's Talk-to before the Pandemonium quest.",
-        position = 223,
+        position = 225,
         section = shipSection
     )
     default boolean shipMusaPointPortSarim()
@@ -2656,7 +2656,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortSarimPandemonium",
         name = "Port Sarim - The Pandemonium",
         description = "",
-        position = 224,
+        position = 235,
         section = shipSection
     )
     default boolean shipPortSarimPandemonium()
@@ -2668,7 +2668,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPandemoniumPortSarim",
         name = "The Pandemonium - Port Sarim",
         description = "",
-        position = 225,
+        position = 243,
         section = shipSection
     )
     default boolean shipPandemoniumPortSarim()
@@ -2692,7 +2692,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPandemoniumMusaPoint",
         name = "The Pandemonium - Musa Point",
         description = "",
-        position = 227,
+        position = 242,
         section = shipSection
     )
     default boolean shipPandemoniumMusaPoint()
@@ -2704,7 +2704,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortSarimEntrana",
         name = "Port Sarim - Entrana",
         description = "Also the monk's Talk-to.",
-        position = 228,
+        position = 231,
         section = shipSection
     )
     default boolean shipPortSarimEntrana()
@@ -2716,7 +2716,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipEntranaPortSarim",
         name = "Entrana - Port Sarim",
         description = "Also the monk's Talk-to.",
-        position = 229,
+        position = 220,
         section = shipSection
     )
     default boolean shipEntranaPortSarim()
@@ -2728,7 +2728,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortSarimPortPiscarilius",
         name = "Port Sarim - Port Piscarilius",
         description = "",
-        position = 230,
+        position = 234,
         section = shipSection
     )
     default boolean shipPortSarimPortPiscarilius()
@@ -2740,7 +2740,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortPiscariliusPortSarim",
         name = "Port Piscarilius - Port Sarim",
         description = "",
-        position = 231,
+        position = 230,
         section = shipSection
     )
     default boolean shipPortPiscariliusPortSarim()
@@ -2764,7 +2764,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipLandsEndPortSarim",
         name = "Land's End - Port Sarim",
         description = "",
-        position = 233,
+        position = 223,
         section = shipSection
     )
     default boolean shipLandsEndPortSarim()
@@ -2776,7 +2776,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPortPiscariliusLandsEnd",
         name = "Port Piscarilius - Land's End",
         description = "",
-        position = 234,
+        position = 229,
         section = shipSection
     )
     default boolean shipPortPiscariliusLandsEnd()
@@ -2788,7 +2788,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipLandsEndPortPiscarilius",
         name = "Land's End - Port Piscarilius",
         description = "",
-        position = 235,
+        position = 222,
         section = shipSection
     )
     default boolean shipLandsEndPortPiscarilius()
@@ -2800,7 +2800,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipRellekkaWaterbirthIsland",
         name = "Rellekka - Waterbirth",
         description = "Also Jarvald's Talk-to in Rellekka.",
-        position = 236,
+        position = 241,
         section = shipSection
     )
     default boolean shipRellekkaWaterbirthIsland()
@@ -2812,7 +2812,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipWaterbirthIslandRellekka",
         name = "Waterbirth - Rellekka",
         description = "",
-        position = 237,
+        position = 245,
         section = shipSection
     )
     default boolean shipWaterbirthIslandRellekka()
@@ -2824,7 +2824,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipRellekkaPiratesCove",
         name = "Rellekka - Pirates' Cove",
         description = "Also Lokar's Talk-to in Rellekka.",
-        position = 238,
+        position = 240,
         section = shipSection
     )
     default boolean shipRellekkaPiratesCove()
@@ -2836,7 +2836,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipPiratesCoveRellekka",
         name = "Pirates' Cove - Rellekka",
         description = "",
-        position = 239,
+        position = 228,
         section = shipSection
     )
     default boolean shipPiratesCoveRellekka()
@@ -2848,7 +2848,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipRellekkaJatizso",
         name = "Rellekka - Jatizso",
         description = "",
-        position = 240,
+        position = 237,
         section = shipSection
     )
     default boolean shipRellekkaJatizso()
@@ -2860,7 +2860,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipJatizsoRellekka",
         name = "Jatizso - Rellekka",
         description = "",
-        position = 241,
+        position = 221,
         section = shipSection
     )
     default boolean shipJatizsoRellekka()
@@ -2872,7 +2872,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipRellekkaNeitiznot",
         name = "Rellekka - Neitiznot",
         description = "",
-        position = 242,
+        position = 239,
         section = shipSection
     )
     default boolean shipRellekkaNeitiznot()
@@ -2884,7 +2884,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipNeitiznotRellekka",
         name = "Neitiznot - Rellekka",
         description = "",
-        position = 243,
+        position = 227,
         section = shipSection
     )
     default boolean shipNeitiznotRellekka()
@@ -2896,7 +2896,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipRellekkaMiscellania",
         name = "Rellekka - Miscellania",
         description = "Also the sailor's Talk-to.",
-        position = 244,
+        position = 238,
         section = shipSection
     )
     default boolean shipRellekkaMiscellania()
@@ -2908,7 +2908,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "shipMiscellaniaRellekka",
         name = "Miscellania - Rellekka",
         description = "Also the sailor's Talk-to.",
-        position = 245,
+        position = 224,
         section = shipSection
     )
     default boolean shipMiscellaniaRellekka()
@@ -2928,7 +2928,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatBoatyMolchIsland",
         name = "Boaty - Molch Island",
         description = "",
-        position = 253,
+        position = 258,
         section = boatSection
     )
     default boolean boatBoatyMolchIsland()
@@ -2940,7 +2940,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatBoatyMolch",
         name = "Boaty - Molch",
         description = "",
-        position = 254,
+        position = 257,
         section = boatSection
     )
     default boolean boatBoatyMolch()
@@ -2952,7 +2952,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatBoatyBattlefront",
         name = "Boaty - Battlefront",
         description = "",
-        position = 255,
+        position = 256,
         section = boatSection
     )
     default boolean boatBoatyBattlefront()
@@ -2964,7 +2964,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatBoatyShayzien",
         name = "Boaty - Shayzien",
         description = "",
-        position = 256,
+        position = 259,
         section = boatSection
     )
     default boolean boatBoatyShayzien()
@@ -2976,7 +2976,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatLarryIceberg",
         name = "Larry - Iceberg",
         description = "",
-        position = 257,
+        position = 263,
         section = boatSection
     )
     default boolean boatLarryIceberg()
@@ -2988,7 +2988,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatLarryWeiss",
         name = "Larry - Weiss",
         description = "",
-        position = 258,
+        position = 265,
         section = boatSection
     )
     default boolean boatLarryWeiss()
@@ -3000,7 +3000,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatLarryRellekka",
         name = "Larry - Rellekka",
         description = "",
-        position = 259,
+        position = 264,
         section = boatSection
     )
     default boolean boatLarryRellekka()
@@ -3012,7 +3012,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatMorytaniaBurghDeRott",
         name = "Morytania - Burgh de Rott",
         description = "",
-        position = 260,
+        position = 266,
         section = boatSection
     )
     default boolean boatMorytaniaBurghDeRott()
@@ -3024,7 +3024,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatMorytaniaMeiyerditch",
         name = "Morytania - Meiyerditch",
         description = "",
-        position = 261,
+        position = 268,
         section = boatSection
     )
     default boolean boatMorytaniaMeiyerditch()
@@ -3036,7 +3036,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatMorytaniaIcyeneGraveyard",
         name = "Morytania - Icyene Graveyard",
         description = "",
-        position = 262,
+        position = 267,
         section = boatSection
     )
     default boolean boatMorytaniaIcyeneGraveyard()
@@ -3048,7 +3048,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatMorytaniaSlepe",
         name = "Morytania - Slepe",
         description = "",
-        position = 263,
+        position = 269,
         section = boatSection
     )
     default boolean boatMorytaniaSlepe()
@@ -3060,7 +3060,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatAchilkaTalTeklan",
         name = "Achilka - Tal Teklan",
         description = "",
-        position = 264,
+        position = 255,
         section = boatSection
     )
     default boolean boatAchilkaTalTeklan()
@@ -3072,7 +3072,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatAchilkaGloomthornTrail",
         name = "Achilka - Gloomthorn Trail",
         description = "",
-        position = 265,
+        position = 253,
         section = boatSection
     )
     default boolean boatAchilkaGloomthornTrail()
@@ -3084,7 +3084,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatAchilkaKastori",
         name = "Achilka - Kastori",
         description = "",
-        position = 266,
+        position = 254,
         section = boatSection
     )
     default boolean boatAchilkaKastori()
@@ -3096,7 +3096,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatConchSummerShore",
         name = "Great Conch - Summer Shore",
         description = "",
-        position = 267,
+        position = 262,
         section = boatSection
     )
     default boolean boatConchSummerShore()
@@ -3108,7 +3108,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatConchNorthCoast",
         name = "Great Conch - North coast",
         description = "",
-        position = 268,
+        position = 261,
         section = boatSection
     )
     default boolean boatConchNorthCoast()
@@ -3120,7 +3120,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "boatConchEastCoast",
         name = "Great Conch - East coast",
         description = "",
-        position = 269,
+        position = 260,
         section = boatSection
     )
     default boolean boatConchEastCoast()
@@ -3140,7 +3140,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "fossilIslandMuseumCamp",
         name = "Museum Camp",
         description = "",
-        position = 271,
+        position = 275,
         section = fossilIslandSection
     )
     default boolean fossilIslandMuseumCamp()
@@ -3152,7 +3152,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "fossilIslandNorth",
         name = "North",
         description = "",
-        position = 272,
+        position = 276,
         section = fossilIslandSection
     )
     default boolean fossilIslandNorth()
@@ -3164,7 +3164,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "fossilIslandBankIsland",
         name = "Bank island",
         description = "",
-        position = 273,
+        position = 271,
         section = fossilIslandSection
     )
     default boolean fossilIslandBankIsland()
@@ -3176,7 +3176,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "fossilIslandDigsite",
         name = "Digsite",
         description = "",
-        position = 274,
+        position = 272,
         section = fossilIslandSection
     )
     default boolean fossilIslandDigsite()
@@ -3188,7 +3188,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "fossilIslandLithkren",
         name = "Lithkren",
         description = "",
-        position = 275,
+        position = 274,
         section = fossilIslandSection
     )
     default boolean fossilIslandLithkren()
@@ -3200,7 +3200,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "fossilIslandFossilIsland",
         name = "Fossil Island",
         description = "",
-        position = 276,
+        position = 273,
         section = fossilIslandSection
     )
     default boolean fossilIslandFossilIsland()
@@ -3220,7 +3220,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideShayzienOutpost",
         name = "M. Guide - Shayzien Outpost",
         description = "",
-        position = 281,
+        position = 284,
         section = otherSection
     )
     default boolean mountainGuideShayzienOutpost()
@@ -3232,7 +3232,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideMountQuidamortem",
         name = "M. Guide - Mount Quidamortem",
         description = "",
-        position = 282,
+        position = 281,
         section = otherSection
     )
     default boolean mountainGuideMountQuidamortem()
@@ -3244,7 +3244,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideSouthOfQuidamortem",
         name = "M. Guide - South of Quidamortem",
         description = "",
-        position = 283,
+        position = 285,
         section = otherSection
     )
     default boolean mountainGuideSouthOfQuidamortem()
@@ -3256,7 +3256,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideQuetzacalliGorge",
         name = "M. Guide - Quetzacalli Gorge",
         description = "",
-        position = 284,
+        position = 283,
         section = otherSection
     )
     default boolean mountainGuideQuetzacalliGorge()
@@ -3268,7 +3268,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideNemusRetreat",
         name = "M. Guide - Nemus Retreat",
         description = "",
-        position = 285,
+        position = 282,
         section = otherSection
     )
     default boolean mountainGuideNemusRetreat()
