@@ -48,8 +48,8 @@ public final class SpiritTree
 
     /**
      * The destinations of the list in list order, each paired with the name its
-     * line prints and the toggle that blocks it. Spirit trees have no master
-     * toggle. The Last-destination option has a toggle of its own, since its
+     * line prints and the toggle that blocks it.
+     * The Last-destination option has a toggle of its own, since its
      * menu entry does not name the place it travels to.
      */
     public enum Destination

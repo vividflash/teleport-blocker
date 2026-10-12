@@ -28,6 +28,7 @@ import com.vividflash.teleportblocker.AncientTeleportSpell;
 import com.vividflash.teleportblocker.Boat;
 import com.vividflash.teleportblocker.CanoeDestination;
 import com.vividflash.teleportblocker.CharterShip;
+import com.vividflash.teleportblocker.FairyRing;
 import com.vividflash.teleportblocker.FossilIsland;
 import com.vividflash.teleportblocker.GnomeGlider;
 import com.vividflash.teleportblocker.JewelleryTeleport;
@@ -53,6 +54,7 @@ import java.util.Set;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -64,10 +66,12 @@ import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.events.MenuEntryAdded;
+import net.runelite.api.events.MenuOpened;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetClosed;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
+import net.runelite.api.gameval.ObjectID;
 import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetUtil;
@@ -90,7 +94,8 @@ import net.runelite.client.util.Text;
  * Signal set to fly to a blocked Hunter Guild, at blocked lines of the
  * Lovakengj minecart station list, at blocked charter ports and the crews'
  * Charter-to option, at the options of blocked ship legs, boat trips and
- * Mountain Guide trips and
+ * Mountain Guide trips, at the fairy ring dials' Confirm for a blocked code
+ * and the rings' Zanaris, Last and Favourites options, and
  * at blocked lines of a boat picker, and consumes clicks and
  * number-key presses on blocked options of the rat pit, jewellery and Soul
  * Wars portal dialogues, of the charter confirm dialogue, of ship and
@@ -141,6 +146,15 @@ public class TeleportBlockFeature implements KeyListener
         MenuAction.GAME_OBJECT_FOURTH_OPTION,
         MenuAction.GAME_OBJECT_FIFTH_OPTION);
 
+    /** The fairy ring objects whose menu carries Zanaris, Last and Favourites. */
+    private static final Set<Integer> FAIRY_RING_OBJECTS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        ObjectID.FAIRYRING_MINORHUB,
+        ObjectID.FAIRYRING_HOMEHUB)));
+    private static final Pattern FAIRY_RING_CODE = Pattern.compile("(?<![A-Za-z])\\(?([A-D][IJKL][PQRS])\\)?$");
+    private static final String FAIRY_RING_ZANARIS = "Zanaris";
+    private static final String FAIRY_RING_LAST = "Last: ";
+    private static final String FAIRY_RING_FAVOURITES = "Favourites";
+
     /** Every click option on an NPC, which leaves Examine out. */
     private static final Set<MenuAction> NPC_OPTIONS = EnumSet.of(
         MenuAction.NPC_FIRST_OPTION,
@@ -184,6 +198,8 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<Boat.Destination> blockedBoats = EnumSet.noneOf(Boat.Destination.class);
     private final Set<FossilIsland.Destination> blockedFossilIsland = EnumSet.noneOf(FossilIsland.Destination.class);
     private final Set<MountainGuide.Destination> blockedMountainGuides = EnumSet.noneOf(MountainGuide.Destination.class);
+    private final Set<FairyRing> blockedFairyRings = EnumSet.noneOf(FairyRing.class);
+    private boolean blockFairyRingPrevious;
 
     /** The legs of the ship NPC clicked last, whose chat lines are read until the next click outside a dialogue. */
     private final Set<Ship.Leg> talkLegs = EnumSet.noneOf(Ship.Leg.class);
@@ -230,6 +246,8 @@ public class TeleportBlockFeature implements KeyListener
         blockedBoats.clear();
         blockedFossilIsland.clear();
         blockedMountainGuides.clear();
+        blockedFairyRings.clear();
+        blockFairyRingPrevious = false;
         talkLegs.clear();
         pickerNetwork = null;
         fossilPicker = false;
@@ -249,19 +267,50 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onMenuEntryAdded(MenuEntryAdded event)
     {
+        filterMenu();
+    }
+
+    // An opened menu is filtered again, for a ring's Last option and
+    // Favourites rows.
+    @Subscribe
+    public void onMenuOpened(MenuOpened event)
+    {
+        filterMenu();
+    }
+
+    private void filterMenu()
+    {
         if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
             && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
             && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
             && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty()
             && blockedCharterPorts.isEmpty() && !blockCharterPrevious && blockedShipLegs.isEmpty() && blockedBoats.isEmpty()
-            && blockedFossilIsland.isEmpty() && blockedMountainGuides.isEmpty())
+            && blockedFossilIsland.isEmpty() && blockedMountainGuides.isEmpty()
+            && blockedFairyRings.isEmpty() && !blockFairyRingPrevious)
         {
             return;
         }
 
         Menu menu = client.getMenu();
         MenuEntry[] entries = menu.getMenuEntries();
+
+        Set<MenuEntry> emptiedFavourites = new HashSet<>();
+        if (!blockedJewellery.isEmpty() || !blockedFairyRings.isEmpty())
+        {
+            for (MenuEntry entry : entries)
+            {
+                if (!blockedJewellery.isEmpty())
+                {
+                    filterSubMenu(entry);
+                }
+                if (filterFairyRingFavourites(entry))
+                {
+                    emptiedFavourites.add(entry);
+                }
+            }
+        }
+
         MenuEntry[] filtered = Arrays.stream(entries)
             .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
                 && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry) && !isBlockedLeverEntry(entry)
@@ -270,21 +319,39 @@ public class TeleportBlockFeature implements KeyListener
                 && !isBlockedQuetzalMap(entry) && !isBlockedQuetzalRoute(entry) && !isBlockedQuetzalPrevious(entry)
                 && !isBlockedWhistleSignal(entry) && !isBlockedMinecart(entry) && !isBlockedCharter(entry)
                 && !isBlockedCharterPrevious(entry) && !isBlockedShip(entry) && !isBlockedBoat(entry)
-                && !isBlockedBoatList(entry) && !isBlockedFossilIsland(entry) && !isBlockedMountainGuide(entry))
+                && !isBlockedBoatList(entry) && !isBlockedFossilIsland(entry) && !isBlockedMountainGuide(entry)
+                && !isBlockedFairyRingConfirm(entry) && !isBlockedFairyRingOption(entry)
+                && !emptiedFavourites.contains(entry))
             .toArray(MenuEntry[]::new);
 
         if (filtered.length != entries.length)
         {
             menu.setMenuEntries(filtered);
         }
+    }
 
-        if (!blockedJewellery.isEmpty())
+    // The Favourites rows sit on a submenu of the ring's Favourites option.
+    // Returns true when every row was removed, so the parent goes with them.
+    private boolean filterFairyRingFavourites(MenuEntry entry)
+    {
+        Menu sub = entry.getSubMenu();
+        if (sub == null || blockedFairyRings.isEmpty() || !isFairyRingObject(entry)
+            || !FAIRY_RING_FAVOURITES.equals(plainText(entry.getOption())))
         {
-            for (MenuEntry entry : entries)
-            {
-                filterSubMenu(entry);
-            }
+            return false;
         }
+
+        MenuEntry[] subEntries = sub.getMenuEntries();
+        MenuEntry[] filtered = Arrays.stream(subEntries)
+            .filter(subEntry -> !isBlockedFairyRingOption(subEntry))
+            .toArray(MenuEntry[]::new);
+
+        if (filtered.length == subEntries.length)
+        {
+            return false;
+        }
+        sub.setMenuEntries(filtered);
+        return filtered.length == 0;
     }
 
     // Rub carries its destinations on a submenu rather than in the top level
@@ -355,6 +422,10 @@ public class TeleportBlockFeature implements KeyListener
     public void onMenuOptionClicked(MenuOptionClicked event)
     {
         if (isDialogueBlocking() && isBlockedDialogueClick(event))
+        {
+            event.consume();
+        }
+        if (isBlockedFairyRingConfirm(event.getMenuEntry()) || isBlockedFairyRingOption(event.getMenuEntry()))
         {
             event.consume();
         }
@@ -719,6 +790,69 @@ public class TeleportBlockFeature implements KeyListener
     private static String plainText(String text)
     {
         return text == null ? "" : Text.removeTags(text).trim();
+    }
+
+    private boolean isBlockedFairyRingConfirm(MenuEntry entry)
+    {
+        if (blockedFairyRings.isEmpty())
+        {
+            return false;
+        }
+
+        MenuAction action = entry.getType();
+        if (action != MenuAction.CC_OP && action != MenuAction.CC_OP_LOW_PRIORITY)
+        {
+            return false;
+        }
+        if (entry.getParam1() != InterfaceID.Fairyrings.CONFIRM)
+        {
+            return false;
+        }
+
+        FairyRing ring = FairyRing.fromDials(
+            client.getVarbitValue(VarbitID.FAIRYRING_1),
+            client.getVarbitValue(VarbitID.FAIRYRING_2),
+            client.getVarbitValue(VarbitID.FAIRYRING_3));
+        return ring != null && blockedFairyRings.contains(ring);
+    }
+
+    private static boolean isFairyRingObject(MenuEntry entry)
+    {
+        return OBJECT_OPTIONS.contains(entry.getType())
+            && FAIRY_RING_OBJECTS.contains(entry.getIdentifier() & 0xFFFF);
+    }
+
+    // The text before the code is a name the player chose, so only the
+    // trailing code is read, bracketed or bare.
+    private static FairyRing fairyRingOf(String option)
+    {
+        Matcher matcher = FAIRY_RING_CODE.matcher(option);
+        return matcher.find() ? FairyRing.valueOf(matcher.group(1)) : null;
+    }
+
+    // The ring object's Zanaris, Last and Favourites rows. A submenu row
+    // carries the object id in its low 16 bits.
+    private boolean isBlockedFairyRingOption(MenuEntry entry)
+    {
+        if (!isFairyRingObject(entry))
+        {
+            return false;
+        }
+
+        String option = plainText(entry.getOption());
+        if (FAIRY_RING_ZANARIS.equals(option))
+        {
+            return blockedFairyRings.contains(FairyRing.BKS);
+        }
+
+        FairyRing ring = fairyRingOf(option);
+        // Only the ring's own Last option, not a favourite labelled that way.
+        if (blockFairyRingPrevious && option.startsWith(FAIRY_RING_LAST)
+            && entry.getIdentifier() <= 0xFFFF)
+        {
+            return true;
+        }
+        return ring != null && blockedFairyRings.contains(ring);
     }
 
     // CC_OP_LOW_PRIORITY carries op index 6 and above, where the alternate
@@ -1711,7 +1845,7 @@ public class TeleportBlockFeature implements KeyListener
 
     private void rebuildBlocked()
     {
-        // With "Checked means: Allow" every toggle allows instead of blocks.
+        // With "Checked Means: Allow" every toggle allows instead of blocks.
         boolean invert = config.checkedMeans() == TeleportBlockerConfig.CheckedMeans.ALLOW;
 
         blockedSpellComponents.clear();
@@ -1904,5 +2038,15 @@ public class TeleportBlockFeature implements KeyListener
                 blockedMountainGuides.add(destination);
             }
         }
+
+        blockedFairyRings.clear();
+        for (FairyRing ring : FairyRing.values())
+        {
+            if (ring.isBlocked(config) != invert)
+            {
+                blockedFairyRings.add(ring);
+            }
+        }
+        blockFairyRingPrevious = config.fairyRingPrevious() != invert;
     }
 }

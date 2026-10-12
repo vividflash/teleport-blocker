@@ -29,8 +29,7 @@ import net.runelite.api.gameval.InterfaceID;
 
 /**
  * Ancient spellbook teleports in spellbook order, each paired with its packed
- * component id and the toggle that blocks it. The book has no master toggle,
- * so every spell is blocked only by its own.
+ * component id and the toggle that blocks it.
  */
 public enum AncientTeleportSpell
 {

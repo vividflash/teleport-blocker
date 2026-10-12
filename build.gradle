@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.vividflash'
-version = '1.5.1'
+version = '1.6'
 
 def runeLiteVersion = '1.13.1'
 
@@ -32,16 +32,4 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnit()
-}
-
-tasks.register('run', JavaExec) {
-    dependsOn testClasses
-    mainClass = 'com.vividflash.teleportblocker.TeleportBlockerPluginTest'
-    classpath = sourceSets.test.runtimeClasspath
-    enableAssertions = true
-    // Off by default so long test sessions run like a normal client.
-    // Enable for an id lookup with: gradlew run -PdevMode
-    if (project.hasProperty('devMode')) {
-        args '--developer-mode'
-    }
 }

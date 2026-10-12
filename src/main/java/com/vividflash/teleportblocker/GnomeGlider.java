@@ -61,7 +61,7 @@ public final class GnomeGlider
     /**
      * The destinations of the glider map, each paired with its map button and
      * the toggle that blocks it. The Feldip Hills and Ape Atoll buttons stay
-     * hidden until their quest progress is met. Gliders have no master toggle.
+     * hidden until their quest progress is met.
      * The pilots' Glider option has a toggle of its own, since its menu entry
      * does not name the place it flies to.
      */

@@ -28,8 +28,7 @@ import java.util.function.Predicate;
 
 /**
  * Canoe destinations in map order, River Lum first, each paired with the name
- * the map prints and the toggle that blocks it. Canoes have no master toggle,
- * so every destination is blocked only by its own. The station tree, the canoe
+ * the map prints and the toggle that blocks it. The station tree, the canoe
  * shape picker and the expert's own options are left alone.
  */
 public enum CanoeDestination

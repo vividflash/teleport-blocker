@@ -29,8 +29,7 @@ import net.runelite.api.gameval.InterfaceID;
 
 /**
  * Lunar spellbook teleports in spellbook order, each paired with its packed
- * component id and the toggle that blocks it. The book has no master toggle,
- * so every spell is blocked only by its own. The Tele Group variants are left
+ * component id and the toggle that blocks it. The Tele Group variants are left
  * alone.
  */
 public enum LunarTeleportSpell

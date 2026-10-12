@@ -53,13 +53,13 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "checkedMeans",
-        name = "Checked means",
+        name = "Checked Means",
         description = "",
         position = 0
     )
     default CheckedMeans checkedMeans()
     {
-        return CheckedMeans.BLOCK;
+        return CheckedMeans.ALLOW;
     }
 
     @ConfigSection(
@@ -416,7 +416,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "ratPitsArdougne",
-        name = "Rat Pits: Ardougne (kittens)",
+        name = "Rat Pits: Ardougne (Kittens)",
         description = "",
         position = 31,
         section = minigamesSection
@@ -428,7 +428,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "ratPitsVarrock",
-        name = "Rat Pits: Varrock (grown cats)",
+        name = "Rat Pits: Varrock (Grown Cats)",
         description = "",
         position = 32,
         section = minigamesSection
@@ -440,7 +440,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "ratPitsKeldagrim",
-        name = "Rat Pits: Keldagrim (overgrown cats)",
+        name = "Rat Pits: Keldagrim (Overgrown Cats)",
         description = "",
         position = 33,
         section = minigamesSection
@@ -452,7 +452,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "ratPitsPortSarim",
-        name = "Rat Pits: Port Sarim (wily cats)",
+        name = "Rat Pits: Port Sarim (Wily Cats)",
         description = "",
         position = 34,
         section = minigamesSection
@@ -535,7 +535,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Ancient spellbook",
+        name = "Ancient Spellbook",
         description = "",
         position = 41,
         closedByDefault = true
@@ -664,7 +664,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Lunar spellbook",
+        name = "Lunar Spellbook",
         description = "",
         position = 52,
         closedByDefault = true
@@ -933,7 +933,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Ring of dueling",
+        name = "Ring of Dueling",
         description = "",
         position = 75,
         closedByDefault = true
@@ -989,7 +989,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Games necklace",
+        name = "Games Necklace",
         description = "",
         position = 80,
         closedByDefault = true
@@ -1057,7 +1057,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Amulet of glory",
+        name = "Amulet of Glory",
         description = "",
         position = 86,
         closedByDefault = true
@@ -1113,7 +1113,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Ring of wealth",
+        name = "Ring of Wealth",
         description = "",
         position = 91,
         closedByDefault = true
@@ -1169,7 +1169,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Necklace of passage",
+        name = "Necklace of Passage",
         description = "",
         position = 96,
         closedByDefault = true
@@ -1225,7 +1225,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Combat bracelet",
+        name = "Combat Bracelet",
         description = "",
         position = 101,
         closedByDefault = true
@@ -1281,7 +1281,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Skills necklace",
+        name = "Skills Necklace",
         description = "",
         position = 106,
         closedByDefault = true
@@ -1361,7 +1361,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Slayer ring",
+        name = "Slayer Ring",
         description = "",
         position = 113,
         closedByDefault = true
@@ -1441,7 +1441,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Digsite pendant",
+        name = "Digsite Pendant",
         description = "",
         position = 120,
         closedByDefault = true
@@ -1485,7 +1485,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Burning amulet",
+        name = "Burning Amulet",
         description = "",
         position = 124,
         closedByDefault = true
@@ -1529,7 +1529,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Soul Wars portal and Edgeville lever",
+        name = "Soul Wars Portal and Edgeville Lever",
         description = "",
         position = 128,
         closedByDefault = true
@@ -1586,7 +1586,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "edgevilleLeverToWilderness",
-        name = "Edgeville lever to Wilderness",
+        name = "Edgeville Lever to Wilderness",
         description = "",
         position = 130,
         section = soulWarsPortalSection
@@ -1598,7 +1598,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "ardougneLeverToWilderness",
-        name = "Ardougne lever to Wilderness",
+        name = "Ardougne Lever to Wilderness",
         description = "",
         position = 129,
         section = soulWarsPortalSection
@@ -1610,7 +1610,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "wildernessLeverToEdgeville",
-        name = "Wilderness lever to Edgeville",
+        name = "Wilderness Lever to Edgeville",
         description = "",
         position = 136,
         section = soulWarsPortalSection
@@ -1622,7 +1622,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "wildernessLeverToArdougne",
-        name = "Wilderness lever to Ardougne",
+        name = "Wilderness Lever to Ardougne",
         description = "Also Pull before the Wilderness Easy Diary.",
         position = 135,
         section = soulWarsPortalSection
@@ -1633,7 +1633,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Spirit trees",
+        name = "Spirit Trees",
         description = "",
         position = 137,
         closedByDefault = true
@@ -1774,7 +1774,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "spiritTreeHouse",
-        name = "Your house",
+        name = "Your House",
         description = "",
         position = 149,
         section = spiritTreeSection
@@ -1810,7 +1810,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "spiritTreePrevious",
-        name = "Previous destination",
+        name = "Previous Destination",
         description = "",
         position = 152,
         section = spiritTreeSection
@@ -1821,7 +1821,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Gnome gliders",
+        name = "Gnome Gliders",
         description = "",
         position = 153,
         closedByDefault = true
@@ -1914,8 +1914,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "gnomeGliderPrevious",
-        name = "Previous destination",
-        description = "The pilots' Glider option.",
+        name = "Previous Destination",
+        description = "",
         position = 161,
         section = gnomeGliderSection
     )
@@ -1925,7 +1925,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Quetzal transport",
+        name = "Quetzal Transport",
         description = "",
         position = 162,
         closedByDefault = true
@@ -1958,8 +1958,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "quetzalPrevious",
-        name = "Previous destination",
-        description = "Also on quetzal whistles.",
+        name = "Previous Destination",
+        description = "",
         position = 179,
         section = quetzalSection
     )
@@ -2137,7 +2137,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Lovakengj minecarts",
+        name = "Lovakengj Minecarts",
         description = "",
         position = 180,
         closedByDefault = true
@@ -2230,7 +2230,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "minecartMountQuidamortem",
-        name = "Mount Quidamortem",
+        name = "Mt. Quidamortem",
         description = "",
         position = 188,
         section = minecartSection
@@ -2289,7 +2289,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Charter ships",
+        name = "Charter Ships",
         description = "Each port also removes Charter-to that port.",
         position = 193,
         closedByDefault = true
@@ -2550,8 +2550,8 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "charterPrevious",
-        name = "Previous destination",
-        description = "The crews' Charter-to option.",
+        name = "Previous Destination",
+        description = "",
         position = 215,
         section = charterSection
     )
@@ -2561,7 +2561,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Other ships",
+        name = "Other Ships",
         description = "",
         position = 216,
         closedByDefault = true
@@ -3106,7 +3106,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatConchNorthCoast",
-        name = "Great Conch - North coast",
+        name = "Great Conch - North Coast",
         description = "",
         position = 261,
         section = boatSection
@@ -3118,7 +3118,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "boatConchEastCoast",
-        name = "Great Conch - East coast",
+        name = "Great Conch - East Coast",
         description = "",
         position = 260,
         section = boatSection
@@ -3162,7 +3162,7 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "fossilIslandBankIsland",
-        name = "Bank island",
+        name = "Bank Island",
         description = "",
         position = 271,
         section = fossilIslandSection
@@ -3211,7 +3211,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Other",
         description = "",
-        position = 280,
+        position = 360,
         closedByDefault = true
     )
     String otherSection = "otherSection";
@@ -3220,7 +3220,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideShayzienOutpost",
         name = "M. Guide - Shayzien Outpost",
         description = "",
-        position = 284,
+        position = 364,
         section = otherSection
     )
     default boolean mountainGuideShayzienOutpost()
@@ -3230,9 +3230,9 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "mountainGuideMountQuidamortem",
-        name = "M. Guide - Mount Quidamortem",
+        name = "M. Guide - Mt. Quidamortem",
         description = "",
-        position = 281,
+        position = 361,
         section = otherSection
     )
     default boolean mountainGuideMountQuidamortem()
@@ -3244,7 +3244,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideSouthOfQuidamortem",
         name = "M. Guide - South of Quidamortem",
         description = "",
-        position = 285,
+        position = 365,
         section = otherSection
     )
     default boolean mountainGuideSouthOfQuidamortem()
@@ -3256,7 +3256,7 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideQuetzacalliGorge",
         name = "M. Guide - Quetzacalli Gorge",
         description = "",
-        position = 283,
+        position = 363,
         section = otherSection
     )
     default boolean mountainGuideQuetzacalliGorge()
@@ -3268,10 +3268,798 @@ public interface TeleportBlockerConfig extends Config
         keyName = "mountainGuideNemusRetreat",
         name = "M. Guide - Nemus Retreat",
         description = "",
-        position = 282,
+        position = 362,
         section = otherSection
     )
     default boolean mountainGuideNemusRetreat()
+    {
+        return false;
+    }
+
+    @ConfigSection(
+        name = "Fairy Rings",
+        description = "",
+        position = 290,
+        closedByDefault = true
+    )
+    String fairyRingSection = "fairyRingSection";
+
+    @ConfigItem(
+        keyName = "fairyRingAIP",
+        name = "AIP",
+        description = "",
+        position = 291,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAIP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAIQ",
+        name = "AIQ (Mudskipper Point)",
+        description = "",
+        position = 292,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAIQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAIR",
+        name = "AIR (Ardougne Island)",
+        description = "",
+        position = 293,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAIR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAIS",
+        name = "AIS (Auburn Valley)",
+        description = "",
+        position = 294,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAIS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAJP",
+        name = "AJP (Avium Savannah)",
+        description = "",
+        position = 295,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAJP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAJQ",
+        name = "AJQ (Dorgesh-Kaan Cave)",
+        description = "",
+        position = 296,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAJQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAJR",
+        name = "AJR (Slayer Cave)",
+        description = "",
+        position = 297,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAJR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAJS",
+        name = "AJS (Penguins)",
+        description = "",
+        position = 298,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAJS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAKP",
+        name = "AKP (Necropolis)",
+        description = "",
+        position = 299,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAKP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAKQ",
+        name = "AKQ (Piscatoris)",
+        description = "",
+        position = 300,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAKQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAKR",
+        name = "AKR (Hosidius Vinery)",
+        description = "",
+        position = 301,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAKR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingAKS",
+        name = "AKS (Feldip Hills)",
+        description = "",
+        position = 302,
+        section = fairyRingSection
+    )
+    default boolean fairyRingAKS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingALP",
+        name = "ALP (Lighthouse)",
+        description = "",
+        position = 303,
+        section = fairyRingSection
+    )
+    default boolean fairyRingALP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingALQ",
+        name = "ALQ (Haunted Woods)",
+        description = "",
+        position = 304,
+        section = fairyRingSection
+    )
+    default boolean fairyRingALQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingALR",
+        name = "ALR (Abyssal Area)",
+        description = "",
+        position = 305,
+        section = fairyRingSection
+    )
+    default boolean fairyRingALR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingALS",
+        name = "ALS (McGrubor's Wood)",
+        description = "",
+        position = 306,
+        section = fairyRingSection
+    )
+    default boolean fairyRingALS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBIP",
+        name = "BIP (Mort Myre Island)",
+        description = "",
+        position = 307,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBIP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBIQ",
+        name = "BIQ (Kalphite Hive)",
+        description = "",
+        position = 308,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBIQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBIR",
+        name = "BIR",
+        description = "",
+        position = 309,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBIR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBIS",
+        name = "BIS (Ardougne Zoo)",
+        description = "",
+        position = 310,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBIS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBJP",
+        name = "BJP (Isle of Souls)",
+        description = "",
+        position = 311,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBJP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBJQ",
+        name = "BJQ",
+        description = "",
+        position = 312,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBJQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBJR",
+        name = "BJR (Fisher King)",
+        description = "",
+        position = 313,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBJR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBJS",
+        name = "BJS (Zul-Andra)",
+        description = "",
+        position = 314,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBJS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBKP",
+        name = "BKP (Castle Wars)",
+        description = "",
+        position = 315,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBKP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBKQ",
+        name = "BKQ (Enchanted Valley)",
+        description = "",
+        position = 316,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBKQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBKR",
+        name = "BKR (Mort Myre)",
+        description = "",
+        position = 317,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBKR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBKS",
+        name = "BKS (Zanaris)",
+        description = "",
+        position = 318,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBKS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBLP",
+        name = "BLP (TzHaar)",
+        description = "",
+        position = 319,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBLP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBLQ",
+        name = "BLQ (Yu'biusk)",
+        description = "",
+        position = 320,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBLQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBLR",
+        name = "BLR (Legends' Guild)",
+        description = "",
+        position = 321,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBLR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingBLS",
+        name = "BLS (South of Quidamortem)",
+        description = "",
+        position = 322,
+        section = fairyRingSection
+    )
+    default boolean fairyRingBLS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCIP",
+        name = "CIP (Miscellania)",
+        description = "",
+        position = 323,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCIP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCIQ",
+        name = "CIQ (Yanille)",
+        description = "",
+        position = 324,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCIQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCIR",
+        name = "CIR (Farming Guild)",
+        description = "",
+        position = 325,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCIR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCIS",
+        name = "CIS (Arceuus Library)",
+        description = "",
+        position = 326,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCIS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCJP",
+        name = "CJP",
+        description = "",
+        position = 327,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCJP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCJQ",
+        name = "CJQ (Great Conch)",
+        description = "",
+        position = 328,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCJQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCJR",
+        name = "CJR (Sinclair Mansion)",
+        description = "",
+        position = 329,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCJR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCJS",
+        name = "CJS",
+        description = "",
+        position = 330,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCJS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCKP",
+        name = "CKP (Cosmic Plane)",
+        description = "",
+        position = 331,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCKP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCKQ",
+        name = "CKQ (Aldarin)",
+        description = "",
+        position = 332,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCKQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCKR",
+        name = "CKR (Tai Bwo Wannai)",
+        description = "",
+        position = 333,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCKR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCKS",
+        name = "CKS (Canifis)",
+        description = "",
+        position = 334,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCKS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCLP",
+        name = "CLP (Draynor Island)",
+        description = "",
+        position = 335,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCLP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCLQ",
+        name = "CLQ",
+        description = "",
+        position = 336,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCLQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCLR",
+        name = "CLR (Ape Atoll)",
+        description = "",
+        position = 337,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCLR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingCLS",
+        name = "CLS (Hazelmere)",
+        description = "",
+        position = 338,
+        section = fairyRingSection
+    )
+    default boolean fairyRingCLS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDIP",
+        name = "DIP (Abyssal Nexus)",
+        description = "",
+        position = 339,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDIP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDIQ",
+        name = "DIQ (Your House)",
+        description = "",
+        position = 340,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDIQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDIR",
+        name = "DIR (Gorak's Plane)",
+        description = "",
+        position = 341,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDIR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDIS",
+        name = "DIS (Wizards' Tower)",
+        description = "",
+        position = 342,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDIS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDJP",
+        name = "DJP (Tower of Life)",
+        description = "",
+        position = 343,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDJP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDJQ",
+        name = "DJQ",
+        description = "",
+        position = 344,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDJQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDJR",
+        name = "DJR (Chasm of Fire)",
+        description = "",
+        position = 345,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDJR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDJS",
+        name = "DJS",
+        description = "",
+        position = 346,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDJS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDKP",
+        name = "DKP (Musa Point)",
+        description = "",
+        position = 347,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDKP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDKQ",
+        name = "DKQ",
+        description = "",
+        position = 348,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDKQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDKR",
+        name = "DKR (Edgeville)",
+        description = "",
+        position = 349,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDKR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDKS",
+        name = "DKS (Polar Hunter)",
+        description = "",
+        position = 350,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDKS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDLP",
+        name = "DLP (Grimstone Dungeon)",
+        description = "",
+        position = 351,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDLP()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDLQ",
+        name = "DLQ (Nardah)",
+        description = "",
+        position = 352,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDLQ()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDLR",
+        name = "DLR (Poison Waste)",
+        description = "",
+        position = 353,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDLR()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingDLS",
+        name = "DLS (Myreque Hideout)",
+        description = "",
+        position = 354,
+        section = fairyRingSection
+    )
+    default boolean fairyRingDLS()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fairyRingPrevious",
+        name = "Previous Destination",
+        description = "",
+        position = 290,
+        section = fairyRingSection
+    )
+    default boolean fairyRingPrevious()
     {
         return false;
     }

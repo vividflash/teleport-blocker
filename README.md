@@ -4,12 +4,12 @@
 option of your item? Went outside of your chunks? Introducing the cure:
 Teleport Blocker. <small><i>Available from your local plugin hub.</i></small>
 
-Set **Checked means** to `Allow` to allow only the checked options and block
-everything else. Default `Block`.
+Set **Checked Means** to `Block` to block only the checked options and allow
+everything else. Default `Allow`.
 
 ## Features
 
-**Spells and minigames**
+**Spells and Minigames**
 
 - **Teleports**: Home, Minigame, Varrock, Lumbridge, Falador, House, Camelot,
   Kourend Castle, Ardougne, Civitas illa Fortis, Watchtower, Trollheim, Ape
@@ -18,61 +18,61 @@ everything else. Default `Block`.
   Games Room, Castle Wars, Clan Wars, Fishing Trawler, Giants' Foundry,
   Guardians of the Rift, Last Man Standing, Mage Training Arena, Mastering
   Mixology, Nightmare Zone, Pest Control, Rat Pits, Rat Pits: Ardougne
-  (kittens), Rat Pits: Varrock (grown cats), Rat Pits: Keldagrim (overgrown
-  cats), Rat Pits: Port Sarim (wily cats), Shades of Mort'ton, Sorceress's
+  (Kittens), Rat Pits: Varrock (Grown Cats), Rat Pits: Keldagrim (Overgrown
+  Cats), Rat Pits: Port Sarim (Wily Cats), Shades of Mort'ton, Sorceress's
   Garden, Soul Wars, Tithe Farm, Trouble Brewing, TzHaar Fight Pit.
-- **Ancient spellbook**: Home, Minigame, Paddewwa, Senntisten, Kharyrll,
+- **Ancient Spellbook**: Home, Minigame, Paddewwa, Senntisten, Kharyrll,
   Lassar, Dareeyak, Carrallanger, Annakarl, Ghorrock.
-- **Lunar spellbook**: Home, Minigame, Moonclan, Ourania, Waterbirth,
+- **Lunar Spellbook**: Home, Minigame, Moonclan, Ourania, Waterbirth,
   Barbarian, Khazard, Fishing Guild, Catherby, Ice Plateau.
 
-**Canoes and jewellery**
+**Canoes and Jewellery**
 
 - **Canoes**: Lumbridge, Champions' Guild, Barbarian Village, Edgeville, Ferox
   Enclave, Wilderness Pond, Castle Wars, Tree Gnome Village, Clocktower, Chaos
   Druid Tower, Tree Gnome Stronghold.
-- **Ring of dueling**: Emir's Arena, Castle Wars, Ferox Enclave, Fortis
+- **Ring of Dueling**: Emir's Arena, Castle Wars, Ferox Enclave, Fortis
   Colosseum.
-- **Games necklace**: Burthorpe, Barbarian Outpost, Corporeal Beast, Tears of
+- **Games Necklace**: Burthorpe, Barbarian Outpost, Corporeal Beast, Tears of
   Guthix, Wintertodt Camp.
-- **Amulet of glory**: Edgeville, Karamja, Draynor Village, Al Kharid.
-- **Ring of wealth**: Miscellania, Grand Exchange, Falador Park, Dondakan.
-- **Necklace of passage**: Wizards' Tower, The Outpost, Eagles' Eyrie,
+- **Amulet of Glory**: Edgeville, Karamja, Draynor Village, Al Kharid.
+- **Ring of Wealth**: Miscellania, Grand Exchange, Falador Park, Dondakan.
+- **Necklace of Passage**: Wizards' Tower, The Outpost, Eagles' Eyrie,
   Wyrmscraig.
-- **Combat bracelet**: Warriors' Guild, Champions' Guild, Monastery, Ranging
+- **Combat Bracelet**: Warriors' Guild, Champions' Guild, Monastery, Ranging
   Guild.
-- **Skills necklace**: Fishing Guild, Mining Guild, Crafting Guild, Cooking
+- **Skills Necklace**: Fishing Guild, Mining Guild, Crafting Guild, Cooking
   Guild, Woodcutting Guild, Farming Guild.
-- **Slayer ring**: Stronghold Slayer Cave, Slayer Tower, Fremennik Slayer
+- **Slayer Ring**: Stronghold Slayer Cave, Slayer Tower, Fremennik Slayer
   Dungeon, Tarn's Lair, Dark Beasts, Wyrmscraig Cavern.
-- **Digsite pendant**: Digsite, Fossil Island, Lithkren Dungeon.
-- **Burning amulet**: Chaos Temple, Bandit Camp, Lava Maze.
+- **Digsite Pendant**: Digsite, Fossil Island, Lithkren Dungeon.
+- **Burning Amulet**: Chaos Temple, Bandit Camp, Lava Maze.
 
 **Transport**
 
-- **Soul Wars portal and Edgeville lever**: Ardougne lever to Wilderness,
-  Edgeville lever to Wilderness, Edgeville to Soul Wars, Ferox Enclave to Soul
-  Wars, Soul Wars to Edgeville, Soul Wars to Ferox Enclave, Wilderness lever
-  to Ardougne, Wilderness lever to Edgeville.
-- **Spirit trees**: Tree Gnome Village, Gnome Stronghold, Battlefield of
+- **Soul Wars Portal and Edgeville Lever**: Ardougne Lever to Wilderness,
+  Edgeville Lever to Wilderness, Edgeville to Soul Wars, Ferox Enclave to Soul
+  Wars, Soul Wars to Edgeville, Soul Wars to Ferox Enclave, Wilderness Lever
+  to Ardougne, Wilderness Lever to Edgeville.
+- **Spirit Trees**: Tree Gnome Village, Gnome Stronghold, Battlefield of
   Khazard, Grand Exchange, Feldip Hills, Prifddinas, Port Sarim, Etceteria,
-  Brimhaven, Hosidius, Farming Guild, Your house, Poison Waste, Laguna
-  Aurorae, Previous destination.
-- **Gnome gliders**: Al Kharid, Ape Atoll, Digsite, Feldip Hills, Grand Tree,
-  Karamja, White Wolf Mountain, Previous destination.
-- **Quetzal transport**: Aldarin, Auburnvale, Cam Torum Entrance, Civitas,
+  Brimhaven, Hosidius, Farming Guild, Your House, Poison Waste, Laguna
+  Aurorae, Previous Destination.
+- **Gnome Gliders**: Al Kharid, Ape Atoll, Digsite, Feldip Hills, Grand Tree,
+  Karamja, White Wolf Mountain, Previous Destination.
+- **Quetzal Transport**: Aldarin, Auburnvale, Cam Torum Entrance, Civitas,
   Civitas to Varrock, Colossal Wyrm Remains, Fortis Colosseum, Hunter Guild,
   Kastori, Outer Fortis, Quetzacalli Gorge, Salvager Overlook, Sunset Coast,
-  Tal Teklan, The Teomat, Varrock to Civitas, Previous destination.
-- **Lovakengj minecarts**: Arceuus, Farming Guild, Hosidius South, Hosidius
-  West, Kingstown, Kourend Woodland, Lovakengj, Mount Quidamortem, Northern
+  Tal Teklan, The Teomat, Varrock to Civitas, Previous Destination.
+- **Lovakengj Minecarts**: Arceuus, Farming Guild, Hosidius South, Hosidius
+  West, Kingstown, Kourend Woodland, Lovakengj, Mt. Quidamortem, Northern
   Tundras, Port Piscarilius, Shayzien East, Shayzien West.
-- **Charter ships**: Aldarin, Brimhaven, Catherby, Civitas illa Fortis,
+- **Charter Ships**: Aldarin, Brimhaven, Catherby, Civitas illa Fortis,
   Corsair Cove, Deepfin Point, Karamja Shipyard, Land's End, Mos Le'Harmless,
   Musa Point, Port Khazard, Port Phasmatys, Port Piscarilius, Port Roberts,
   Port Sarim, Port Tyras, Prifddinas, Red Rock, Sunset Coast, The Pandemonium,
-  The Summer Shore, Previous destination.
-- **Other ships**: Barnaby - Ardougne, Barnaby - Brimhaven, Barnaby -
+  The Summer Shore, Previous Destination.
+- **Other Ships**: Barnaby - Ardougne, Barnaby - Brimhaven, Barnaby -
   Rimmington, Entrana - Port Sarim, Jatizso - Rellekka, Land's End - Port
   Piscarilius, Land's End - Port Sarim, Miscellania - Rellekka, Musa Point -
   Port Sarim, Musa Point - The Pandemonium, Neitiznot - Rellekka, Pirates'
@@ -85,13 +85,30 @@ everything else. Default `Block`.
   Sarim, Waterbirth - Rellekka.
 - **Boats**: Achilka - Gloomthorn Trail, Achilka - Kastori, Achilka - Tal
   Teklan, Boaty - Battlefront, Boaty - Molch, Boaty - Molch Island, Boaty -
-  Shayzien, Great Conch - East coast, Great Conch - North coast, Great Conch -
+  Shayzien, Great Conch - East Coast, Great Conch - North Coast, Great Conch -
   Summer Shore, Larry - Iceberg, Larry - Rellekka, Larry - Weiss, Morytania -
   Burgh de Rott, Morytania - Icyene Graveyard, Morytania - Meiyerditch,
   Morytania - Slepe.
-- **Fossil Island**: Bank island, Digsite, Fossil Island, Lithkren, Museum
+- **Fossil Island**: Bank Island, Digsite, Fossil Island, Lithkren, Museum
   Camp, North.
-- **Other**: M. Guide - Mount Quidamortem, M. Guide - Nemus Retreat, M.
+- **Fairy Rings**: Previous Destination, AIP, AIQ (Mudskipper Point), AIR
+  (Ardougne Island), AIS (Auburn Valley), AJP (Avium Savannah), AJQ
+  (Dorgesh-Kaan Cave), AJR (Slayer Cave), AJS (Penguins), AKP (Necropolis), AKQ
+  (Piscatoris), AKR (Hosidius Vinery), AKS (Feldip Hills), ALP (Lighthouse),
+  ALQ (Haunted Woods), ALR (Abyssal Area), ALS (McGrubor's Wood), BIP (Mort
+  Myre Island), BIQ (Kalphite Hive), BIR, BIS (Ardougne Zoo), BJP (Isle of
+  Souls), BJQ, BJR (Fisher King), BJS (Zul-Andra), BKP (Castle Wars), BKQ
+  (Enchanted Valley), BKR (Mort Myre), BKS (Zanaris), BLP (TzHaar), BLQ
+  (Yu'biusk), BLR (Legends' Guild), BLS (South of Quidamortem), CIP
+  (Miscellania), CIQ (Yanille), CIR (Farming Guild), CIS (Arceuus Library),
+  CJP, CJQ (Great Conch), CJR (Sinclair Mansion), CJS, CKP (Cosmic Plane), CKQ
+  (Aldarin), CKR (Tai Bwo Wannai), CKS (Canifis), CLP (Draynor Island), CLQ,
+  CLR (Ape Atoll), CLS (Hazelmere), DIP (Abyssal Nexus), DIQ (Your House), DIR
+  (Gorak's Plane), DIS (Wizards' Tower), DJP (Tower of Life), DJQ, DJR (Chasm
+  of Fire), DJS, DKP (Musa Point), DKQ, DKR (Edgeville), DKS (Polar Hunter),
+  DLP (Grimstone Dungeon), DLQ (Nardah), DLR (Poison Waste), DLS (Myreque
+  Hideout).
+- **Other**: M. Guide - Mt. Quidamortem, M. Guide - Nemus Retreat, M.
   Guide - Quetzacalli Gorge, M. Guide - Shayzien Outpost, M. Guide - South of
   Quidamortem.
 
