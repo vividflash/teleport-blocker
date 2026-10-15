@@ -42,6 +42,7 @@ import net.runelite.api.gameval.ObjectID;
 public final class FossilIsland
 {
     private static final String TRAVEL_OPTION = "Travel";
+    private static final String TRAVEL_KEY = StripAndLowercase.of(TRAVEL_OPTION);
 
     /** The rowboats on the island, whose Travel option opens the picker. */
     private static final Set<Integer> PICKER_OBJECT_IDS = ids(
@@ -63,7 +64,7 @@ public final class FossilIsland
 
     private static boolean isTravel(String option)
     {
-        return StripAndLowercase.of(TRAVEL_OPTION).equals(StripAndLowercase.of(option));
+        return TRAVEL_KEY.equals(StripAndLowercase.of(option));
     }
 
     /** True when the option on the object opens the rowboat picker. */

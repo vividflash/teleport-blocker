@@ -254,6 +254,8 @@ public final class Ship
         private final Set<Integer> npcIds;
         private final List<String> options;
         private final List<String> lines;
+        private final List<String> optionKeys;
+        private final List<String> lineKeys;
         private final Set<Integer> talkIds;
         private final Predicate<TeleportBlockerConfig> blocked;
 
@@ -263,6 +265,8 @@ public final class Ship
             this.npcIds = npcIds;
             this.options = options;
             this.lines = lines;
+            this.optionKeys = keys(options);
+            this.lineKeys = keys(lines);
             this.talkIds = talkIds;
             this.blocked = blocked;
         }
@@ -280,12 +284,12 @@ public final class Ship
 
         public boolean matchesOption(String option)
         {
-            return matchesAny(options, option);
+            return matchesAny(optionKeys, option);
         }
 
         public boolean matchesLine(String line)
         {
-            return matchesAny(lines, line);
+            return matchesAny(lineKeys, line);
         }
 
         public boolean isBlocked(TeleportBlockerConfig config)
@@ -293,12 +297,22 @@ public final class Ship
             return blocked.test(config);
         }
 
-        private static boolean matchesAny(List<String> texts, String text)
+        private static List<String> keys(List<String> texts)
+        {
+            String[] keys = new String[texts.size()];
+            for (int i = 0; i < keys.length; i++)
+            {
+                keys[i] = StripAndLowercase.of(texts.get(i));
+            }
+            return Arrays.asList(keys);
+        }
+
+        private static boolean matchesAny(List<String> keys, String text)
         {
             String key = StripAndLowercase.of(text);
-            for (String candidate : texts)
+            for (String candidate : keys)
             {
-                if (!key.isEmpty() && StripAndLowercase.of(candidate).equals(key))
+                if (!key.isEmpty() && candidate.equals(key))
                 {
                     return true;
                 }

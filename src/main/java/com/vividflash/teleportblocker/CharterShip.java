@@ -296,11 +296,17 @@ public final class CharterShip
 
         private final Predicate<TeleportBlockerConfig> blocked;
         private final List<String> portNames;
+        private final String[] portKeys;
 
         Port(Predicate<TeleportBlockerConfig> blocked, String... portNames)
         {
             this.blocked = blocked;
             this.portNames = Collections.unmodifiableList(Arrays.asList(portNames));
+            this.portKeys = new String[portNames.length];
+            for (int i = 0; i < portNames.length; i++)
+            {
+                portKeys[i] = StripAndLowercase.of(portNames[i]);
+            }
         }
 
         public boolean isBlocked(TeleportBlockerConfig config)
@@ -312,9 +318,9 @@ public final class CharterShip
         public boolean matchesName(String text)
         {
             String name = StripAndLowercase.of(text);
-            for (String portName : portNames)
+            for (String portKey : portKeys)
             {
-                if (!name.isEmpty() && StripAndLowercase.of(portName).equals(name))
+                if (!name.isEmpty() && portKey.equals(name))
                 {
                     return true;
                 }

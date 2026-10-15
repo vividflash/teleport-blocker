@@ -95,6 +95,8 @@ public enum JewelleryTeleport
     private final Jewellery item;
     private final String optionLine;
     private final String altOptionLine;
+    private final String optionKey;
+    private final String altOptionKey;
     private final Predicate<TeleportBlockerConfig> blocked;
 
     JewelleryTeleport(Jewellery item, String optionLine, Predicate<TeleportBlockerConfig> blocked)
@@ -107,6 +109,8 @@ public enum JewelleryTeleport
         this.item = item;
         this.optionLine = optionLine;
         this.altOptionLine = altOptionLine;
+        this.optionKey = StripAndLowercase.of(optionLine);
+        this.altOptionKey = altOptionLine == null ? null : StripAndLowercase.of(altOptionLine);
         this.blocked = blocked;
     }
 
@@ -123,8 +127,8 @@ public enum JewelleryTeleport
     {
         String key = StripAndLowercase.of(line);
         return !key.isEmpty()
-            && (key.equals(StripAndLowercase.of(optionLine))
-                || (altOptionLine != null && key.equals(StripAndLowercase.of(altOptionLine))));
+            && (key.equals(optionKey)
+                || (altOptionKey != null && key.equals(altOptionKey)));
     }
 
     /** True when the line is a known destination of the given item. */

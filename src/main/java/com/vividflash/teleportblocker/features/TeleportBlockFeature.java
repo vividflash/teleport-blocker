@@ -109,6 +109,15 @@ public class TeleportBlockFeature implements KeyListener
 {
     private static final String SELECT_OPTION = "Select";
 
+    private static final String SPIRIT_TREE_TITLE_KEY = StripAndLowercase.of(SpiritTree.TITLE);
+    private static final String SPIRIT_TREE_PREVIOUS_KEY = StripAndLowercase.of(SpiritTree.PREVIOUS_OPTION);
+    private static final String SPIRIT_TREE_OBJECT_KEY = StripAndLowercase.of(SpiritTree.OBJECT_NAME);
+    private static final String GLIDER_PREVIOUS_KEY = StripAndLowercase.of(GnomeGlider.PREVIOUS_OPTION);
+    private static final String QUETZAL_PREVIOUS_KEY = StripAndLowercase.of(QuetzalTransport.PREVIOUS_OPTION);
+    private static final String QUETZAL_SIGNAL_KEY = StripAndLowercase.of(QuetzalTransport.SIGNAL_OPTION);
+    private static final String SHIP_TALK_KEY = StripAndLowercase.of(Ship.TALK_OPTION);
+    private static final String CHARTER_CONFIRM_KEY = StripAndLowercase.of(CharterShip.CONFIRM_OPTION);
+
     private static final int CANOE_MAP_LUM = WidgetUtil.componentToInterface(InterfaceID.CanoeMapLum.UNIVERSE);
     private static final int CANOE_MAP_DOUGNE = WidgetUtil.componentToInterface(InterfaceID.CanoeMapDougne.UNIVERSE);
 
@@ -212,6 +221,10 @@ public class TeleportBlockFeature implements KeyListener
     /** True when a Mountain Guide around Mount Quidamortem was clicked last, whose chat lines are read until the next click outside a dialogue. */
     private boolean mountainGuideChat;
 
+    /** The variant id of the entry being checked, computed at most once per entry. */
+    private boolean variantKnown;
+    private int entryVariantId;
+
     public void startUp()
     {
         rebuildBlocked();
@@ -267,7 +280,16 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onMenuEntryAdded(MenuEntryAdded event)
     {
-        filterMenu();
+        if (!isFiltering())
+        {
+            return;
+        }
+
+        MenuEntry entry = event.getMenuEntry();
+        if (isBlocked(entry))
+        {
+            client.getMenu().removeMenuEntry(entry);
+        }
     }
 
     // An opened menu is filtered again, for a ring's Last option and
@@ -278,16 +300,23 @@ public class TeleportBlockFeature implements KeyListener
         filterMenu();
     }
 
-    private void filterMenu()
+    private boolean isFiltering()
     {
-        if (blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
+        return !(blockedSpellComponents.isEmpty() && blockedMinigames.isEmpty() && blockedJewellery.isEmpty()
             && blockedCanoes.isEmpty() && blockedEntryPortals.isEmpty() && blockedLeverEntries.isEmpty()
             && blockedLeverDestinations.isEmpty() && blockedSpiritTrees.isEmpty() && !blockSpiritTreePrevious
             && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
             && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty()
             && blockedCharterPorts.isEmpty() && !blockCharterPrevious && blockedShipLegs.isEmpty() && blockedBoats.isEmpty()
             && blockedFossilIsland.isEmpty() && blockedMountainGuides.isEmpty()
-            && blockedFairyRings.isEmpty() && !blockFairyRingPrevious)
+            && blockedFairyRings.isEmpty() && !blockFairyRingPrevious);
+    }
+
+    // Submenus are walked on this full pass only, which runs before the menu
+    // shows.
+    private void filterMenu()
+    {
+        if (!isFiltering())
         {
             return;
         }
@@ -295,7 +324,7 @@ public class TeleportBlockFeature implements KeyListener
         Menu menu = client.getMenu();
         MenuEntry[] entries = menu.getMenuEntries();
 
-        Set<MenuEntry> emptiedFavourites = new HashSet<>();
+        Set<MenuEntry> emptiedFavourites = null;
         if (!blockedJewellery.isEmpty() || !blockedFairyRings.isEmpty())
         {
             for (MenuEntry entry : entries)
@@ -306,28 +335,63 @@ public class TeleportBlockFeature implements KeyListener
                 }
                 if (filterFairyRingFavourites(entry))
                 {
+                    if (emptiedFavourites == null)
+                    {
+                        emptiedFavourites = new HashSet<>();
+                    }
                     emptiedFavourites.add(entry);
                 }
             }
         }
 
-        MenuEntry[] filtered = Arrays.stream(entries)
-            .filter(entry -> !isBlockedSpell(entry) && !isBlockedMinigame(entry) && !isBlockedJewellery(entry)
-                && !isBlockedCanoe(entry) && !isBlockedEntryPortal(entry) && !isBlockedLeverEntry(entry)
-                && !isBlockedLeverDestination(entry) && !isBlockedSpiritTree(entry)
-                && !isBlockedSpiritTreePrevious(entry) && !isBlockedGlider(entry) && !isBlockedGliderPrevious(entry)
-                && !isBlockedQuetzalMap(entry) && !isBlockedQuetzalRoute(entry) && !isBlockedQuetzalPrevious(entry)
-                && !isBlockedWhistleSignal(entry) && !isBlockedMinecart(entry) && !isBlockedCharter(entry)
-                && !isBlockedCharterPrevious(entry) && !isBlockedShip(entry) && !isBlockedBoat(entry)
-                && !isBlockedBoatList(entry) && !isBlockedFossilIsland(entry) && !isBlockedMountainGuide(entry)
-                && !isBlockedFairyRingConfirm(entry) && !isBlockedFairyRingOption(entry)
-                && !emptiedFavourites.contains(entry))
-            .toArray(MenuEntry[]::new);
-
-        if (filtered.length != entries.length)
+        MenuEntry[] filtered = null;
+        int kept = 0;
+        for (int i = 0; i < entries.length; i++)
         {
-            menu.setMenuEntries(filtered);
+            MenuEntry entry = entries[i];
+            if (isBlocked(entry) || (emptiedFavourites != null && emptiedFavourites.contains(entry)))
+            {
+                if (filtered == null)
+                {
+                    filtered = new MenuEntry[entries.length - 1];
+                    System.arraycopy(entries, 0, filtered, 0, i);
+                    kept = i;
+                }
+            }
+            else if (filtered != null)
+            {
+                filtered[kept++] = entry;
+            }
         }
+
+        if (filtered != null)
+        {
+            menu.setMenuEntries(kept == filtered.length ? filtered : Arrays.copyOf(filtered, kept));
+        }
+    }
+
+    private boolean isBlocked(MenuEntry entry)
+    {
+        variantKnown = false;
+        return isBlockedSpell(entry) || isBlockedMinigame(entry) || isBlockedJewellery(entry)
+            || isBlockedCanoe(entry) || isBlockedEntryPortal(entry) || isBlockedLeverEntry(entry)
+            || isBlockedLeverDestination(entry) || isBlockedSpiritTree(entry)
+            || isBlockedSpiritTreePrevious(entry) || isBlockedGlider(entry) || isBlockedGliderPrevious(entry)
+            || isBlockedQuetzalMap(entry) || isBlockedQuetzalRoute(entry) || isBlockedQuetzalPrevious(entry)
+            || isBlockedWhistleSignal(entry) || isBlockedMinecart(entry) || isBlockedCharter(entry)
+            || isBlockedCharterPrevious(entry) || isBlockedShip(entry) || isBlockedBoat(entry)
+            || isBlockedBoatList(entry) || isBlockedFossilIsland(entry) || isBlockedMountainGuide(entry)
+            || isBlockedFairyRingConfirm(entry) || isBlockedFairyRingOption(entry);
+    }
+
+    private int entryVariantId(MenuEntry entry)
+    {
+        if (!variantKnown)
+        {
+            entryVariantId = variantId(entry.getIdentifier());
+            variantKnown = true;
+        }
+        return entryVariantId;
     }
 
     // The Favourites rows sit on a submenu of the ring's Favourites option.
@@ -787,6 +851,11 @@ public class TeleportBlockFeature implements KeyListener
         return !line.isEmpty() && StripAndLowercase.of(optionLine).equals(StripAndLowercase.of(line));
     }
 
+    private static boolean matchesKey(String key, String line)
+    {
+        return !line.isEmpty() && key.equals(StripAndLowercase.of(line));
+    }
+
     private static String plainText(String text)
     {
         return text == null ? "" : Text.removeTags(text).trim();
@@ -1007,7 +1076,7 @@ public class TeleportBlockFeature implements KeyListener
     /** The lines of the spirit tree list, or null when that list is not open. */
     private Widget[] spiritTreeLines()
     {
-        return listLines(title -> matchesLine(SpiritTree.TITLE, title));
+        return listLines(title -> matchesKey(SPIRIT_TREE_TITLE_KEY, title));
     }
 
     /** The lines of the minecart station list, or null when that list is not open. */
@@ -1088,13 +1157,13 @@ public class TeleportBlockFeature implements KeyListener
     private boolean isBlockedSpiritTreePrevious(MenuEntry entry)
     {
         if (!blockSpiritTreePrevious || !OBJECT_OPTIONS.contains(entry.getType())
-            || !matchesLine(SpiritTree.PREVIOUS_OPTION, plainText(entry.getOption())))
+            || !matchesKey(SPIRIT_TREE_PREVIOUS_KEY, plainText(entry.getOption())))
         {
             return false;
         }
 
-        ObjectComposition composition = client.getObjectDefinition(variantId(entry.getIdentifier()));
-        return composition != null && matchesLine(SpiritTree.OBJECT_NAME, plainText(composition.getName()));
+        ObjectComposition composition = client.getObjectDefinition(entryVariantId(entry));
+        return composition != null && matchesKey(SPIRIT_TREE_OBJECT_KEY, plainText(composition.getName()));
     }
 
     // An object whose look depends on the player's progress reaches the menu
@@ -1139,7 +1208,7 @@ public class TeleportBlockFeature implements KeyListener
     private boolean isBlockedGliderPrevious(MenuEntry entry)
     {
         if (!blockGliderPrevious || !NPC_OPTIONS.contains(entry.getType())
-            || !matchesLine(GnomeGlider.PREVIOUS_OPTION, plainText(entry.getOption())))
+            || !matchesKey(GLIDER_PREVIOUS_KEY, plainText(entry.getOption())))
         {
             return false;
         }
@@ -1194,16 +1263,17 @@ public class TeleportBlockFeature implements KeyListener
     // site, so the option is removed whatever it points at.
     private boolean isBlockedQuetzalPrevious(MenuEntry entry)
     {
-        if (!blockQuetzalPrevious || !matchesLine(QuetzalTransport.PREVIOUS_OPTION, plainText(entry.getOption())))
+        if (!blockQuetzalPrevious)
         {
             return false;
         }
 
         if (NPC_OPTIONS.contains(entry.getType()))
         {
-            return npcMatches(entry, QuetzalTransport::isNetworkQuetzal);
+            return matchesKey(QUETZAL_PREVIOUS_KEY, plainText(entry.getOption()))
+                && npcMatches(entry, QuetzalTransport::isNetworkQuetzal);
         }
-        return isWhistleOption(entry);
+        return isWhistleOption(entry) && matchesKey(QUETZAL_PREVIOUS_KEY, plainText(entry.getOption()));
     }
 
     // A whistle set to fly straight to the Hunter Guild does so from Signal
@@ -1212,8 +1282,8 @@ public class TeleportBlockFeature implements KeyListener
     private boolean isBlockedWhistleSignal(MenuEntry entry)
     {
         if (!blockedQuetzalDestinations.contains(QuetzalTransport.Destination.HUNTER_GUILD)
-            || !matchesLine(QuetzalTransport.SIGNAL_OPTION, plainText(entry.getOption()))
-            || !isWhistleOption(entry))
+            || !isWhistleOption(entry)
+            || !matchesKey(QUETZAL_SIGNAL_KEY, plainText(entry.getOption())))
         {
             return false;
         }
@@ -1252,7 +1322,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         int objectId = entry.getIdentifier();
-        int variantId = variantId(objectId);
+        int variantId = entryVariantId(entry);
         for (SoulWarsPortal.Entry portal : blockedEntryPortals)
         {
             if (portal.getObjectId() == objectId || portal.getObjectId() == variantId)
@@ -1273,7 +1343,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         int objectId = entry.getIdentifier();
-        int variantId = variantId(objectId);
+        int variantId = entryVariantId(entry);
         for (WildernessLever.Entry lever : blockedLeverEntries)
         {
             if (lever.getObjectId() == objectId || lever.getObjectId() == variantId)
@@ -1295,7 +1365,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         int objectId = entry.getIdentifier();
-        int variantId = variantId(objectId);
+        int variantId = entryVariantId(entry);
         if (objectId == WildernessLever.Destination.PRE_DIARY_OBJECT_ID
             || variantId == WildernessLever.Destination.PRE_DIARY_OBJECT_ID)
         {
@@ -1429,10 +1499,16 @@ public class TeleportBlockFeature implements KeyListener
             return false;
         }
 
+        int component = entry.getParam1();
+        boolean onInventory = WidgetUtil.componentToInterface(component) == InterfaceID.INVENTORY;
+        if (!onInventory && !isBlockedWornComponent(component))
+        {
+            return false;
+        }
+
         String target = entry.getTarget();
         String itemName = target == null ? "" : Text.removeTags(target).trim();
-        int component = entry.getParam1();
-        boolean bareOnInventory = itemName.isEmpty() && WidgetUtil.componentToInterface(component) == InterfaceID.INVENTORY;
+        boolean bareOnInventory = itemName.isEmpty() && onInventory;
 
         String line = Text.removeTags(option).trim();
         for (JewelleryTeleport teleport : blockedJewellery)
@@ -1443,6 +1519,18 @@ public class TeleportBlockFeature implements KeyListener
                 continue;
             }
             if (bareOnInventory || (onItemMenu(item, component) && item.matchesTarget(itemName)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isBlockedWornComponent(int component)
+    {
+        for (JewelleryTeleport teleport : blockedJewellery)
+        {
+            if (teleport.getItem().getWornComponentId() == component)
             {
                 return true;
             }
@@ -1575,7 +1663,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         String option = plainText(entry.getOption());
-        boolean talk = matchesLine(Ship.TALK_OPTION, option);
+        boolean talk = matchesKey(SHIP_TALK_KEY, option);
         for (Ship.Leg leg : blockedShipLegs)
         {
             if ((leg.matchesOption(option) && npcMatches(entry, leg::isLegNpc))
@@ -1614,7 +1702,7 @@ public class TeleportBlockFeature implements KeyListener
             if (onObject)
             {
                 int objectId = entry.getIdentifier();
-                if (destination.isOptionObject(objectId) || destination.isOptionObject(variantId(objectId)))
+                if (destination.isOptionObject(objectId) || destination.isOptionObject(entryVariantId(entry)))
                 {
                     return true;
                 }
@@ -1665,7 +1753,7 @@ public class TeleportBlockFeature implements KeyListener
         }
 
         int objectId = entry.getIdentifier();
-        int variantId = variantId(objectId);
+        int variantId = entryVariantId(entry);
         String option = plainText(entry.getOption());
         for (FossilIsland.Destination destination : blockedFossilIsland)
         {
@@ -1742,7 +1830,7 @@ public class TeleportBlockFeature implements KeyListener
     // while that port is blocked. It catches a port the menu let through.
     private boolean isBlockedCharterConfirm(Widget[] lines, String line)
     {
-        if (blockedCharterPorts.isEmpty() || !matchesLine(CharterShip.CONFIRM_OPTION, line))
+        if (blockedCharterPorts.isEmpty() || !matchesKey(CHARTER_CONFIRM_KEY, line))
         {
             return false;
         }

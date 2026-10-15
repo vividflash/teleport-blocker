@@ -42,6 +42,7 @@ import net.runelite.api.gameval.NpcID;
 public final class MountainGuide
 {
     private static final String FOLLOW_OPTION = "Follow";
+    private static final String FOLLOW_KEY = StripAndLowercase.of(FOLLOW_OPTION);
 
     private static final Set<Integer> QUIDAMORTEM_GUIDE_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         NpcID.RAIDS_MOUNTAINGUIDE_1OP, NpcID.RAIDS_MOUNTAINGUIDE_2OPS, NpcID.RAIDS_MOUNTAINGUIDE_TEMPLE_MULTI,
@@ -66,7 +67,7 @@ public final class MountainGuide
 
     public static boolean isFollow(String option)
     {
-        return StripAndLowercase.of(FOLLOW_OPTION).equals(StripAndLowercase.of(option));
+        return FOLLOW_KEY.equals(StripAndLowercase.of(option));
     }
 
     /**

@@ -71,12 +71,14 @@ public final class Boat
 
         private final Set<Integer> pickerObjectIds;
         private final String pickerOption;
+        private final String pickerKey;
         private final Set<Integer> talkNpcIds;
 
         Network(Set<Integer> pickerObjectIds, String pickerOption, Set<Integer> talkNpcIds)
         {
             this.pickerObjectIds = pickerObjectIds;
             this.pickerOption = pickerOption;
+            this.pickerKey = StripAndLowercase.of(pickerOption);
             this.talkNpcIds = talkNpcIds;
         }
 
@@ -89,7 +91,7 @@ public final class Boat
         public boolean opensPicker(int objectId, String option)
         {
             return hasPicker() && pickerObjectIds.contains(objectId)
-                && StripAndLowercase.of(pickerOption).equals(StripAndLowercase.of(option));
+                && pickerKey.equals(StripAndLowercase.of(option));
         }
 
         public boolean isTalkNpc(int npcId)
@@ -141,6 +143,7 @@ public final class Boat
         private final Network network;
         private final List<String> lines;
         private final String option;
+        private final String optionKey;
         private final Set<Integer> objectIds;
         private final Set<Integer> npcIds;
         private final Predicate<TeleportBlockerConfig> blocked;
@@ -156,6 +159,7 @@ public final class Boat
             this.network = network;
             this.lines = lines;
             this.option = option;
+            this.optionKey = StripAndLowercase.of(option);
             this.objectIds = objectIds;
             this.npcIds = npcIds;
             this.blocked = blocked;
@@ -168,7 +172,7 @@ public final class Boat
 
         public boolean matchesOption(String text)
         {
-            return option != null && StripAndLowercase.of(option).equals(StripAndLowercase.of(text));
+            return option != null && optionKey.equals(StripAndLowercase.of(text));
         }
 
         public boolean isOptionObject(int objectId)
