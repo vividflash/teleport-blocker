@@ -62,7 +62,7 @@ public final class FossilIsland
         return Collections.unmodifiableList(Arrays.asList(texts));
     }
 
-    private static boolean isTravel(String option)
+    public static boolean isTravel(String option)
     {
         return TRAVEL_KEY.equals(StripAndLowercase.of(option));
     }
@@ -99,10 +99,10 @@ public final class FossilIsland
             this.blocked = blocked;
         }
 
-        /** True when the option on the object travels straight to this destination. */
-        public boolean travelsFrom(int objectId, String option)
+        /** True when the object's Travel option goes straight to this destination. */
+        public boolean travelsFrom(int objectId)
         {
-            return travelObjectIds.contains(objectId) && isTravel(option);
+            return travelObjectIds.contains(objectId);
         }
 
         public boolean isBlocked(TeleportBlockerConfig config)

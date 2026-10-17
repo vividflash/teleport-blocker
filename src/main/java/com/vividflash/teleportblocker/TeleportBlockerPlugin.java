@@ -52,9 +52,9 @@ public class TeleportBlockerPlugin extends Plugin
     private static final String LAST_SEEN_VERSION_KEY = "lastSeenVersion";
 
     /** The release the notice below belongs to, not the packaged version. */
-    private static final String VERSION = "1.6";
+    private static final String VERSION = "1.7";
     private static final String UPDATE_MESSAGE =
-        "Teleport Blocker v1.6: New Default: \"Checked Means\": Allow; Added Fairy Rings.";
+        "Teleport Blocker v1.7: Added Diary Items; Several Performance Improvements; Regrouped the Settings and Improved Readme.";
 
     /** Dark red, for legibility against the opaque chatbox background. */
     private static final Color NOTICE_COLOR = new Color(0x480000);

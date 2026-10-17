@@ -170,9 +170,10 @@ public final class Boat
             return network;
         }
 
-        public boolean matchesOption(String text)
+        /** True when the option key, as made by {@link StripAndLowercase}, is this destination's. */
+        public boolean matchesOptionKey(String key)
         {
-            return option != null && optionKey.equals(StripAndLowercase.of(text));
+            return option != null && optionKey.equals(key);
         }
 
         public boolean isOptionObject(int objectId)
