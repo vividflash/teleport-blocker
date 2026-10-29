@@ -28,15 +28,11 @@ import java.util.Locale;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
 
-/**
- * Destinations offered by teleport jewellery and achievement diary reward
- * items, each paired with its item, the option text the game prints and the
- * toggle that blocks it. A few destinations are worded one way on the worn
- * menu and another in the rub dialogue or the inventory menu, so those carry
- * a second accepted line. Cancel, Rub, Wear, Wield, Drop and the Ring of
- * wealth Features, Boss Log and Coin Collection options are not listed and are
- * never touched.
- */
+// Destinations offered by teleport jewellery and achievement diary reward items, each paired with
+// its item, the option text the game prints and the toggle that blocks it. A few destinations are
+// worded one way on the worn menu and another in the rub dialogue or the inventory menu, so those
+// carry a second accepted line. Cancel, Rub, Wear, Wield, Drop and the Ring of wealth Features,
+// Boss Log and Coin Collection options are not listed and are never touched.
 public enum ItemTeleport
 {
     DUELING_EMIRS_ARENA(Item.RING_OF_DUELING, "Emir's Arena", TeleportBlockerConfig::duelingEmirsArena),
@@ -157,7 +153,7 @@ public enum ItemTeleport
                 || (altOptionKey != null && key.equals(altOptionKey)));
     }
 
-    /** True when the line is a known destination of the given item. */
+    // True when the line is a known destination of the given item.
     public static boolean matchesDialogueLine(Item item, String line)
     {
         for (ItemTeleport teleport : values())
@@ -181,15 +177,12 @@ public enum ItemTeleport
         return optionLine;
     }
 
-    /**
-     * Teleport items, each paired with the equipment slot its worn menu sits
-     * on and a lower case fragment of the item name. Every charge variant and tier carries
-     * that fragment, so the fragment stands in for a list of item ids. The
-     * fragment is matched against the menu target, which keeps a destination word
-     * from being read off some unrelated widget. The diary items have no rub
-     * dialogue, and several share the plain Teleport option, so their options
-     * are only matched with the item name on the target.
-     */
+    // Teleport items, each paired with the equipment slot its worn menu sits on and a lower case
+    // fragment of the item name. Every charge variant and tier carries that fragment, so the
+    // fragment stands in for a list of item ids. The fragment is matched against the menu target,
+    // which keeps a destination word from being read off some unrelated widget. The diary items
+    // have no rub dialogue, and several share the plain Teleport option, so their options are only
+    // matched with the item name on the target.
     public enum Item
     {
         RING_OF_DUELING("Ring of dueling", "dueling", InterfaceID.Wornitems.SLOT12),
@@ -237,16 +230,14 @@ public enum ItemTeleport
             return wornComponentId;
         }
 
-        /**
-         * True when the destinations of this item can appear in a chat dialogue
-         * or as bare submenu lines.
-         */
+        // True when the destinations of this item can appear in a chat dialogue or as bare submenu
+        // lines.
         public boolean hasRubDialogue()
         {
             return rubDialogue;
         }
 
-        /** A target that cannot be read matches nothing, so the entry is left alone. */
+        // A target that cannot be read matches nothing, so the entry is left alone.
         public boolean matchesTarget(String target)
         {
             return target != null && target.toLowerCase(Locale.ROOT).contains(targetKeyword);

@@ -31,20 +31,16 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.ObjectID;
 
-/**
- * The Wilderness levers: the Edgeville and Ardougne levers that pull a player
- * into the Deserted Keep, and the Deserted Keep lever that pulls back out.
- */
+// The Wilderness levers: the Edgeville and Ardougne levers that pull a player into the Deserted
+// Keep, and the Deserted Keep lever that pulls back out.
 public final class WildernessLever
 {
     private WildernessLever()
     {
     }
 
-    /**
-     * The two levers that pull into the Wilderness, each paired with its
-     * object id and the toggle that blocks it. Both offer only Pull.
-     */
+    // The two levers that pull into the Wilderness, each paired with its object id and the toggle
+    // that blocks it. Both offer only Pull.
     public enum Entry
     {
         EDGEVILLE(ObjectID.EDGEVILLE_WILDY_LEVER, TeleportBlockerConfig::edgevilleLeverToWilderness),
@@ -70,19 +66,20 @@ public final class WildernessLever
         }
     }
 
-    /**
-     * The two return destinations of the Deserted Keep lever, each paired with
-     * its option line and the toggle that blocks it. Once the Wilderness Easy
-     * Diary is done the lever offers both as options, in either order, so the
-     * option text tells them apart. Before that diary it offers only Pull,
-     * which always goes to Ardougne. Swap-options is never touched.
-     */
+    // The two return destinations of the Deserted Keep lever, each paired with its option line and
+    // the toggle that blocks it. Once the Wilderness Easy Diary is done the lever offers both as
+    // options, in either order, so the option text tells them apart. Before that diary it offers
+    // only Pull, which always goes to Ardougne. Swap-options is never touched.
     public enum Destination
     {
         EDGEVILLE("Edgeville", TeleportBlockerConfig::wildernessLeverToEdgeville),
         ARDOUGNE("Ardougne", TeleportBlockerConfig::wildernessLeverToArdougne);
 
         public static final int PRE_DIARY_OBJECT_ID = ObjectID.WILDOUTLEVER_DEFAULT;
+
+        // The lever reaches the menu under this id, which shows one of the ids here by diary
+        // progress.
+        public static final int VARIANT_BASE_OBJECT_ID = ObjectID.WILDOUTLEVER;
 
         private static final Set<Integer> OBJECT_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             ObjectID.WILDOUTLEVER_DIARY,

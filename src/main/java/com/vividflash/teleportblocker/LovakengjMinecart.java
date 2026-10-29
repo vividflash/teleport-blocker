@@ -26,31 +26,26 @@ package com.vividflash.teleportblocker;
 
 import java.util.function.Predicate;
 
-/**
- * The Lovakengj minecart network. Every conductor and minecart opens the same
- * station list, drawn by the generic list script that also draws the spirit
- * tree list, so the list is recognised by its title. The title goes on to name
- * the fare, which depends on quest progress.
- */
+// The Lovakengj minecart network. Every conductor and minecart opens the same station list, drawn
+// by the generic list script that also draws the spirit tree list, so the list is recognised by its
+// title. The title goes on to name the fare, which depends on quest progress.
 public final class LovakengjMinecart
 {
-    /** The start of the title printed above the station list, ahead of the fare. */
+    // The start of the title printed above the station list, ahead of the fare.
     public static final String TITLE = "Minecart rides";
 
     private LovakengjMinecart()
     {
     }
 
-    /** True when a list title belongs to the station list, whatever fare it names. */
+    // True when a list title belongs to the station list, whatever fare it names.
     public static boolean isTitle(String title)
     {
         return StripAndLowercase.of(title).startsWith(StripAndLowercase.of(TITLE));
     }
 
-    /**
-     * The stations of the list in list order, each paired with the name its
-     * line prints and the toggle that blocks it.
-     */
+    // The stations of the list in list order, each paired with the name its line prints and the
+    // toggle that blocks it.
     public enum Station
     {
         ARCEUUS("Arceuus", TeleportBlockerConfig::minecartArceuus),

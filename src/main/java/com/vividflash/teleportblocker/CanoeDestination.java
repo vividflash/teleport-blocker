@@ -26,11 +26,9 @@ package com.vividflash.teleportblocker;
 
 import java.util.function.Predicate;
 
-/**
- * Canoe destinations in map order, River Lum first, each paired with the name
- * the map prints and the toggle that blocks it. The station tree, the canoe
- * shape picker and the expert's own options are left alone.
- */
+// Canoe destinations in map order, River Lum first, each paired with the name the map prints and
+// the toggle that blocks it. The station tree, the canoe shape picker and the expert's own options
+// are left alone.
 public enum CanoeDestination
 {
     LUMBRIDGE("Lumbridge", TeleportBlockerConfig::canoeLumbridge),

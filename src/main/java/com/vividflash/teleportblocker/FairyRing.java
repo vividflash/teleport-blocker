@@ -26,9 +26,7 @@ package com.vividflash.teleportblocker;
 
 import java.util.function.Predicate;
 
-/**
- * Fairy ring codes in alphabetical order, each paired with the toggle that blocks it.
- */
+// Fairy ring codes in alphabetical order, each paired with the toggle that blocks it.
 public enum FairyRing
 {
     AIP(TeleportBlockerConfig::fairyRingAIP),
@@ -110,7 +108,7 @@ public enum FairyRing
         return blocked.test(config);
     }
 
-    /** The ring for the three dial values, or null when a dial value is outside 0 to 3. */
+    // The ring for the three dial values, or null when a dial value is outside 0 to 3.
     public static FairyRing fromDials(int left, int middle, int right)
     {
         if (left < 0 || left > 3 || middle < 0 || middle > 3 || right < 0 || right > 3)

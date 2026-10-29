@@ -32,15 +32,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.NpcID;
 
-/**
- * The ships crewed by NPCs outside the charter network: Captain Barnaby's
- * ships, the ships out of Port Sarim and the ships out of Rellekka. Each leg
- * sails from the NPCs at its starting end, from a click option named after
- * the destination or Travel, and mostly from their chat as well.
- */
+// The ships crewed by NPCs outside the charter network: Captain Barnaby's ships, the ships out of
+// Port Sarim and the ships out of Rellekka. Each leg sails from the NPCs at its starting end, from
+// a click option named after the destination or Travel, and mostly from their chat as well.
 public final class Ship
 {
-    /** The option that opens an NPC's chat. */
+    // The option that opens an NPC's chat.
     public static final String TALK_OPTION = "Talk-to";
 
     private Ship()
@@ -57,16 +54,12 @@ public final class Ship
         return Collections.unmodifiableList(Arrays.asList(texts));
     }
 
-    /**
-     * The legs in the order of the config, each paired with the NPCs that sail
-     * it, the click options that sail it straight away, the chat lines that
-     * pick it, the NPCs among them that lose Talk-to, and the toggle that
-     * blocks it. Captain Barnaby's legs are kept by destination, so each one
-     * starts at both of the other ports. An NPC that sails one leg only and
-     * reaches it in chat through a line any dialogue could carry, such as YES
-     * or Let's go!, loses Talk-to at the blocked end, since its chat leads
-     * there too.
-     */
+    // The legs in the order of the config, each paired with the NPCs that sail it, the click
+    // options that sail it straight away, the chat lines that pick it, the NPCs among them that
+    // lose Talk-to, and the toggle that blocks it. Captain Barnaby's legs are kept by destination,
+    // so each one starts at both of the other ports. An NPC that sails one leg only and reaches it
+    // in chat through a line any dialogue could carry, such as YES or Let's go!, loses Talk-to at
+    // the blocked end, since its chat leads there too.
     public enum Leg
     {
         BARNABY_ARDOUGNE(
@@ -276,7 +269,7 @@ public final class Ship
             return npcIds.contains(npcId);
         }
 
-        /** True when the NPC loses Talk-to while this leg is blocked. */
+        // True when the NPC loses Talk-to while this leg is blocked.
         public boolean removesTalk(int npcId)
         {
             return talkIds.contains(npcId);

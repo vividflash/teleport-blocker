@@ -27,11 +27,8 @@ package com.vividflash.teleportblocker;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.ObjectID;
 
-/**
- * The two destinations the Soul Wars portal dialogue offers, each paired with
- * its option line and the toggle that blocks it. Nowhere is not listed and is
- * never touched.
- */
+// The two destinations the Soul Wars portal dialogue offers, each paired with its option line and
+// the toggle that blocks it. Nowhere is not listed and is never touched.
 public enum SoulWarsPortal
 {
     EDGEVILLE("Edgeville", TeleportBlockerConfig::soulWarsPortalEdgeville),
@@ -62,10 +59,7 @@ public enum SoulWarsPortal
         return optionLine;
     }
 
-    /**
-     * The two portals that take you into Soul Wars, each paired with the toggle
-     * that blocks it.
-     */
+    // The two portals that take you into Soul Wars, each paired with the toggle that blocks it.
     public enum Entry
     {
         EDGEVILLE(ObjectID.SOUL_WARS_EDGEVILLE_PORTAL, TeleportBlockerConfig::soulWarsEntryEdgeville),

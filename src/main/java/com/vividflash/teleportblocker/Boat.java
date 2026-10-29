@@ -33,15 +33,16 @@ import java.util.function.Predicate;
 import net.runelite.api.gameval.NpcID;
 import net.runelite.api.gameval.ObjectID;
 
-/**
- * The boats: Boaty on Lake Molch, Larry's boat, the Morytania rowboat,
- * Achilka's boats and the Great Conch rowboats. Some
- * offer their destinations as click options, the others open a picker whose
- * lines are not known word for word, so a picker line is read by the place
- * names it contains, and only while the picker of the boat just used is open.
- */
+// The boats: Boaty on Lake Molch, Larry's boat, the Morytania rowboat, the Slepe rowboat, Achilka's
+// boats and the Great Conch rowboats. Some offer their destinations as click options, the others open a picker
+// whose lines are not known word for word, so a picker line is read by the place names it contains,
+// and only while the picker of the boat just used is open.
 public final class Boat
 {
+    // Larry's boat at Rellekka reaches the menu under this id, which shows PENG_BOAT_3OPS or
+    // PENG_BOAT_ICE by quest progress.
+    public static final int VARIANT_BASE_OBJECT_ID = ObjectID.PENG_BOAT_RELL;
+
     private Boat()
     {
     }
@@ -56,16 +57,15 @@ public final class Boat
         return Collections.unmodifiableList(Arrays.asList(texts));
     }
 
-    /**
-     * The boats, each paired with the objects whose option opens its picker and
-     * the NPCs whose chat can pick one of its destinations. A boat with neither
-     * is only ever used through click options.
-     */
+    // The boats, each paired with the objects whose option opens its picker and the NPCs whose chat
+    // can pick one of its destinations. A boat with neither is only ever used through click
+    // options.
     public enum Network
     {
         BOATY(ids(ObjectID.AERIAL_FISHING_BOAT), "Board", ids()),
         LARRY(ids(), null, ids(NpcID.PENG_LARRY_RELL)),
         MORYTANIA_ROWBOAT(ids(ObjectID.MYQ5_BOAT_VIS, ObjectID.MYQ5_SLEPE_BOAT), "Board", ids()),
+        SLEPE_ROWBOAT(ids(), null, ids()),
         ACHILKA(ids(), null, ids()),
         CONCH_ROWBOAT(ids(ObjectID.CONCH_ROWBOAT_NORTH, ObjectID.CONCH_ROWBOAT_EAST, ObjectID.CONCH_ROWBOAT_SOUTH), "Travel", ids());
 
@@ -87,7 +87,7 @@ public final class Boat
             return pickerOption != null;
         }
 
-        /** True when the option on the object opens this boat's picker. */
+        // True when the option on the object opens this boat's picker.
         public boolean opensPicker(int objectId, String option)
         {
             return hasPicker() && pickerObjectIds.contains(objectId)
@@ -100,14 +100,11 @@ public final class Boat
         }
     }
 
-    /**
-     * The destinations in the order of the config, each paired with its boat,
-     * the lines that pick it, the click option that travels there straight
-     * away with the objects or NPCs that carry it, and the toggle that blocks
-     * it. On a boat with a picker the lines are the place words a picker line
-     * naming it contains, and on a boat reached through chat they are the
-     * chat lines themselves.
-     */
+    // The destinations in the order of the config, each paired with its boat, the lines that pick
+    // it, the click option that travels there straight away with the objects or NPCs that carry it,
+    // and the toggle that blocks it. On a boat with a picker the lines are the place words a picker
+    // line naming it contains, and on a boat reached through chat they are the chat lines
+    // themselves.
     public enum Destination
     {
         BOATY_MOLCH_ISLAND(Network.BOATY, texts("molch island"), TeleportBlockerConfig::boatBoatyMolchIsland),
@@ -127,6 +124,12 @@ public final class Boat
         MORYTANIA_MEIYERDITCH(Network.MORYTANIA_ROWBOAT, texts("meiyerditch"), TeleportBlockerConfig::boatMorytaniaMeiyerditch),
         MORYTANIA_ICYENE_GRAVEYARD(Network.MORYTANIA_ROWBOAT, texts("icyene graveyard", "icyene", "graveyard"), TeleportBlockerConfig::boatMorytaniaIcyeneGraveyard),
         MORYTANIA_SLEPE(Network.MORYTANIA_ROWBOAT, texts("slepe"), TeleportBlockerConfig::boatMorytaniaSlepe),
+        SLEPE_FROM_PORT_PHASMATYS(Network.SLEPE_ROWBOAT, texts(), "Travel",
+            ids(ObjectID.SLEPE_BOAT), ids(),
+            TeleportBlockerConfig::boatMorytaniaSlepe),
+        PORT_PHASMATYS_FROM_SLEPE(Network.SLEPE_ROWBOAT, texts(), "Travel",
+            ids(ObjectID.SLEPE_BOAT_RETURN), ids(),
+            TeleportBlockerConfig::boatMorytaniaPortPhasmatys),
         ACHILKA_TAL_TEKLAN(Network.ACHILKA, texts(), "Tal Teklan",
             ids(), ids(NpcID.TLATI_RIVERBOAT_OWNER_SOUTH, NpcID.TLATI_RIVERBOAT_OWNER_NORTH),
             TeleportBlockerConfig::boatAchilkaTalTeklan),
@@ -170,7 +173,7 @@ public final class Boat
             return network;
         }
 
-        /** True when the option key, as made by {@link StripAndLowercase}, is this destination's. */
+        // True when the option key, as made by StripAndLowercase, is this destination's.
         public boolean matchesOptionKey(String key)
         {
             return option != null && optionKey.equals(key);
@@ -186,7 +189,8 @@ public final class Boat
             return npcIds.contains(npcId);
         }
 
-        /** True when the text is a chat line that picks this destination, on a boat reached through chat. */
+        // True when the text is a chat line that picks this destination, on a boat reached through
+        // chat.
         public boolean matchesTalkLine(String text)
         {
             if (network.hasPicker())
@@ -210,12 +214,9 @@ public final class Boat
             return blocked.test(config);
         }
 
-        /**
-         * The destination of the boat's picker that a picker line names, or null
-         * when it names none. A line can contain the words of more than one
-         * destination, as Molch Island contains Molch, so the destination with
-         * the longest matching words wins.
-         */
+        // The destination of the boat's picker that a picker line names, or null when it names
+        // none. A line can contain the words of more than one destination, as Molch Island contains
+        // Molch, so the destination with the longest matching words wins.
         public static Destination forPickerLine(Network network, String text)
         {
             if (!network.hasPicker())

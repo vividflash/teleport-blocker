@@ -30,10 +30,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
-/**
- * Destinations offered by the Minigames window, each paired with the name the
- * window prints and the toggle that blocks it.
- */
+// Destinations offered by the Minigames window, each paired with the name the window prints and the
+// toggle that blocks it.
 public enum Minigame
 {
     BARBARIAN_ASSAULT("Barbarian Assault", TeleportBlockerConfig::barbarianAssault),
@@ -95,11 +93,8 @@ public enum Minigame
         return minigameName;
     }
 
-    /**
-     * The four destinations the rat pit dialogue offers, each paired with its
-     * option line and the toggle that blocks it. Cancel is not listed and is never
-     * touched.
-     */
+    // The four destinations the rat pit dialogue offers, each paired with its option line and the
+    // toggle that blocks it. Cancel is not listed and is never touched.
     public enum RatPit
     {
         ARDOUGNE("Ardougne (kittens)", TeleportBlockerConfig::ratPitsArdougne),

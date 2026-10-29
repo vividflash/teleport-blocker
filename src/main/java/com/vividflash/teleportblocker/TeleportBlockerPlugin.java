@@ -31,6 +31,7 @@ import javax.inject.Inject;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.client.chat.ChatColorType;
 import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
@@ -41,22 +42,26 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 @PluginDescriptor(
     name = "Teleport Blocker",
-    description = "Teleport Removal Options for most things",
+    description = "Teleport Removal Options for Most Things",
     tags = {"teleport", "block", "chunk", "locked", "transport", "ship", "spell", "boat", "misclick"}
 )
 public class TeleportBlockerPlugin extends Plugin
 {
     private static final String CONFIG_GROUP = "teleportblocker";
 
-    /** Marks the release a profile has already been told about. */
+    // Marks the release a profile has already been told about.
     private static final String LAST_SEEN_VERSION_KEY = "lastSeenVersion";
 
-    /** The release the notice below belongs to, not the packaged version. */
-    private static final String VERSION = "1.7";
-    private static final String UPDATE_MESSAGE =
-        "Teleport Blocker v1.7: Added Diary Items; Several Performance Improvements; Regrouped the Settings and Improved Readme.";
+    // The release the notice below belongs to, not the packaged version.
+    private static final String VERSION = "1.8";
+    private static final String UPDATE_TITLE = "Teleport Blocker v1.8:";
+    private static final String[] UPDATE_LINES = {
+        "Order: Alphabetical for easier Navigation",
+        "Added: Arceuus Spellbook, Mushtrees, Morytania Boats",
+        "Fixed: Edge cases of Spirit Tree, Quetzal and Glider Blocking.",
+    };
 
-    /** Dark red, for legibility against the opaque chatbox background. */
+    // Dark red, for legibility against the opaque chatbox background. Only the title carries it.
     private static final Color NOTICE_COLOR = new Color(0x480000);
 
     @Inject
@@ -92,10 +97,8 @@ public class TeleportBlockerPlugin extends Plugin
         }
     }
 
-    /**
-     * One-time post-update notice on first login. A profile that carries no
-     * version yet is told as well, so a fresh install reads the current notice once.
-     */
+    // One-time post-update notice on first login. A profile that carries no version yet is told as
+    // well, so a fresh install reads the current notice once.
     private void maybeAnnounceUpdate()
     {
         if (updateChecked)
@@ -111,11 +114,21 @@ public class TeleportBlockerPlugin extends Plugin
         }
 
         configManager.setConfiguration(CONFIG_GROUP, LAST_SEEN_VERSION_KEY, VERSION);
+        // One message broken into lines, so the chat timestamp shows once. The builder escapes tags,
+        // so the breaks go between the built pieces.
+        StringBuilder notice = new StringBuilder(new ChatMessageBuilder().append(NOTICE_COLOR, UPDATE_TITLE).build());
+        for (String line : UPDATE_LINES)
+        {
+            notice.append("<br>").append(new ChatMessageBuilder().append(ChatColorType.NORMAL).append(line).build());
+        }
+        queueNotice(notice.toString());
+    }
+
+    private void queueNotice(String message)
+    {
         chatMessageManager.queue(QueuedMessage.builder()
             .type(ChatMessageType.CONSOLE)
-            .runeLiteFormattedMessage(new ChatMessageBuilder()
-                .append(NOTICE_COLOR, UPDATE_MESSAGE)
-                .build())
+            .runeLiteFormattedMessage(message)
             .build());
     }
 

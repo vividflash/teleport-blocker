@@ -27,10 +27,8 @@ package com.vividflash.teleportblocker;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
 
-/**
- * Standard spellbook teleports in spellbook order, each paired with its packed
- * component id and the toggle that blocks it.
- */
+// Standard spellbook teleports in spellbook order, each paired with its packed component id and the
+// toggle that blocks it.
 public enum TeleportSpell
 {
     HOME("Home Teleport", InterfaceID.MagicSpellbook.TELEPORT_HOME_STANDARD, TeleportBlockerConfig::homeTeleport),

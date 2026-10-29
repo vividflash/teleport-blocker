@@ -24,34 +24,31 @@
  */
 package com.vividflash.teleportblocker;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
-/**
- * The spirit tree network. Every tree opens the same destination list, drawn
- * by a generic list script that takes its title and lines from the game, so
- * the list is recognised by its title.
- */
+// The spirit tree network. Every tree opens the same destination list, drawn by a generic list
+// script that takes its title and lines from the game, so the list is recognised by its title.
 public final class SpiritTree
 {
-    /** The title printed above the destination list. */
+    // The title printed above the destination list.
     public static final String TITLE = "Spirit Tree Locations";
 
-    /** The tree option that travels straight to the last destination used. */
+    // The tree option that travels straight to the last destination used. In game the option now
+    // names that destination instead (e.g. "Laguna Aurorae"), so both forms are matched.
     public static final String PREVIOUS_OPTION = "Last-destination";
 
-    /** The name the spirit tree objects carry. */
+    // The name the spirit tree objects carry.
     public static final String OBJECT_NAME = "Spirit tree";
 
     private SpiritTree()
     {
     }
 
-    /**
-     * The destinations of the list in list order, each paired with the name its
-     * line prints and the toggle that blocks it.
-     * The Last-destination option has a toggle of its own, since its
-     * menu entry does not name the place it travels to.
-     */
+    // The destinations of the list in list order, each paired with the name its line prints and the
+    // toggle that blocks it. The Last-destination option has a toggle of its own, which also covers
+    // the option when it names the place it travels to.
     public enum Destination
     {
         TREE_GNOME_VILLAGE("Tree Gnome Village", TeleportBlockerConfig::spiritTreeGnomeVillage),
@@ -68,6 +65,16 @@ public final class SpiritTree
         HOUSE("Your house", TeleportBlockerConfig::spiritTreeHouse),
         POISON_WASTE("Poison Waste", TeleportBlockerConfig::spiritTreePoisonWaste),
         LAGUNA_AURORAE("Laguna Aurorae", TeleportBlockerConfig::spiritTreeLagunaAurorae);
+
+        private static final Map<String, Destination> BY_KEY = new HashMap<>();
+
+        static
+        {
+            for (Destination destination : values())
+            {
+                BY_KEY.put(StripAndLowercase.of(destination.destinationName), destination);
+            }
+        }
 
         private final String destinationName;
         private final Predicate<TeleportBlockerConfig> blocked;
@@ -88,16 +95,19 @@ public final class SpiritTree
             return blocked.test(config);
         }
 
-        /**
-         * True when the text after a line's shortcut names this destination.
-         * The house line can carry the house's location in brackets, which is
-         * cut before comparing.
-         */
+        // True when the text after a line's shortcut names this destination. The house line can
+        // carry the house's location in brackets, which is cut before comparing.
         public boolean matchesLine(String destination)
         {
             int bracket = destination.indexOf(" (");
             String place = bracket > 0 ? destination.substring(0, bracket) : destination;
             return StripAndLowercase.of(destinationName).equals(StripAndLowercase.of(place));
+        }
+
+        // The destination a tree option names, or null when the option names none.
+        public static Destination forOption(String option)
+        {
+            return BY_KEY.get(StripAndLowercase.of(option));
         }
 
         @Override

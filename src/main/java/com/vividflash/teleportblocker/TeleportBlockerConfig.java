@@ -63,7 +63,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Teleports",
+        name = "Spellbook (Standard)",
         description = "",
         position = 20,
         closedByDefault = true
@@ -229,7 +229,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Minigames",
         description = "",
-        position = 55,
+        position = 20,
         closedByDefault = true
     )
     String minigamesSection = "minigamesSection";
@@ -535,9 +535,9 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Ancient Spellbook",
+        name = "Spellbook (Ancient)",
         description = "",
-        position = 40,
+        position = 20,
         closedByDefault = true
     )
     String ancientSection = "ancientSection";
@@ -664,9 +664,185 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Lunar Spellbook",
+        name = "Spellbook (Arceuus)",
+        description = "",
+        position = 20,
+        closedByDefault = true
+    )
+    String arceuusSection = "arceuusSection";
+
+    @ConfigItem(
+        keyName = "arceuusHomeTeleport",
+        name = "Home Teleport",
+        description = "",
+        position = 10,
+        section = arceuusSection
+    )
+    default boolean arceuusHomeTeleport()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusMinigameTeleport",
+        name = "Minigame Teleport",
+        description = "",
+        position = 140,
+        section = arceuusSection
+    )
+    default boolean arceuusMinigameTeleport()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusLibrary",
+        name = "Arceuus Library Teleport",
+        description = "",
+        position = 20,
+        section = arceuusSection
+    )
+    default boolean arceuusLibrary()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusDraynorManor",
+        name = "Draynor Manor Teleport",
+        description = "",
+        position = 30,
+        section = arceuusSection
+    )
+    default boolean arceuusDraynorManor()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusBattlefront",
+        name = "Battlefront Teleport",
+        description = "",
+        position = 40,
+        section = arceuusSection
+    )
+    default boolean arceuusBattlefront()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusMindAltar",
+        name = "Mind Altar Teleport",
         description = "",
         position = 50,
+        section = arceuusSection
+    )
+    default boolean arceuusMindAltar()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusRespawn",
+        name = "Respawn Teleport",
+        description = "",
+        position = 60,
+        section = arceuusSection
+    )
+    default boolean arceuusRespawn()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusSalveGraveyard",
+        name = "Salve Graveyard Teleport",
+        description = "",
+        position = 70,
+        section = arceuusSection
+    )
+    default boolean arceuusSalveGraveyard()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusFenkenstrainsCastle",
+        name = "Fenkenstrain's Castle Teleport",
+        description = "",
+        position = 80,
+        section = arceuusSection
+    )
+    default boolean arceuusFenkenstrainsCastle()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusWestArdougne",
+        name = "West Ardougne Teleport",
+        description = "",
+        position = 90,
+        section = arceuusSection
+    )
+    default boolean arceuusWestArdougne()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusHarmonyIsland",
+        name = "Harmony Island Teleport",
+        description = "",
+        position = 100,
+        section = arceuusSection
+    )
+    default boolean arceuusHarmonyIsland()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusCemetery",
+        name = "Cemetery Teleport",
+        description = "",
+        position = 110,
+        section = arceuusSection
+    )
+    default boolean arceuusCemetery()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusBarrows",
+        name = "Barrows Teleport",
+        description = "",
+        position = 120,
+        section = arceuusSection
+    )
+    default boolean arceuusBarrows()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "arceuusApeAtoll",
+        name = "Ape Atoll Teleport",
+        description = "",
+        position = 130,
+        section = arceuusSection
+    )
+    default boolean arceuusApeAtoll()
+    {
+        return false;
+    }
+
+    @ConfigSection(
+        name = "Spellbook (Lunar)",
+        description = "",
+        position = 20,
         closedByDefault = true
     )
     String lunarSection = "lunarSection";
@@ -795,7 +971,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Canoes",
         description = "",
-        position = 262,
+        position = 20,
         closedByDefault = true
     )
     String canoeSection = "canoeSection";
@@ -935,7 +1111,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Ring of Dueling",
         description = "",
-        position = 70,
+        position = 20,
         closedByDefault = true
     )
     String duelingSection = "duelingSection";
@@ -991,7 +1167,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Games Necklace",
         description = "",
-        position = 80,
+        position = 20,
         closedByDefault = true
     )
     String gamesNecklaceSection = "gamesNecklaceSection";
@@ -1059,7 +1235,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Amulet of Glory",
         description = "",
-        position = 62,
+        position = 20,
         closedByDefault = true
     )
     String glorySection = "glorySection";
@@ -1115,7 +1291,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Ring of Wealth",
         description = "",
-        position = 64,
+        position = 20,
         closedByDefault = true
     )
     String wealthSection = "wealthSection";
@@ -1171,7 +1347,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Necklace of Passage",
         description = "",
-        position = 155,
+        position = 20,
         closedByDefault = true
     )
     String passageSection = "passageSection";
@@ -1227,7 +1403,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Combat Bracelet",
         description = "",
-        position = 66,
+        position = 20,
         closedByDefault = true
     )
     String combatBraceletSection = "combatBraceletSection";
@@ -1283,7 +1459,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Skills Necklace",
         description = "",
-        position = 68,
+        position = 20,
         closedByDefault = true
     )
     String skillsNecklaceSection = "skillsNecklaceSection";
@@ -1363,7 +1539,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Slayer Ring",
         description = "",
-        position = 140,
+        position = 20,
         closedByDefault = true
     )
     String slayerRingSection = "slayerRingSection";
@@ -1443,7 +1619,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Digsite Pendant",
         description = "",
-        position = 150,
+        position = 20,
         closedByDefault = true
     )
     String digsitePendantSection = "digsitePendantSection";
@@ -1487,7 +1663,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Burning Amulet",
         description = "",
-        position = 160,
+        position = 20,
         closedByDefault = true
     )
     String burningAmuletSection = "burningAmuletSection";
@@ -1529,19 +1705,19 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Ardougne Cloak",
+        name = "Diary Items",
         description = "",
-        position = 162,
+        position = 20,
         closedByDefault = true
     )
-    String ardougneCloakSection = "ardougneCloakSection";
+    String diaryItemsSection = "diaryItemsSection";
 
     @ConfigItem(
         keyName = "ardougneKandarinMonastery",
-        name = "Kandarin Monastery",
+        name = "Ardougne Cloak - Kandarin Monastery",
         description = "",
         position = 10,
-        section = ardougneCloakSection
+        section = diaryItemsSection
     )
     default boolean ardougneKandarinMonastery()
     {
@@ -1550,30 +1726,22 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "ardougneArdougneFarm",
-        name = "Ardougne Farm",
+        name = "Ardougne Cloak - Ardougne Farm",
         description = "",
         position = 20,
-        section = ardougneCloakSection
+        section = diaryItemsSection
     )
     default boolean ardougneArdougneFarm()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Desert Amulet",
-        description = "",
-        position = 163,
-        closedByDefault = true
-    )
-    String desertAmuletSection = "desertAmuletSection";
-
     @ConfigItem(
         keyName = "desertNardah",
-        name = "Nardah",
+        name = "Desert Amulet - Nardah",
         description = "",
-        position = 10,
-        section = desertAmuletSection
+        position = 30,
+        section = diaryItemsSection
     )
     default boolean desertNardah()
     {
@@ -1582,90 +1750,58 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "desertKalphiteCave",
-        name = "Kalphite Cave",
+        name = "Desert Amulet - Kalphite Cave",
         description = "",
-        position = 20,
-        section = desertAmuletSection
+        position = 40,
+        section = diaryItemsSection
     )
     default boolean desertKalphiteCave()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Explorer's Ring",
-        description = "",
-        position = 164,
-        closedByDefault = true
-    )
-    String explorersRingSection = "explorersRingSection";
-
     @ConfigItem(
         keyName = "explorersCabbagePatch",
-        name = "Cabbage Patch (Falador)",
+        name = "Explorer's Ring - Cabbage Patch (Falador)",
         description = "",
-        position = 10,
-        section = explorersRingSection
+        position = 50,
+        section = diaryItemsSection
     )
     default boolean explorersCabbagePatch()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Fremennik Sea Boots",
-        description = "",
-        position = 165,
-        closedByDefault = true
-    )
-    String fremennikSeaBootsSection = "fremennikSeaBootsSection";
-
     @ConfigItem(
         keyName = "fremennikRellekka",
-        name = "Rellekka",
+        name = "Fremennik Sea Boots - Rellekka",
         description = "",
-        position = 10,
-        section = fremennikSeaBootsSection
+        position = 60,
+        section = diaryItemsSection
     )
     default boolean fremennikRellekka()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Kandarin Headgear",
-        description = "",
-        position = 166,
-        closedByDefault = true
-    )
-    String kandarinHeadgearSection = "kandarinHeadgearSection";
-
     @ConfigItem(
         keyName = "kandarinSherlock",
-        name = "Sherlock (Seers)",
+        name = "Kandarin Headgear - Sherlock (Seers)",
         description = "",
-        position = 10,
-        section = kandarinHeadgearSection
+        position = 70,
+        section = diaryItemsSection
     )
     default boolean kandarinSherlock()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Karamja Gloves",
-        description = "",
-        position = 167,
-        closedByDefault = true
-    )
-    String karamjaGlovesSection = "karamjaGlovesSection";
-
     @ConfigItem(
         keyName = "karamjaGemMine",
-        name = "Gem Mine (Shilo)",
+        name = "Karamja Gloves - Gem Mine (Shilo)",
         description = "",
-        position = 10,
-        section = karamjaGlovesSection
+        position = 80,
+        section = diaryItemsSection
     )
     default boolean karamjaGemMine()
     {
@@ -1674,30 +1810,22 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "karamjaSlayerMaster",
-        name = "Slayer Master (Shilo)",
+        name = "Karamja Gloves - Slayer Master (Shilo)",
         description = "",
-        position = 20,
-        section = karamjaGlovesSection
+        position = 90,
+        section = diaryItemsSection
     )
     default boolean karamjaSlayerMaster()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Morytania Legs",
-        description = "",
-        position = 168,
-        closedByDefault = true
-    )
-    String morytaniaLegsSection = "morytaniaLegsSection";
-
     @ConfigItem(
         keyName = "morytaniaEctofuntus",
-        name = "Ectofuntus",
+        name = "Morytania Legs - Ectofuntus",
         description = "",
-        position = 10,
-        section = morytaniaLegsSection
+        position = 100,
+        section = diaryItemsSection
     )
     default boolean morytaniaEctofuntus()
     {
@@ -1706,30 +1834,22 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "morytaniaBurghDeRott",
-        name = "Burgh de Rott",
+        name = "Morytania Legs - Burgh de Rott",
         description = "",
-        position = 20,
-        section = morytaniaLegsSection
+        position = 110,
+        section = diaryItemsSection
     )
     default boolean morytaniaBurghDeRott()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Rada's Blessing",
-        description = "",
-        position = 169,
-        closedByDefault = true
-    )
-    String radasBlessingSection = "radasBlessingSection";
-
     @ConfigItem(
         keyName = "radasKourendWoodland",
-        name = "Kourend Woodland",
+        name = "Rada's Blessing - Kourend Woodland",
         description = "",
-        position = 10,
-        section = radasBlessingSection
+        position = 120,
+        section = diaryItemsSection
     )
     default boolean radasKourendWoodland()
     {
@@ -1738,50 +1858,34 @@ public interface TeleportBlockerConfig extends Config
 
     @ConfigItem(
         keyName = "radasMtKaruulm",
-        name = "Mt. Karuulm",
+        name = "Rada's Blessing - Mt. Karuulm",
         description = "",
-        position = 20,
-        section = radasBlessingSection
+        position = 130,
+        section = diaryItemsSection
     )
     default boolean radasMtKaruulm()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Western Banner",
-        description = "",
-        position = 170,
-        closedByDefault = true
-    )
-    String westernBannerSection = "westernBannerSection";
-
     @ConfigItem(
         keyName = "westernPiscatoris",
-        name = "Piscatoris",
+        name = "Western Banner - Piscatoris",
         description = "",
-        position = 10,
-        section = westernBannerSection
+        position = 140,
+        section = diaryItemsSection
     )
     default boolean westernPiscatoris()
     {
         return false;
     }
 
-    @ConfigSection(
-        name = "Wilderness Sword",
-        description = "",
-        position = 171,
-        closedByDefault = true
-    )
-    String wildernessSwordSection = "wildernessSwordSection";
-
     @ConfigItem(
         keyName = "wildernessFountainOfRune",
-        name = "Fountain of Rune",
+        name = "Wilderness Sword - Fountain of Rune",
         description = "",
-        position = 10,
-        section = wildernessSwordSection
+        position = 150,
+        section = diaryItemsSection
     )
     default boolean wildernessFountainOfRune()
     {
@@ -1791,7 +1895,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Soul Wars Portal and Edgeville Lever",
         description = "",
-        position = 264,
+        position = 20,
         closedByDefault = true
     )
     String soulWarsPortalSection = "soulWarsPortalSection";
@@ -1895,7 +1999,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Spirit Trees",
         description = "",
-        position = 180,
+        position = 20,
         closedByDefault = true
     )
     String spiritTreeSection = "spiritTreeSection";
@@ -2083,7 +2187,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Gnome Gliders",
         description = "",
-        position = 190,
+        position = 20,
         closedByDefault = true
     )
     String gnomeGliderSection = "gnomeGliderSection";
@@ -2187,7 +2291,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Quetzal Transport",
         description = "",
-        position = 266,
+        position = 20,
         closedByDefault = true
     )
     String quetzalSection = "quetzalSection";
@@ -2399,7 +2503,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Lovakengj Minecarts",
         description = "",
-        position = 268,
+        position = 20,
         closedByDefault = true
     )
     String minecartSection = "minecartSection";
@@ -2549,9 +2653,9 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Charter Ships",
+        name = "Ships (Charter)",
         description = "Each port also removes Charter-to that port.",
-        position = 220,
+        position = 20,
         closedByDefault = true
     )
     String charterSection = "charterSection";
@@ -2821,9 +2925,9 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Other Ships",
+        name = "Ships (Other)",
         description = "",
-        position = 230,
+        position = 20,
         closedByDefault = true
     )
     String shipSection = "shipSection";
@@ -3179,7 +3283,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Boats",
         description = "",
-        position = 240,
+        position = 20,
         closedByDefault = true
     )
     String boatSection = "boatSection";
@@ -3317,6 +3421,18 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigItem(
+        keyName = "boatMorytaniaPortPhasmatys",
+        name = "Morytania - Port Phasmatys",
+        description = "",
+        position = 165,
+        section = boatSection
+    )
+    default boolean boatMorytaniaPortPhasmatys()
+    {
+        return false;
+    }
+
+    @ConfigItem(
         keyName = "boatAchilkaTalTeklan",
         name = "Achilka - Tal Teklan",
         description = "",
@@ -3391,7 +3507,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Fossil Island",
         description = "",
-        position = 250,
+        position = 20,
         closedByDefault = true
     )
     String fossilIslandSection = "fossilIslandSection";
@@ -3468,10 +3584,58 @@ public interface TeleportBlockerConfig extends Config
         return false;
     }
 
+    @ConfigItem(
+        keyName = "fossilIslandMushtreeHouseOnTheHill",
+        name = "Mushtree - House on the Hill",
+        description = "",
+        position = 70,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandMushtreeHouseOnTheHill()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandMushtreeVerdantValley",
+        name = "Mushtree - Verdant Valley",
+        description = "",
+        position = 80,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandMushtreeVerdantValley()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandMushtreeStickySwamp",
+        name = "Mushtree - Sticky Swamp",
+        description = "",
+        position = 90,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandMushtreeStickySwamp()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "fossilIslandMushtreeMushroomMeadow",
+        name = "Mushtree - Mushroom Meadow",
+        description = "",
+        position = 100,
+        section = fossilIslandSection
+    )
+    default boolean fossilIslandMushtreeMushroomMeadow()
+    {
+        return false;
+    }
+
     @ConfigSection(
         name = "Other",
         description = "",
-        position = 270,
+        position = 30,
         closedByDefault = true
     )
     String otherSection = "otherSection";
@@ -3539,7 +3703,7 @@ public interface TeleportBlockerConfig extends Config
     @ConfigSection(
         name = "Fairy Rings",
         description = "",
-        position = 195,
+        position = 20,
         closedByDefault = true
     )
     String fairyRingSection = "fairyRingSection";

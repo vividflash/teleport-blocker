@@ -32,13 +32,10 @@ import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.NpcID;
 
-/**
- * The Mountain Guides. The three around Mount Quidamortem open the same chat
- * picker from Travel and from Talk-to, so a picker line is read only while the
- * chat of a guide clicked last is open. The guide between Nemus Retreat and
- * Quetzacalli Gorge travels straight from Follow to the other end, and which
- * end he stands at is told apart by his position.
- */
+// The Mountain Guides. The three around Mount Quidamortem open the same chat picker from Travel and
+// from Talk-to, so a picker line is read only while the chat of a guide clicked last is open. The
+// guide between Nemus Retreat and Quetzacalli Gorge travels straight from Follow to the other end,
+// and which end he stands at is told apart by his position.
 public final class MountainGuide
 {
     private static final String FOLLOW_OPTION = "Follow";
@@ -48,7 +45,7 @@ public final class MountainGuide
         NpcID.RAIDS_MOUNTAINGUIDE_1OP, NpcID.RAIDS_MOUNTAINGUIDE_2OPS, NpcID.RAIDS_MOUNTAINGUIDE_TEMPLE_MULTI,
         NpcID.RAIDS_MOUNTAINGUIDE_WALL_MULTI, NpcID.RAIDS_MOUNTAINGUIDE_SOUTH_MULTI)));
 
-    /** West of this x the Varlamore guide stands at Nemus Retreat, east of it at Quetzacalli Gorge. */
+    // West of this x the Varlamore guide stands at Nemus Retreat, east of it at Quetzacalli Gorge.
     private static final int VARLAMORE_MIDPOINT_X = 1420;
 
     private MountainGuide()
@@ -70,11 +67,8 @@ public final class MountainGuide
         return FOLLOW_KEY.equals(StripAndLowercase.of(option));
     }
 
-    /**
-     * The destinations in the order of the config, each paired with the picker
-     * line that picks it or the side of the Varlamore guide whose Follow goes
-     * there, and the toggle that blocks it.
-     */
+    // The destinations in the order of the config, each paired with the picker line that picks it
+    // or the side of the Varlamore guide whose Follow goes there, and the toggle that blocks it.
     public enum Destination
     {
         SHAYZIEN_OUTPOST("The Shayzien Outpost.", null, TeleportBlockerConfig::mountainGuideShayzienOutpost),
@@ -100,7 +94,7 @@ public final class MountainGuide
             return line != null && !key.isEmpty() && StripAndLowercase.of(line).equals(key);
         }
 
-        /** True when Follow on the Varlamore guide standing at this x goes here. */
+        // True when Follow on the Varlamore guide standing at this x goes here.
         public boolean followsFrom(int x)
         {
             return followFromX != null && followFromX.test(x);

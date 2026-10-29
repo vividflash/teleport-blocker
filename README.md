@@ -11,12 +11,15 @@ everything else. Default `Allow`.
 
 **Spells**
 
-- **Teleports**: Home, Minigame, Varrock, Lumbridge, Falador, House, Camelot,
+- **Spellbook (Standard)**: Home, Minigame, Varrock, Lumbridge, Falador, House, Camelot,
   Kourend Castle, Ardougne, Civitas illa Fortis, Watchtower, Trollheim, Ape
   Atoll.
-- **Ancient Spellbook**: Home, Minigame, Paddewwa, Senntisten, Kharyrll,
+- **Spellbook (Ancient)**: Home, Minigame, Paddewwa, Senntisten, Kharyrll,
   Lassar, Dareeyak, Carrallanger, Annakarl, Ghorrock.
-- **Lunar Spellbook**: Home, Minigame, Moonclan, Ourania, Waterbirth,
+- **Spellbook (Arceuus)**: Home, Minigame, Arceuus Library, Draynor Manor,
+  Battlefront, Mind Altar, Respawn, Salve Graveyard, Fenkenstrain's Castle,
+  West Ardougne, Harmony Island, Cemetery, Barrows, Ape Atoll.
+- **Spellbook (Lunar)**: Home, Minigame, Moonclan, Ourania, Waterbirth,
   Barbarian, Khazard, Fishing Guild, Catherby, Ice Plateau.
 
 **Minigames**
@@ -95,12 +98,12 @@ everything else. Default `Allow`.
 
 **Boats and Charter Ships**
 
-- **Charter Ships**: Aldarin, Brimhaven, Catherby, Civitas illa Fortis,
+- **Ships (Charter)**: Aldarin, Brimhaven, Catherby, Civitas illa Fortis,
   Corsair Cove, Deepfin Point, Karamja Shipyard, Land's End, Mos Le'Harmless,
   Musa Point, Port Khazard, Port Phasmatys, Port Piscarilius, Port Roberts,
   Port Sarim, Port Tyras, Prifddinas, Red Rock, Sunset Coast, The Pandemonium,
   The Summer Shore, Previous Destination.
-- **Other Ships**: Barnaby - Ardougne, Barnaby - Brimhaven, Barnaby -
+- **Ships (Other)**: Barnaby - Ardougne, Barnaby - Brimhaven, Barnaby -
   Rimmington, Entrana - Port Sarim, Jatizso - Rellekka, Land's End - Port
   Piscarilius, Land's End - Port Sarim, Miscellania - Rellekka, Musa Point -
   Port Sarim, Musa Point - The Pandemonium, Neitiznot - Rellekka, Pirates'
@@ -116,9 +119,10 @@ everything else. Default `Allow`.
   Shayzien, Great Conch - East Coast, Great Conch - North Coast, Great Conch -
   Summer Shore, Larry - Iceberg, Larry - Rellekka, Larry - Weiss, Morytania -
   Burgh de Rott, Morytania - Icyene Graveyard, Morytania - Meiyerditch,
-  Morytania - Slepe.
+  Morytania - Port Phasmatys, Morytania - Slepe.
 - **Fossil Island**: Bank Island, Digsite, Fossil Island, Lithkren, Museum
-  Camp, North.
+  Camp, North, Mushtree - House on the Hill, Mushtree - Verdant Valley,
+  Mushtree - Sticky Swamp, Mushtree - Mushroom Meadow.
 
 **Special Transport**
 

@@ -32,30 +32,26 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.NpcID;
 
-/**
- * The charter ships. Every Trader Stan and Trader Crewmember opens the same
- * chartering menu, which offers each port as a pin on its map and as a line
- * of its list, and a picked port is confirmed in a chat dialogue that names
- * the port and its fare.
- */
+// The charter ships. Every Trader Stan and Trader Crewmember opens the same chartering menu, which
+// offers each port as a pin on its map and as a line of its list, and a picked port is confirmed in
+// a chat dialogue that names the port and its fare.
 public final class CharterShip
 {
-    /** The crew option that sails straight to the last port chartered to, followed by that port's name. */
+    // The crew option that sails straight to the last port chartered to, followed by that port's
+    // name.
     public static final String PREVIOUS_OPTION = "Charter-to";
 
-    /** The line of the confirm dialogue that pays the fare and sails. */
+    // The line of the confirm dialogue that pays the fare and sails.
     public static final String CONFIRM_OPTION = "Okay";
 
-    /** The start of the confirm dialogue's title, ahead of the port's name. */
+    // The start of the confirm dialogue's title, ahead of the port's name.
     private static final String CONFIRM_START = "Sailing to ";
 
-    /** The part of the confirm dialogue's title that follows the port's name. */
+    // The part of the confirm dialogue's title that follows the port's name.
     private static final String CONFIRM_COST = " costs ";
 
-    /**
-     * Trader Stan and the Trader Crewmembers, in every form they take at every
-     * port, including the crews of the patrolling charter ships.
-     */
+    // Trader Stan and the Trader Crewmembers, in every form they take at every port, including the
+    // crews of the patrolling charter ships.
     private static final Set<Integer> CREW_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         NpcID.SAILING_TRANSPORT_TRADER_STAN,
         NpcID.SAILING_TRANSPORT_TRADER_STAN_CREW_MAN1,
@@ -242,7 +238,7 @@ public final class CharterShip
         return CREW_IDS.contains(npcId);
     }
 
-    /** The port a Charter-to option names, or null when the option is not Charter-to. */
+    // The port a Charter-to option names, or null when the option is not Charter-to.
     public static String previousPort(String option)
     {
         if (!option.regionMatches(true, 0, PREVIOUS_OPTION, 0, PREVIOUS_OPTION.length()))
@@ -252,7 +248,7 @@ public final class CharterShip
         return option.substring(PREVIOUS_OPTION.length()).trim();
     }
 
-    /** The port the confirm dialogue's title names, or null when the text is not that title. */
+    // The port the confirm dialogue's title names, or null when the text is not that title.
     public static String confirmPort(String title)
     {
         if (!title.regionMatches(true, 0, CONFIRM_START, 0, CONFIRM_START.length()))
@@ -263,13 +259,10 @@ public final class CharterShip
         return cost > CONFIRM_START.length() ? title.substring(CONFIRM_START.length(), cost).trim() : null;
     }
 
-    /**
-     * The ports of the chartering menu in list order, each paired with the
-     * name its pin and line carry and the toggle that blocks it. The Karamja
-     * Shipyard port is also known as plain Shipyard, so both names are
-     * matched. The Charter-to option has a toggle of its own, which removes it
-     * whatever port it names.
-     */
+    // The ports of the chartering menu in list order, each paired with the name its pin and line
+    // carry and the toggle that blocks it. The Karamja Shipyard port is also known as plain
+    // Shipyard, so both names are matched. The Charter-to option has a toggle of its own, which
+    // removes it whatever port it names.
     public enum Port
     {
         PORT_SARIM(TeleportBlockerConfig::charterPortSarim, "Port Sarim"),
@@ -314,7 +307,7 @@ public final class CharterShip
             return blocked.test(config);
         }
 
-        /** True when the text is one of the names this port carries. */
+        // True when the text is one of the names this port carries.
         public boolean matchesName(String text)
         {
             String name = StripAndLowercase.of(text);

@@ -25,6 +25,7 @@
 package com.vividflash.teleportblocker.features;
 
 import com.vividflash.teleportblocker.AncientTeleportSpell;
+import com.vividflash.teleportblocker.ArceuusTeleportSpell;
 import com.vividflash.teleportblocker.Boat;
 import com.vividflash.teleportblocker.CanoeDestination;
 import com.vividflash.teleportblocker.CharterShip;
@@ -37,6 +38,7 @@ import com.vividflash.teleportblocker.LovakengjMinecart;
 import com.vividflash.teleportblocker.LunarTeleportSpell;
 import com.vividflash.teleportblocker.Minigame;
 import com.vividflash.teleportblocker.MountainGuide;
+import com.vividflash.teleportblocker.Mushtree;
 import com.vividflash.teleportblocker.QuetzalTransport;
 import com.vividflash.teleportblocker.Ship;
 import com.vividflash.teleportblocker.SoulWarsPortal;
@@ -47,7 +49,6 @@ import com.vividflash.teleportblocker.TeleportSpell;
 import com.vividflash.teleportblocker.WildernessLever;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -59,6 +60,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Menu;
 import net.runelite.api.MenuAction;
@@ -83,37 +85,32 @@ import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.util.Text;
 
-/**
- * Removes the menu entries pointing at blocked spellbook teleports, at
- * blocked rows of the Minigames window, at blocked canoe map destinations, at
- * blocked portals into Soul Wars, at blocked destinations on worn teleport
- * jewellery, at blocked options of the Wilderness levers, at blocked lines
- * of the spirit tree list and at the trees' Last-destination option, at
- * blocked glider map destinations and at the pilots' Glider option, at
- * blocked quetzal map landing sites and legs of the Varrock quetzal route,
- * at the quetzals' and whistles' Last-destination option and at a whistle's
- * Signal set to fly to a blocked Hunter Guild, at blocked lines of the
- * Lovakengj minecart station list, at blocked charter ports and the crews'
- * Charter-to option, at the options of blocked ship legs, boat trips and
- * Mountain Guide trips, at the fairy ring dials' Confirm for a blocked code
- * and the rings' Zanaris, Last and Favourites options, and
- * at blocked lines of a boat picker, and consumes clicks and
- * number-key presses on blocked options of the rat pit, jewellery and Soul
- * Wars portal dialogues, of the charter confirm dialogue, of ship and
- * Mountain Guide chats and
- * of boat pickers, as well as shortcut key presses on blocked spirit tree,
- * minecart, charter and boat picker lines. The spell icons themselves are only touched
- * through the Minigame Teleport toggles.
- */
+// Removes the menu entries pointing at blocked spellbook teleports, at blocked rows of the
+// Minigames window, at blocked canoe map destinations, at blocked portals into Soul Wars, at
+// blocked destinations on worn teleport jewellery, at blocked options of the Wilderness levers, at
+// blocked lines of the spirit tree list and at the trees' Last-destination option, at blocked
+// glider map destinations and at the pilots' Glider option, at blocked quetzal map landing sites
+// and legs of the Varrock quetzal route, at the quetzals' and whistles' Last-destination option and
+// at a whistle's Signal set to fly to a blocked Hunter Guild, at blocked lines of the Lovakengj
+// minecart station list, at blocked charter ports and the crews' Charter-to option, at the options
+// of blocked ship legs, boat trips and Mountain Guide trips, at the fairy ring dials' Confirm for a
+// blocked code and the rings' Zanaris, Last and Favourites options, and at blocked lines of a boat
+// picker, and consumes clicks and number-key presses on blocked options of the rat pit, jewellery
+// and Soul Wars portal dialogues, of the charter confirm dialogue, of ship and Mountain Guide chats
+// and of boat pickers, as well as shortcut key presses on blocked spirit tree, minecart, charter
+// and boat picker lines. The spell icons themselves are only touched through the Minigame Teleport
+// toggles.
+@Slf4j
 @Singleton
 public class TeleportBlockFeature implements KeyListener
 {
     private static final String SELECT_OPTION = "Select";
+    // The option of a destination button that a map drawn over a list by another plugin adds.
+    private static final String TRAVEL_OPTION = "Travel";
 
     private static final String SPIRIT_TREE_TITLE_KEY = StripAndLowercase.of(SpiritTree.TITLE);
     private static final String SPIRIT_TREE_PREVIOUS_KEY = StripAndLowercase.of(SpiritTree.PREVIOUS_OPTION);
     private static final String SPIRIT_TREE_OBJECT_KEY = StripAndLowercase.of(SpiritTree.OBJECT_NAME);
-    private static final String GLIDER_PREVIOUS_KEY = StripAndLowercase.of(GnomeGlider.PREVIOUS_OPTION);
     private static final String QUETZAL_PREVIOUS_KEY = StripAndLowercase.of(QuetzalTransport.PREVIOUS_OPTION);
     private static final String QUETZAL_SIGNAL_KEY = StripAndLowercase.of(QuetzalTransport.SIGNAL_OPTION);
     private static final String SHIP_TALK_KEY = StripAndLowercase.of(Ship.TALK_OPTION);
@@ -122,7 +119,7 @@ public class TeleportBlockFeature implements KeyListener
     private static final int CANOE_MAP_LUM = WidgetUtil.componentToInterface(InterfaceID.CanoeMapLum.UNIVERSE);
     private static final int CANOE_MAP_DOUGNE = WidgetUtil.componentToInterface(InterfaceID.CanoeMapDougne.UNIVERSE);
 
-    /** Line breaks are dropped by removeTags, so they are converted first. */
+    // Line breaks are dropped by removeTags, so they are converted first.
     private static final Pattern BREAK_TAG = Pattern.compile("(?i)<br\\s*/?>");
 
     private static final Set<Integer> MINIGAME_ROWS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -148,7 +145,7 @@ public class TeleportBlockFeature implements KeyListener
         InterfaceID.Minigames.MINIGAME_20,
         InterfaceID.Minigames.MINIGAME_21)));
 
-    /** Every click option on a scene object, which leaves Examine out. */
+    // Every click option on a scene object, which leaves Examine out.
     private static final Set<MenuAction> OBJECT_OPTIONS = EnumSet.of(
         MenuAction.GAME_OBJECT_FIRST_OPTION,
         MenuAction.GAME_OBJECT_SECOND_OPTION,
@@ -156,16 +153,22 @@ public class TeleportBlockFeature implements KeyListener
         MenuAction.GAME_OBJECT_FOURTH_OPTION,
         MenuAction.GAME_OBJECT_FIFTH_OPTION);
 
-    /** The fairy ring objects whose menu carries Zanaris, Last and Favourites. */
+    // The fairy ring objects whose menu carries Zanaris, Last and Favourites.
     private static final Set<Integer> FAIRY_RING_OBJECTS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         ObjectID.FAIRYRING_MINORHUB,
         ObjectID.FAIRYRING_HOMEHUB)));
+
+    // The objects that show a checked object as a variant, so only their definition is read.
+    private static final Set<Integer> VARIANT_BASE_OBJECTS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        WildernessLever.Destination.VARIANT_BASE_OBJECT_ID,
+        Boat.VARIANT_BASE_OBJECT_ID,
+        FossilIsland.VARIANT_BASE_OBJECT_ID)));
     private static final Pattern FAIRY_RING_CODE = Pattern.compile("(?<![A-Za-z])\\(?([A-D][IJKL][PQRS])\\)?$");
     private static final String FAIRY_RING_ZANARIS = "Zanaris";
     private static final String FAIRY_RING_LAST = "Last: ";
     private static final String FAIRY_RING_FAVOURITES = "Favourites";
 
-    /** Every click option on an NPC, which leaves Examine out. */
+    // Every click option on an NPC, which leaves Examine out.
     private static final Set<MenuAction> NPC_OPTIONS = EnumSet.of(
         MenuAction.NPC_FIRST_OPTION,
         MenuAction.NPC_SECOND_OPTION,
@@ -207,31 +210,38 @@ public class TeleportBlockFeature implements KeyListener
     private final Set<Ship.Leg> blockedShipLegs = EnumSet.noneOf(Ship.Leg.class);
     private final Set<Boat.Destination> blockedBoats = EnumSet.noneOf(Boat.Destination.class);
     private final Set<FossilIsland.Destination> blockedFossilIsland = EnumSet.noneOf(FossilIsland.Destination.class);
+    private final Set<Mushtree.Destination> blockedMushtrees = EnumSet.noneOf(Mushtree.Destination.class);
     private final Set<MountainGuide.Destination> blockedMountainGuides = EnumSet.noneOf(MountainGuide.Destination.class);
     private final Set<FairyRing> blockedFairyRings = EnumSet.noneOf(FairyRing.class);
     private boolean blockFairyRingPrevious;
 
-    /** The legs of the ship NPC clicked last, whose chat lines are read until the next click outside a dialogue. */
+    // The legs of the ship NPC clicked last, whose chat lines are read until the next click outside
+    // a dialogue.
     private final Set<Ship.Leg> talkLegs = EnumSet.noneOf(Ship.Leg.class);
-    /** The boat whose picker or chat was opened last, or null. */
+    // The boat whose picker or chat was opened last, or null.
     private Boat.Network pickerNetwork;
-    /** True when a Fossil Island rowboat's picker was opened last. */
+    // True when a Fossil Island rowboat's picker was opened last.
     private boolean fossilPicker;
-    /** True once the remembered boat's picker has opened, so its closing forgets the boat. */
+    // True once the remembered boat's picker has opened, so its closing forgets the boat.
     private boolean pickerOpened;
-    /** True when a Mountain Guide around Mount Quidamortem was clicked last, whose chat lines are read until the next click outside a dialogue. */
+    // True when a Mountain Guide around Mount Quidamortem was clicked last, whose chat lines are
+    // read until the next click outside a dialogue.
     private boolean mountainGuideChat;
 
-    /** The variant id of the entry being checked, computed at most once per entry. */
+    // The variant id of the entry being checked, computed at most once per entry.
     private boolean variantKnown;
     private int entryVariantId;
-    /** Object ids already seen to have no variants, so their definition is not read again. */
-    private final BitSet plainObjects = new BitSet();
-    /** True while the chartering menu is loaded, so its widget is only read then. */
+    // True while the chartering menu is loaded, so its widget is only read then.
     private boolean charterMenuLoaded;
+    // The list and group logged as recognised last, so each is logged once per opening.
+    private String loggedList;
+    private int loggedListGroup;
+    // The map button logged as removed last.
+    private String loggedMapButton;
 
     public void startUp()
     {
+        log.debug("[state] startUp");
         rebuildBlocked();
         eventBus.register(this);
         keyManager.registerKeyListener(this);
@@ -239,6 +249,7 @@ public class TeleportBlockFeature implements KeyListener
 
     public void shutDown()
     {
+        log.debug("[state] shutDown");
         keyManager.unregisterKeyListener(this);
         eventBus.unregister(this);
         blockedSpellComponents.clear();
@@ -263,6 +274,7 @@ public class TeleportBlockFeature implements KeyListener
         blockedShipLegs.clear();
         blockedBoats.clear();
         blockedFossilIsland.clear();
+        blockedMushtrees.clear();
         blockedMountainGuides.clear();
         blockedFairyRings.clear();
         blockFairyRingPrevious = false;
@@ -271,7 +283,6 @@ public class TeleportBlockFeature implements KeyListener
         fossilPicker = false;
         pickerOpened = false;
         mountainGuideChat = false;
-        plainObjects.clear();
         charterMenuLoaded = false;
     }
 
@@ -295,6 +306,10 @@ public class TeleportBlockFeature implements KeyListener
         MenuEntry entry = event.getMenuEntry();
         if (isBlocked(entry))
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[menu] removed option={} target={} type={}", entry.getOption(), entry.getTarget(), entry.getType());
+            }
             client.getMenu().removeMenuEntry(entry);
         }
     }
@@ -315,7 +330,7 @@ public class TeleportBlockFeature implements KeyListener
             && blockedGliders.isEmpty() && !blockGliderPrevious && blockedQuetzalDestinations.isEmpty()
             && blockedQuetzalRoutes.isEmpty() && !blockQuetzalPrevious && blockedMinecartStations.isEmpty()
             && blockedCharterPorts.isEmpty() && !blockCharterPrevious && blockedShipLegs.isEmpty() && blockedBoats.isEmpty()
-            && blockedFossilIsland.isEmpty() && blockedMountainGuides.isEmpty()
+            && blockedFossilIsland.isEmpty() && blockedMushtrees.isEmpty() && blockedMountainGuides.isEmpty()
             && blockedFairyRings.isEmpty() && !blockFairyRingPrevious);
     }
 
@@ -373,6 +388,10 @@ public class TeleportBlockFeature implements KeyListener
 
         if (filtered != null)
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[menu] opened menu filtered, {} of {} entries kept", kept, entries.length);
+            }
             menu.setMenuEntries(kept == filtered.length ? filtered : Arrays.copyOf(filtered, kept));
         }
     }
@@ -387,7 +406,7 @@ public class TeleportBlockFeature implements KeyListener
             || isBlockedQuetzalMap(entry) || isBlockedQuetzalRoute(entry) || isBlockedQuetzalPrevious(entry)
             || isBlockedWhistleSignal(entry) || isBlockedMinecart(entry) || isBlockedCharter(entry)
             || isBlockedCharterPrevious(entry) || isBlockedShip(entry) || isBlockedBoat(entry)
-            || isBlockedBoatList(entry) || isBlockedFossilIsland(entry) || isBlockedMountainGuide(entry)
+            || isBlockedBoatList(entry) || isBlockedFossilIsland(entry) || isBlockedMushtree(entry) || isBlockedMountainGuide(entry)
             || isBlockedFairyRingConfirm(entry) || isBlockedFairyRingOption(entry);
     }
 
@@ -421,6 +440,10 @@ public class TeleportBlockFeature implements KeyListener
         {
             return false;
         }
+        if (log.isDebugEnabled())
+        {
+            log.debug("[menu] favourites submenu filtered, {} of {} rows kept", filtered.length, subEntries.length);
+        }
         sub.setMenuEntries(filtered);
         return filtered.length == 0;
     }
@@ -449,6 +472,10 @@ public class TeleportBlockFeature implements KeyListener
 
         if (filtered.length != subEntries.length)
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[menu] submenu of {} filtered, {} of {} lines kept", target, filtered.length, subEntries.length);
+            }
             sub.setMenuEntries(filtered);
         }
     }
@@ -492,12 +519,28 @@ public class TeleportBlockFeature implements KeyListener
     @Subscribe
     public void onMenuOptionClicked(MenuOptionClicked event)
     {
+        if (log.isDebugEnabled())
+        {
+            int clickedGroup = WidgetUtil.componentToInterface(event.getMenuEntry().getParam1());
+            if (clickedGroup == InterfaceID.MENU || clickedGroup == InterfaceID.MENU_NEW)
+            {
+                logListClick(event.getMenuEntry());
+            }
+        }
         if (isDialogueBlocking() && isBlockedDialogueClick(event))
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[click] consumed dialogue click option={} target={}", event.getMenuOption(), event.getMenuTarget());
+            }
             event.consume();
         }
         if (isBlockedFairyRingConfirm(event.getMenuEntry()) || isBlockedFairyRingOption(event.getMenuEntry()))
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[click] consumed fairy ring click option={} target={}", event.getMenuOption(), event.getMenuTarget());
+            }
             event.consume();
         }
         rememberTransport(event.getMenuEntry());
@@ -528,6 +571,10 @@ public class TeleportBlockFeature implements KeyListener
                 {
                     if (npcMatches(entry, leg::isLegNpc))
                     {
+                        if (log.isDebugEnabled())
+                        {
+                            log.debug("[transport] ship npc clicked, remembered leg={}", leg);
+                        }
                         talkLegs.add(leg);
                     }
                 }
@@ -538,11 +585,22 @@ public class TeleportBlockFeature implements KeyListener
                 {
                     if (npcMatches(entry, network::isTalkNpc))
                     {
+                        if (log.isDebugEnabled())
+                        {
+                            log.debug("[transport] boat npc clicked, remembered network={}", network);
+                        }
                         pickerNetwork = network;
                     }
                 }
             }
             mountainGuideChat = !blockedMountainGuides.isEmpty() && npcMatches(entry, MountainGuide::isQuidamortemGuide);
+            if (mountainGuideChat)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug("[transport] mountain guide clicked, chat lines watched");
+                }
+            }
         }
         else if (OBJECT_OPTIONS.contains(action) && (!blockedBoats.isEmpty() || !blockedFossilIsland.isEmpty()))
         {
@@ -553,10 +611,21 @@ public class TeleportBlockFeature implements KeyListener
             {
                 if (network.opensPicker(objectId, option) || network.opensPicker(variantId, option))
                 {
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("[transport] boat object clicked, remembered network={} option={}", network, option);
+                    }
                     pickerNetwork = network;
                 }
             }
             fossilPicker = FossilIsland.opensPicker(objectId, option) || FossilIsland.opensPicker(variantId, option);
+            if (fossilPicker)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug("[transport] fossil island rowboat clicked, option={}", option);
+                }
+            }
         }
     }
 
@@ -574,6 +643,10 @@ public class TeleportBlockFeature implements KeyListener
     {
         if (event.getGroupId() == InterfaceID.CHARTERING_MENU_SIDE)
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[charter] chartering menu loaded");
+            }
             charterMenuLoaded = true;
         }
         if (remembersPicker() && isPickerGroup(event.getGroupId()))
@@ -589,15 +662,25 @@ public class TeleportBlockFeature implements KeyListener
         {
             charterMenuLoaded = false;
         }
+        if (event.getGroupId() == InterfaceID.MENU || event.getGroupId() == InterfaceID.MENU_NEW
+            || event.getGroupId() == InterfaceID.FOSSIL_MUSHTREES)
+        {
+            loggedList = null;
+            loggedMapButton = null;
+        }
         if (pickerOpened && isPickerGroup(event.getGroupId()))
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[picker] closed, remembered boat forgotten");
+            }
             pickerNetwork = null;
             fossilPicker = false;
             pickerOpened = false;
         }
     }
 
-    /** True when the boat clicked last opens a picker, which may be on the shared list interface. */
+    // True when the boat clicked last opens a picker, which may be on the shared list interface.
     private boolean remembersPicker()
     {
         Boat.Network network = pickerNetwork;
@@ -610,7 +693,7 @@ public class TeleportBlockFeature implements KeyListener
     }
 
     // The number keys pick a dialogue line, and the number and letter keys a
-    // spirit tree, minecart, charter or boat picker line, without going through
+    // spirit tree, minecart, charter, boat or mushtree picker line, without going through
     // MenuOptionClicked. The pressed key and the typed key arrive as separate
     // events, so consuming one does not suppress the other and both are taken.
     @Override
@@ -621,6 +704,7 @@ public class TeleportBlockFeature implements KeyListener
         consumeIfBlockedMinecartKey(e);
         consumeIfBlockedCharterKey(e);
         consumeIfBlockedBoatKey(e);
+        consumeIfBlockedMushtreeKey(e);
     }
 
     @Override
@@ -631,6 +715,7 @@ public class TeleportBlockFeature implements KeyListener
         consumeIfBlockedMinecartKey(e);
         consumeIfBlockedCharterKey(e);
         consumeIfBlockedBoatKey(e);
+        consumeIfBlockedMushtreeKey(e);
     }
 
     @Override
@@ -648,6 +733,10 @@ public class TeleportBlockFeature implements KeyListener
         int digit = digitOf(e);
         if (digit > 0 && (isBlockedDialogueDigit(digit) || isBlockedTransportDigit(digit)))
         {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[key] consumed dialogue digit {}", digit);
+            }
             e.consume();
         }
     }
@@ -679,12 +768,10 @@ public class TeleportBlockFeature implements KeyListener
         return -1;
     }
 
-    /**
-     * True when the given 1-based digit currently selects a blocked line of the
-     * rat pit or jewellery dialogue. The dialogue title takes a child slot of
-     * its own, so the offset comes from locating the first child whose text
-     * matches a known destination line rather than from a fixed index.
-     */
+    // True when the given 1-based digit currently selects a blocked line of the rat pit or
+    // jewellery dialogue. The dialogue title takes a child slot of its own, so the offset comes
+    // from locating the first child whose text matches a known destination line rather than from a
+    // fixed index.
     private boolean isBlockedDialogueDigit(int digit)
     {
         Widget options = client.getWidget(InterfaceID.Chatmenu.OPTIONS);
@@ -724,15 +811,12 @@ public class TeleportBlockFeature implements KeyListener
         return isBlockedDialogueLine(item, portal, lines[index].getText());
     }
 
-    /**
-     * The item whose rub dialogue the lines belong to, or null when they belong
-     * to none. The dialogue carries no marker of the item that opened it, and a
-     * portal or an NPC can offer a place a piece of jewellery also travels to,
-     * so the lines are read as a rub dialogue only when one item accounts for
-     * more of them than any other item and for more than one of them. Every
-     * item offers at least two destinations, while a dialogue that only shares
-     * a place name offers one.
-     */
+    // The item whose rub dialogue the lines belong to, or null when they belong to none. The
+    // dialogue carries no marker of the item that opened it, and a portal or an NPC can offer a
+    // place a piece of jewellery also travels to, so the lines are read as a rub dialogue only when
+    // one item accounts for more of them than any other item and for more than one of them. Every
+    // item offers at least two destinations, while a dialogue that only shares a place name offers
+    // one.
     private static Item dialogueItem(Widget[] lines)
     {
         Item item = null;
@@ -770,12 +854,9 @@ public class TeleportBlockFeature implements KeyListener
         return most > 1 && !tied ? item : null;
     }
 
-    /**
-     * True when the lines are the Soul Wars portal dialogue. That dialogue
-     * carries no marker of its own either, and one of the two places it offers
-     * is a jewellery destination as well, so it is only recognised when both of
-     * them are present.
-     */
+    // True when the lines are the Soul Wars portal dialogue. That dialogue carries no marker of its
+    // own either, and one of the two places it offers is a jewellery destination as well, so it is
+    // only recognised when both of them are present.
     private static boolean isPortalDialogue(Widget[] lines)
     {
         for (SoulWarsPortal destination : SoulWarsPortal.values())
@@ -825,7 +906,7 @@ public class TeleportBlockFeature implements KeyListener
         return item != null && ItemTeleport.matchesDialogueLine(item, line);
     }
 
-    /** True when the text is a blocked line of the dialogue it was read from. */
+    // True when the text is a blocked line of the dialogue it was read from.
     private boolean isBlockedDialogueLine(Item item, boolean portal, String text)
     {
         String line = plainText(text);
@@ -994,16 +1075,21 @@ public class TeleportBlockFeature implements KeyListener
     // Every spirit tree opens the same destination list on an interface that
     // other lists share, so the title is checked before a line is read. The
     // lines are made by script, so the destination is read from the line the
-    // entry sits on rather than from a fixed position.
+    // entry sits on rather than from a fixed position. A map button another
+    // plugin draws over the list names its destination in the entry's target.
     private boolean isBlockedSpiritTree(MenuEntry entry)
     {
-        if (blockedSpiritTrees.isEmpty() || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
+        if (blockedSpiritTrees.isEmpty())
         {
             return false;
         }
 
-        String line = entryLine(entry, spiritTreeLines());
-        return line != null && isBlockedSpiritTreeLine(line);
+        if (isListLineEntry(entry))
+        {
+            String line = entryLine(entry, spiritTreeLines());
+            return line != null && isBlockedSpiritTreeLine(line);
+        }
+        return isMapButtonEntry(entry) && spiritTreeLines() != null && isBlockedMapButton(entry, this::isBlockedSpiritTreeLine);
     }
 
     // Every conductor and minecart opens the same station list, drawn on the
@@ -1011,16 +1097,59 @@ public class TeleportBlockFeature implements KeyListener
     // title of its own.
     private boolean isBlockedMinecart(MenuEntry entry)
     {
-        if (blockedMinecartStations.isEmpty() || entry.getParam1() != InterfaceID.Menu.LJ_LAYER1)
+        if (blockedMinecartStations.isEmpty())
         {
             return false;
         }
 
-        String line = entryLine(entry, minecartLines());
-        return line != null && isBlockedMinecartLine(line);
+        if (isListLineEntry(entry))
+        {
+            String line = entryLine(entry, minecartLines());
+            return line != null && isBlockedMinecartLine(line);
+        }
+        return isMapButtonEntry(entry) && minecartLines() != null && isBlockedMapButton(entry, this::isBlockedMinecartLine);
     }
 
-    /** The text of the list line an entry sits on, or null when it sits on none. */
+    // True when an entry sits on a line of the classic or the modern list.
+    private static boolean isListLineEntry(MenuEntry entry)
+    {
+        return entry.getParam1() == InterfaceID.Menu.LJ_LAYER1 || entry.getParam1() == InterfaceID.MenuNew.TEXT;
+    }
+
+    // True when an entry is the Travel option of a button that a map drawn over the classic or the
+    // modern list adds to the list's root layer.
+    private static boolean isMapButtonEntry(MenuEntry entry)
+    {
+        return (entry.getParam1() == InterfaceID.Menu.LJ_LAYER2 || entry.getParam1() == InterfaceID.MenuNew.INFINITE)
+            && TRAVEL_OPTION.equals(entry.getOption());
+    }
+
+    // A map button's target is the destination's name.
+    private boolean isBlockedMapButton(MenuEntry entry, Predicate<String> blocked)
+    {
+        String destination = plainText(entry.getTarget());
+        if (!blocked.test(destination))
+        {
+            return false;
+        }
+        logMapButton(destination, WidgetUtil.componentToInterface(entry.getParam1()));
+        return true;
+    }
+
+    // The menu is rebuilt while the mouse rests on a button, so a removal is logged once per button.
+    private void logMapButton(String destination, int group)
+    {
+        if (log.isDebugEnabled() && !destination.equals(loggedMapButton))
+        {
+            loggedMapButton = destination;
+            if (log.isDebugEnabled())
+            {
+                log.debug("[teleportmaps] removed map button {} on group {}", destination, group);
+            }
+        }
+    }
+
+    // The text of the list line an entry sits on, or null when it sits on none.
     private static String entryLine(MenuEntry entry, Widget[] lines)
     {
         int index = entry.getParam0();
@@ -1069,13 +1198,17 @@ public class TeleportBlockFeature implements KeyListener
             String text = plainText(line.getText());
             if (key.equalsIgnoreCase(listLabel(text)) && blocked.test(text))
             {
+                if (log.isDebugEnabled())
+                {
+                    log.debug("[key] consumed list key {} on line {}", key, text);
+                }
                 e.consume();
                 return;
             }
         }
     }
 
-    /** The letter or digit a key press stands for, or null when it stands for none. */
+    // The letter or digit a key press stands for, or null when it stands for none.
     private static String keyLabel(KeyEvent e)
     {
         char ch = e.getKeyChar();
@@ -1088,52 +1221,122 @@ public class TeleportBlockFeature implements KeyListener
         return digit > 0 ? String.valueOf(digit) : null;
     }
 
-    /** The lines of the spirit tree list, or null when that list is not open. */
+    // The lines of the spirit tree list, or null when that list is not open.
     private Widget[] spiritTreeLines()
     {
-        return listLines(title -> matchesKey(SPIRIT_TREE_TITLE_KEY, title));
+        return listLines("spirit tree", title -> matchesKey(SPIRIT_TREE_TITLE_KEY, title));
     }
 
-    /** The lines of the minecart station list, or null when that list is not open. */
+    // The lines of the minecart station list, or null when that list is not open.
     private Widget[] minecartLines()
     {
-        return listLines(LovakengjMinecart::isTitle);
+        return listLines("minecart", LovakengjMinecart::isTitle);
     }
 
-    /** The lines of the shared list interface, or null when no list with a matching title is open. */
-    private Widget[] listLines(Predicate<String> isTitle)
+    // The lines of the shared list interface, classic (187) or modern (947), or null when no list
+    // with a matching title is open. A map drawn over the list by another plugin hides the lines
+    // and the title but keeps their text, so only the list's root is checked for being shown.
+    private Widget[] listLines(String name, Predicate<String> isTitle)
     {
-        Widget list = client.getWidget(InterfaceID.Menu.LJ_LAYER1);
+        int group;
+        Widget list;
         Widget frame = client.getWidget(InterfaceID.Menu.LJ_LAYER2);
-        if (list == null || list.isHidden() || frame == null)
+        if (frame != null && !frame.isHidden())
+        {
+            group = InterfaceID.MENU;
+            list = hasTitle(frame, isTitle) ? client.getWidget(InterfaceID.Menu.LJ_LAYER1) : null;
+        }
+        else
+        {
+            Widget universe = client.getWidget(InterfaceID.MenuNew.UNIVERSE);
+            group = InterfaceID.MENU_NEW;
+            list = universe != null && !universe.isHidden() && hasTitle(client.getWidget(InterfaceID.MenuNew.TITLE), isTitle)
+                ? client.getWidget(InterfaceID.MenuNew.TEXT) : null;
+        }
+        if (list == null)
         {
             return null;
+        }
+
+        if (log.isDebugEnabled() && (!name.equals(loggedList) || group != loggedListGroup))
+        {
+            loggedList = name;
+            loggedListGroup = group;
+            if (log.isDebugEnabled())
+            {
+                log.debug("[list] {} list recognised on group {}, lines hidden={}", name, group, list.isHidden());
+            }
+        }
+        return list.getDynamicChildren();
+    }
+
+    // True when a title widget's own text or one of its dynamic children's matches.
+    private static boolean hasTitle(Widget frame, Predicate<String> isTitle)
+    {
+        if (frame == null)
+        {
+            return false;
+        }
+        if (isTitle.test(plainText(frame.getText())))
+        {
+            return true;
         }
 
         Widget[] titles = frame.getDynamicChildren();
         if (titles == null)
         {
-            return null;
+            return false;
         }
 
         for (Widget title : titles)
         {
             if (title != null && isTitle.test(plainText(title.getText())))
             {
-                return list.getDynamicChildren();
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
-    /** The shortcut a list line prints before its text, or null when it prints none. */
+    // Logs what a click on the shared list interface landed on, so a list the
+    // plugin does not recognise shows its title and line in the log.
+    private void logListClick(MenuEntry entry)
+    {
+        boolean modern = WidgetUtil.componentToInterface(entry.getParam1()) == InterfaceID.MENU_NEW;
+        Widget frame = client.getWidget(modern ? InterfaceID.MenuNew.TITLE : InterfaceID.Menu.LJ_LAYER2);
+        Widget[] titles = frame == null ? null : frame.getDynamicChildren();
+        StringBuilder titleText = new StringBuilder();
+        if (frame != null && !plainText(frame.getText()).isEmpty())
+        {
+            titleText.append('[').append(plainText(frame.getText())).append(']');
+        }
+        if (titles != null)
+        {
+            for (Widget title : titles)
+            {
+                if (title != null && !plainText(title.getText()).isEmpty())
+                {
+                    titleText.append('[').append(plainText(title.getText())).append(']');
+                }
+            }
+        }
+        Widget list = client.getWidget(modern ? InterfaceID.MenuNew.TEXT : InterfaceID.Menu.LJ_LAYER1);
+        Widget[] lines = list == null || !isListLineEntry(entry) ? null : list.getDynamicChildren();
+        log.debug("[list] click group={} option={} target={} type={} param0={} param1={} line={} titles={} "
+                + "mapButton={} spiritTreeList={} minecartList={}",
+            modern ? InterfaceID.MENU_NEW : InterfaceID.MENU, entry.getOption(), entry.getTarget(), entry.getType(),
+            entry.getParam0(), entry.getParam1(), entryLine(entry, lines), titleText, isMapButtonEntry(entry),
+            spiritTreeLines() != null, minecartLines() != null);
+    }
+
+    // The shortcut a list line prints before its text, or null when it prints none.
     private static String listLabel(String line)
     {
         int colon = line.indexOf(": ");
         return colon > 0 ? line.substring(0, colon).trim() : null;
     }
 
-    /** The text a list line prints after its shortcut. */
+    // The text a list line prints after its shortcut.
     private static String listText(String line)
     {
         int colon = line.indexOf(": ");
@@ -1166,26 +1369,48 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
-    // Last-destination travels straight to the tree used last, and its entry
-    // does not name that tree, so the option is removed whatever it points at.
+    // Last-destination travels straight to the tree used last. Its entry reads
+    // either Last-destination or the name of that tree. Previous Destination
+    // removes it whatever it points at; a named tree is also removed by that
+    // tree's own toggle.
     // The object's name is checked so the same option elsewhere is left alone.
     private boolean isBlockedSpiritTreePrevious(MenuEntry entry)
     {
-        if (!blockSpiritTreePrevious || !OBJECT_OPTIONS.contains(entry.getType())
-            || !matchesKey(SPIRIT_TREE_PREVIOUS_KEY, plainText(entry.getOption())))
+        if ((!blockSpiritTreePrevious && blockedSpiritTrees.isEmpty()) || !OBJECT_OPTIONS.contains(entry.getType()))
         {
             return false;
         }
 
-        ObjectComposition composition = client.getObjectDefinition(entryVariantId(entry));
+        String option = plainText(entry.getOption());
+        boolean blocked;
+        if (matchesKey(SPIRIT_TREE_PREVIOUS_KEY, option))
+        {
+            blocked = blockSpiritTreePrevious;
+        }
+        else
+        {
+            SpiritTree.Destination named = SpiritTree.Destination.forOption(option);
+            blocked = named != null && (blockSpiritTreePrevious || blockedSpiritTrees.contains(named));
+        }
+        if (!blocked)
+        {
+            return false;
+        }
+
+        ObjectComposition composition = client.getObjectDefinition(entry.getIdentifier());
+        if (composition != null && composition.getImpostorIds() != null)
+        {
+            composition = composition.getImpostor();
+        }
         return composition != null && matchesKey(SPIRIT_TREE_OBJECT_KEY, plainText(composition.getName()));
     }
 
     // An object whose look depends on the player's progress reaches the menu
     // under its base id, so the id of the variant on screen is checked too.
+    // Only the known base ids are looked up.
     private int variantId(int objectId)
     {
-        if (objectId >= 0 && plainObjects.get(objectId))
+        if (!VARIANT_BASE_OBJECTS.contains(objectId))
         {
             return objectId;
         }
@@ -1193,10 +1418,6 @@ public class TeleportBlockFeature implements KeyListener
         ObjectComposition composition = client.getObjectDefinition(objectId);
         if (composition == null || composition.getImpostorIds() == null)
         {
-            if (composition != null && objectId >= 0)
-            {
-                plainObjects.set(objectId);
-            }
             return objectId;
         }
         ObjectComposition variant = composition.getImpostor();
@@ -1225,19 +1446,27 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
-    // Glider flies straight to the pilot's last destination, and its entry
-    // does not name that place, so the option is removed whatever it points
-    // at. The pilot's name is checked so the same option elsewhere is left
-    // alone.
+    // "Glider-to <place>" flies straight to the pilot's last destination.
+    // Previous Destination removes it whatever it points at; a named place is
+    // also removed by that place's own toggle. The bare Glider option opens
+    // the map and stays. The pilot's name is checked so the same option
+    // elsewhere is left alone.
     private boolean isBlockedGliderPrevious(MenuEntry entry)
     {
-        if (!blockGliderPrevious || !NPC_OPTIONS.contains(entry.getType())
-            || !matchesKey(GLIDER_PREVIOUS_KEY, plainText(entry.getOption())))
+        if ((!blockGliderPrevious && blockedGliders.isEmpty()) || !NPC_OPTIONS.contains(entry.getType()))
         {
             return false;
         }
 
-        return GnomeGlider.isPilot(plainText(entry.getTarget()));
+        String option = plainText(entry.getOption());
+        if (!option.startsWith(GnomeGlider.PREVIOUS_PREFIX))
+        {
+            return false;
+        }
+
+        GnomeGlider.Destination named = GnomeGlider.Destination.forPlace(option.substring(GnomeGlider.PREVIOUS_PREFIX.length()));
+        boolean blocked = blockGliderPrevious || (named != null && blockedGliders.contains(named));
+        return blocked && GnomeGlider.isPilot(plainText(entry.getTarget()));
     }
 
     // A quetzal map icon carries one option, whose text is the name of its
@@ -1283,21 +1512,38 @@ public class TeleportBlockFeature implements KeyListener
     }
 
     // Last-destination flies straight to the landing site used last, from a
-    // network quetzal and from a whistle, and its entry does not name that
-    // site, so the option is removed whatever it points at.
+    // network quetzal and from a whistle. Its entry reads either
+    // Last-destination or the name of that site. Previous Destination removes
+    // it whatever it points at; a named site is also removed by that site's
+    // own toggle.
     private boolean isBlockedQuetzalPrevious(MenuEntry entry)
     {
-        if (!blockQuetzalPrevious)
+        if (!blockQuetzalPrevious && blockedQuetzalDestinations.isEmpty())
+        {
+            return false;
+        }
+
+        String option = plainText(entry.getOption());
+        boolean blocked;
+        if (matchesKey(QUETZAL_PREVIOUS_KEY, option))
+        {
+            blocked = blockQuetzalPrevious;
+        }
+        else
+        {
+            QuetzalTransport.Destination named = QuetzalTransport.Destination.forOption(option);
+            blocked = named != null && (blockQuetzalPrevious || blockedQuetzalDestinations.contains(named));
+        }
+        if (!blocked)
         {
             return false;
         }
 
         if (NPC_OPTIONS.contains(entry.getType()))
         {
-            return matchesKey(QUETZAL_PREVIOUS_KEY, plainText(entry.getOption()))
-                && npcMatches(entry, QuetzalTransport::isNetworkQuetzal);
+            return npcMatches(entry, QuetzalTransport::isNetworkQuetzal);
         }
-        return isWhistleOption(entry) && matchesKey(QUETZAL_PREVIOUS_KEY, plainText(entry.getOption()));
+        return isWhistleOption(entry);
     }
 
     // A whistle set to fly straight to the Hunter Guild does so from Signal
@@ -1437,11 +1683,9 @@ public class TeleportBlockFeature implements KeyListener
         return minigame != null && blockedMinigames.contains(minigame);
     }
 
-    /**
-     * The name a row prints, which is its first line. The location sits either
-     * below the name in the same widget or on a child of it, so both are tried.
-     * A row whose name cannot be read returns null and is left alone.
-     */
+    // The name a row prints, which is its first line. The location sits either below the name in
+    // the same widget or on a child of it, so both are tried. A row whose name cannot be read
+    // returns null and is left alone.
     private static String rowName(Widget row)
     {
         if (row == null)
@@ -1568,7 +1812,7 @@ public class TeleportBlockFeature implements KeyListener
             || WidgetUtil.componentToInterface(component) == InterfaceID.INVENTORY;
     }
 
-    /** True when the click landed on a blocked line of a destination dialogue. */
+    // True when the click landed on a blocked line of a destination dialogue.
     private boolean isBlockedDialogueClick(MenuOptionClicked event)
     {
         if (event.getParam1() != InterfaceID.Chatmenu.OPTIONS)
@@ -1669,7 +1913,7 @@ public class TeleportBlockFeature implements KeyListener
         }
     }
 
-    /** The lines of the chartering list, or null when the chartering menu is not open. */
+    // The lines of the chartering list, or null when the chartering menu is not open.
     private Widget[] charterLines()
     {
         Widget list = client.getWidget(InterfaceID.CharteringMenuSide.LIST_CONTENT);
@@ -1721,8 +1965,8 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
-    // Larry's boat and Achilka offer each destination as a click option of its
-    // own, so the option is removed from the boats and NPCs that carry it.
+    // Larry's boat, the Slepe rowboat and Achilka offer each destination as a
+    // click option of its own, so the option is removed from the boats and NPCs that carry it.
     private boolean isBlockedBoat(MenuEntry entry)
     {
         if (blockedBoats.isEmpty())
@@ -1783,10 +2027,11 @@ public class TeleportBlockFeature implements KeyListener
         }
     }
 
-    /** The lines of the shared list interface while the remembered boat's picker may be on it, or null. */
+    // The lines of the shared list interface while the remembered boat's picker may be on it, or
+    // null.
     private Widget[] boatPickerLines()
     {
-        return remembersPicker() ? listLines(title -> true) : null;
+        return remembersPicker() ? listLines("boat", title -> true) : null;
     }
 
     // The rowboats to Lithkren and back travel straight from Travel, so the
@@ -1809,12 +2054,98 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
-    /**
-     * True when the given 1-based digit currently picks a blocked line of the
-     * charter confirm dialogue, of a ship NPC's chat or of a boat picker. The
-     * option lines are the children that carry a click option, which leaves
-     * the title out.
-     */
+    // The mushtree picker has one button per tree, with the tree's name on a
+    // label beside it. Which button carries which tree is not known yet, so
+    // the label is read, and logged so a dev run shows the order.
+    private boolean isBlockedMushtree(MenuEntry entry)
+    {
+        if (blockedMushtrees.isEmpty())
+        {
+            return false;
+        }
+
+        int line = Mushtree.lineOf(entry.getParam1());
+        if (line < 0)
+        {
+            return entry.getParam1() == InterfaceID.FossilMushtrees.UNIVERSE && TRAVEL_OPTION.equals(entry.getOption())
+                && isBlockedMushtreeButton(entry);
+        }
+
+        String label = mushtreeLabel(line);
+        if (log.isDebugEnabled())
+        {
+            log.debug("[mushtree] line {} label {} option {} type {}", line + 1, label, entry.getOption(), entry.getType());
+        }
+        return isBlockedMushtreeLabel(label);
+    }
+
+    // A map drawn over the picker by another plugin adds a button per tree to the picker's root,
+    // named after the tree.
+    private boolean isBlockedMushtreeButton(MenuEntry entry)
+    {
+        String label = plainText(entry.getTarget());
+        if (!isBlockedMushtreeLabel(label))
+        {
+            return false;
+        }
+        logMapButton(label, InterfaceID.FOSSIL_MUSHTREES);
+        return true;
+    }
+
+    // The picker takes 1 to 4 for its four lines, top to bottom.
+    private void consumeIfBlockedMushtreeKey(KeyEvent e)
+    {
+        if (blockedMushtrees.isEmpty())
+        {
+            return;
+        }
+
+        int digit = digitOf(e);
+        Widget picker = digit > 0 && digit <= Mushtree.lineCount()
+            ? client.getWidget(InterfaceID.FossilMushtrees.UNIVERSE) : null;
+        if (picker == null || picker.isHidden())
+        {
+            return;
+        }
+
+        String label = mushtreeLabel(digit - 1);
+        if (isBlockedMushtreeLabel(label))
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[key] consumed mushtree key {} on label {}", digit, label);
+            }
+            e.consume();
+        }
+    }
+
+    // The text of a 0-based mushtree picker line's label, or null when it is not loaded.
+    private String mushtreeLabel(int line)
+    {
+        Widget label = client.getWidget(Mushtree.labelOf(line));
+        return label == null ? null : plainText(label.getText());
+    }
+
+    private boolean isBlockedMushtreeLabel(String label)
+    {
+        if (label == null)
+        {
+            return false;
+        }
+
+        for (Mushtree.Destination destination : blockedMushtrees)
+        {
+            if (destination.isNamedBy(label))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // True when the given 1-based digit currently picks a blocked line of the charter confirm
+    // dialogue, of a ship NPC's chat or of a boat picker. The option lines are the children that
+    // carry a click option, which leaves the title out.
     private boolean isBlockedTransportDigit(int digit)
     {
         Widget options = client.getWidget(InterfaceID.Chatmenu.OPTIONS);
@@ -1858,7 +2189,8 @@ public class TeleportBlockFeature implements KeyListener
         return false;
     }
 
-    /** True when the text is a blocked line of the charter confirm dialogue, of a ship NPC's chat, of a boat picker or of a Mountain Guide's chat. */
+    // True when the text is a blocked line of the charter confirm dialogue, of a ship NPC's chat,
+    // of a boat picker or of a Mountain Guide's chat.
     private boolean isBlockedTransportLine(Widget[] lines, String text)
     {
         String line = plainText(text);
@@ -1989,6 +2321,13 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
         for (AncientTeleportSpell spell : AncientTeleportSpell.values())
+        {
+            if (spell.isBlocked(config) != invert)
+            {
+                blockedSpellComponents.add(spell.getComponentId());
+            }
+        }
+        for (ArceuusTeleportSpell spell : ArceuusTeleportSpell.values())
         {
             if (spell.isBlocked(config) != invert)
             {
@@ -2180,5 +2519,29 @@ public class TeleportBlockFeature implements KeyListener
             }
         }
         blockFairyRingPrevious = config.fairyRingPrevious() != invert;
+
+        blockedMushtrees.clear();
+        for (Mushtree.Destination destination : Mushtree.Destination.values())
+        {
+            if (destination.isBlocked(config) != invert)
+            {
+                blockedMushtrees.add(destination);
+            }
+        }
+
+        if (log.isDebugEnabled())
+        {
+            log.debug("[config] invert={} spells={} minigames={} ratPits={} itemTeleports={} portals={} canoes={} "
+                    + "entryPortals={} leverEntries={} leverDestinations={} spiritTrees={} spiritTreePrev={} gliders={} gliderPrev={} "
+                    + "quetzalDestinations={} quetzalRoutes={} quetzalPrev={} minecarts={} charterPorts={} charterPrev={} "
+                    + "shipLegs={} boats={} fossilIsland={} mushtrees={} mountainGuides={} fairyRings={} fairyRingPrev={}",
+                invert, blockedSpellComponents.size(), blockedMinigames.size(), blockedRatPits.size(),
+                blockedItemTeleports.size(), blockedPortals.size(), blockedCanoes.size(), blockedEntryPortals.size(),
+                blockedLeverEntries.size(), blockedLeverDestinations.size(), blockedSpiritTrees.size(), blockSpiritTreePrevious,
+                blockedGliders.size(), blockGliderPrevious, blockedQuetzalDestinations.size(), blockedQuetzalRoutes.size(),
+                blockQuetzalPrevious, blockedMinecartStations.size(), blockedCharterPorts.size(), blockCharterPrevious,
+                blockedShipLegs.size(), blockedBoats.size(), blockedFossilIsland.size(), blockedMushtrees.size(), blockedMountainGuides.size(),
+                blockedFairyRings.size(), blockFairyRingPrevious);
+        }
     }
 }

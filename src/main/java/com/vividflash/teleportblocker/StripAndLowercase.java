@@ -25,22 +25,26 @@
 package com.vividflash.teleportblocker;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
-/** Comparison key for option text, ignoring case and punctuation. */
+// Comparison key for option text, ignoring case and punctuation.
 public final class StripAndLowercase
 {
+    private static final Pattern NON_ALPHANUMERIC = Pattern.compile("[^a-z0-9]");
+    private static final Pattern NON_ALPHANUMERIC_RUN = Pattern.compile("[^a-z0-9]+");
+
     private StripAndLowercase()
     {
     }
 
     public static String of(String text)
     {
-        return text == null ? "" : text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+        return text == null ? "" : NON_ALPHANUMERIC.matcher(text.toLowerCase(Locale.ROOT)).replaceAll("");
     }
 
-    /** The words of a text, lowercased, between single spaces and with a space at both ends. */
+    // The words of a text, lowercased, between single spaces and with a space at both ends.
     public static String words(String text)
     {
-        return " " + text.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", " ").trim() + " ";
+        return " " + NON_ALPHANUMERIC_RUN.matcher(text.toLowerCase(Locale.ROOT)).replaceAll(" ").trim() + " ";
     }
 }

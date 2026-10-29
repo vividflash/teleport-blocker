@@ -27,10 +27,8 @@ package com.vividflash.teleportblocker;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
 
-/**
- * Ancient spellbook teleports in spellbook order, each paired with its packed
- * component id and the toggle that blocks it.
- */
+// Ancient spellbook teleports in spellbook order, each paired with its packed component id and the
+// toggle that blocks it.
 public enum AncientTeleportSpell
 {
     HOME("Home Teleport", InterfaceID.MagicSpellbook.TELEPORT_HOME_ZAROS, TeleportBlockerConfig::ancientHomeTeleport),

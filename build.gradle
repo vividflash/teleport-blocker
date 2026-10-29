@@ -3,9 +3,9 @@ plugins {
 }
 
 group = 'com.vividflash'
-version = '1.7'
+version = '1.8'
 
-def runeLiteVersion = '1.13.2'
+def runeLiteVersion = '1.13.4'
 
 repositories {
     mavenLocal()
@@ -21,7 +21,6 @@ dependencies {
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
 
     testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion
-    testImplementation group: 'net.runelite', name: 'jshell', version: runeLiteVersion
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
 
@@ -33,3 +32,5 @@ tasks.withType(JavaCompile) {
 test {
     useJUnit()
 }
+
+if (file('dev.gradle').exists()) { apply from: 'dev.gradle' }

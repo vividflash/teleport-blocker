@@ -32,21 +32,22 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.ObjectID;
 
-/**
- * The Fossil Island rowboats. The rowboats on the island open a picker whose
- * lines are not known word for word, so a picker line is read by the place
- * words it contains, and only while the picker of a rowboat just used is open.
- * The rowboats to Lithkren and back travel straight from Travel. The Dive
- * option is not a trip and is never touched.
- */
+// The Fossil Island rowboats. The rowboats on the island open a picker whose lines are not known
+// word for word, so a picker line is read by the place words it contains, and only while the picker
+// of a rowboat just used is open. The rowboats to Lithkren and back travel straight from Travel.
+// The Dive option is not a trip and is never touched.
 public final class FossilIsland
 {
     private static final String TRAVEL_OPTION = "Travel";
     private static final String TRAVEL_KEY = StripAndLowercase.of(TRAVEL_OPTION);
 
-    /** The rowboats on the island, whose Travel option opens the picker. */
+    // The rowboats on the island, whose Travel option opens the picker.
     private static final Set<Integer> PICKER_OBJECT_IDS = ids(
         ObjectID.FOSSIL_ROWBOAT_CAMP, ObjectID.FOSSIL_ROWBOAT_NORTH, ObjectID.FOSSIL_ROWBOAT_DIVING);
+
+    // The rowboat to Lithkren reaches the menu under this id, which shows
+    // FOSSIL_ROWBOAT_LITHKREN_BUILT once repaired.
+    public static final int VARIANT_BASE_OBJECT_ID = ObjectID.FOSSIL_ROWBOAT_LITHKREN;
 
     private FossilIsland()
     {
@@ -67,17 +68,15 @@ public final class FossilIsland
         return TRAVEL_KEY.equals(StripAndLowercase.of(option));
     }
 
-    /** True when the option on the object opens the rowboat picker. */
+    // True when the option on the object opens the rowboat picker.
     public static boolean opensPicker(int objectId, String option)
     {
         return PICKER_OBJECT_IDS.contains(objectId) && isTravel(option);
     }
 
-    /**
-     * The destinations in the order of the config, each paired with the place
-     * words a picker line naming it contains, the rowboats whose Travel goes
-     * there straight away, and the toggle that blocks it.
-     */
+    // The destinations in the order of the config, each paired with the place words a picker line
+    // naming it contains, the rowboats whose Travel goes there straight away, and the toggle that
+    // blocks it.
     public enum Destination
     {
         MUSEUM_CAMP(texts("camp"), ids(), TeleportBlockerConfig::fossilIslandMuseumCamp),
@@ -99,7 +98,7 @@ public final class FossilIsland
             this.blocked = blocked;
         }
 
-        /** True when the object's Travel option goes straight to this destination. */
+        // True when the object's Travel option goes straight to this destination.
         public boolean travelsFrom(int objectId)
         {
             return travelObjectIds.contains(objectId);
@@ -110,10 +109,8 @@ public final class FossilIsland
             return blocked.test(config);
         }
 
-        /**
-         * The destination a picker line names, or null when it names none. The
-         * destination with the longest matching words wins.
-         */
+        // The destination a picker line names, or null when it names none. The destination with the
+        // longest matching words wins.
         public static Destination forPickerLine(String text)
         {
             String line = StripAndLowercase.words(text);

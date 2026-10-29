@@ -26,21 +26,22 @@ package com.vividflash.teleportblocker;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
 
-/**
- * The gnome glider network. Every pilot opens the same map, which carries one
- * button per destination, so a click is recognised by the button it lands on.
- */
+// The gnome glider network. Every pilot opens the same map, which carries one button per
+// destination, so a click is recognised by the button it lands on.
 public final class GnomeGlider
 {
-    /** The pilot option that flies straight to the last destination used. */
-    public static final String PREVIOUS_OPTION = "Glider";
+    // The pilot option that flies straight to the last destination used, "Glider-to <place>".
+    // It shows only once the pilot has a last destination. The bare "Glider" option opens the map.
+    public static final String PREVIOUS_PREFIX = "Glider-to ";
 
-    /** The six glider pilots, by the name their menu entries show. */
+    // The six glider pilots, by the name their menu entries show.
     private static final Set<String> PILOT_NAMES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         StripAndLowercase.of("Captain Errdo"),
         StripAndLowercase.of("Captain Klemfoodle"),
@@ -58,30 +59,45 @@ public final class GnomeGlider
         return PILOT_NAMES.contains(StripAndLowercase.of(name));
     }
 
-    /**
-     * The destinations of the glider map, each paired with its map button and
-     * the toggle that blocks it. The Feldip Hills and Ape Atoll buttons stay
-     * hidden until their quest progress is met.
-     * The pilots' Glider option has a toggle of its own, since its menu entry
-     * does not name the place it flies to.
-     */
+    // The destinations of the glider map, each paired with its map button and the toggle that
+    // blocks it. The Feldip Hills and Ape Atoll buttons stay hidden until their quest progress is
+    // met. Each also carries the gnome name the pilots' Glider-to option uses. That option has a
+    // toggle of its own, which also covers it whatever place it names.
     public enum Destination
     {
-        GRAND_TREE(InterfaceID.Glidermap.GRANDTREE_BUTTON, TeleportBlockerConfig::gnomeGliderGrandTree),
-        KARAMJA(InterfaceID.Glidermap.KARAMJA_BUTTON, TeleportBlockerConfig::gnomeGliderKaramja),
-        AL_KHARID(InterfaceID.Glidermap.ALKHARID_BUTTON, TeleportBlockerConfig::gnomeGliderAlKharid),
-        WHITE_WOLF_MOUNTAIN(InterfaceID.Glidermap.WHITEWOLFMOUNTAIN_BUTTON, TeleportBlockerConfig::gnomeGliderWhiteWolfMountain),
-        DIGSITE(InterfaceID.Glidermap.VARROCK_BUTTON, TeleportBlockerConfig::gnomeGliderDigsite),
-        FELDIP_HILLS(InterfaceID.Glidermap.OGREAREA_BUTTON, TeleportBlockerConfig::gnomeGliderFeldipHills),
-        APE_ATOLL(InterfaceID.Glidermap.APEATOLL_BUTTON, TeleportBlockerConfig::gnomeGliderApeAtoll);
+        GRAND_TREE(InterfaceID.Glidermap.GRANDTREE_BUTTON, "Ta Quir Priw", TeleportBlockerConfig::gnomeGliderGrandTree),
+        KARAMJA(InterfaceID.Glidermap.KARAMJA_BUTTON, "Gandius", TeleportBlockerConfig::gnomeGliderKaramja),
+        AL_KHARID(InterfaceID.Glidermap.ALKHARID_BUTTON, "Kar-Hewo", TeleportBlockerConfig::gnomeGliderAlKharid),
+        WHITE_WOLF_MOUNTAIN(InterfaceID.Glidermap.WHITEWOLFMOUNTAIN_BUTTON, "Sindarpos", TeleportBlockerConfig::gnomeGliderWhiteWolfMountain),
+        DIGSITE(InterfaceID.Glidermap.VARROCK_BUTTON, "Lemanto Andra", TeleportBlockerConfig::gnomeGliderDigsite),
+        FELDIP_HILLS(InterfaceID.Glidermap.OGREAREA_BUTTON, "Lemantolly Undri", TeleportBlockerConfig::gnomeGliderFeldipHills),
+        APE_ATOLL(InterfaceID.Glidermap.APEATOLL_BUTTON, "Ookookolly Undri", TeleportBlockerConfig::gnomeGliderApeAtoll);
+
+        private static final Map<String, Destination> BY_KEY = new HashMap<>();
+
+        static
+        {
+            for (Destination destination : values())
+            {
+                BY_KEY.put(StripAndLowercase.of(destination.gnomeName), destination);
+            }
+        }
 
         private final int componentId;
+        private final String gnomeName;
         private final Predicate<TeleportBlockerConfig> blocked;
 
-        Destination(int componentId, Predicate<TeleportBlockerConfig> blocked)
+        Destination(int componentId, String gnomeName, Predicate<TeleportBlockerConfig> blocked)
         {
             this.componentId = componentId;
+            this.gnomeName = gnomeName;
             this.blocked = blocked;
+        }
+
+        // The destination a Glider-to option names, or null when it names none.
+        public static Destination forPlace(String place)
+        {
+            return BY_KEY.get(StripAndLowercase.of(place));
         }
 
         public int getComponentId()

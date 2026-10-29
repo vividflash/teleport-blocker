@@ -26,32 +26,33 @@ package com.vividflash.teleportblocker;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.ItemID;
 import net.runelite.api.gameval.NpcID;
 
-/**
- * The quetzals: the network whose quetzals and whistles open a map of landing
- * sites, and the separate quetzal that flies between Varrock and Civitas illa
- * Fortis.
- */
+// The quetzals: the network whose quetzals and whistles open a map of landing sites, and the
+// separate quetzal that flies between Varrock and Civitas illa Fortis.
 public final class QuetzalTransport
 {
-    /** The network quetzal and whistle option that flies straight to the last landing site used. */
+    // The network quetzal and whistle option that flies straight to the last landing site used.
     public static final String PREVIOUS_OPTION = "Last-destination";
 
-    /** The whistle option that opens the map, or flies straight to the Hunter Guild when the whistle is set to. */
+    // The whistle option that opens the map, or flies straight to the Hunter Guild when the whistle
+    // is set to.
     public static final String SIGNAL_OPTION = "Signal";
 
-    /** The component that holds the landing site icons, on the quetzals' map and on the whistle's map. */
+    // The component that holds the landing site icons, on the quetzals' map and on the whistle's
+    // map.
     private static final Set<Integer> MAP_ICONS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         InterfaceID.QuetzalMenu.ICONS,
         InterfaceID.QuetzalwhistleMenu.ICONS)));
 
-    /** The network quetzals: Renu in each of her colours, and the quetzal at every landing site. */
+    // The network quetzals: Renu in each of her colours, and the quetzal at every landing site.
     private static final Set<Integer> NETWORK_QUETZAL_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         NpcID.QUETZAL_CHILD_GREEN,
         NpcID.QUETZAL_CHILD_ORANGE,
@@ -73,7 +74,7 @@ public final class QuetzalTransport
         NpcID.QUETZAL_AUBURNVALLEY,
         NpcID.QUETZAL_KASTORI)));
 
-    /** Every tier of the quetzal whistle. */
+    // Every tier of the quetzal whistle.
     private static final Set<Integer> WHISTLE_IDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         ItemID.HG_QUETZALWHISTLE_BASIC,
         ItemID.HG_QUETZALWHISTLE_ENHANCED,
@@ -99,11 +100,9 @@ public final class QuetzalTransport
         return WHISTLE_IDS.contains(itemId);
     }
 
-    /**
-     * The two legs of the Varrock quetzal route, each paired with the keeper
-     * and the quetzal at its starting end and the toggle that blocks it. The
-     * quetzal flies from Travel, and the keeper from Travel and from chat.
-     */
+    // The two legs of the Varrock quetzal route, each paired with the keeper and the quetzal at its
+    // starting end and the toggle that blocks it. The quetzal flies from Travel, and the keeper
+    // from Travel and from chat.
     public enum Route
     {
         VARROCK_TO_CIVITAS(NpcID.VMQ2_QUETZAL_KEEPER_2OP, NpcID.VMQ2_QUETZAL_OP, TeleportBlockerConfig::quetzalVarrockToCivitas),
@@ -131,12 +130,10 @@ public final class QuetzalTransport
         }
     }
 
-    /**
-     * The landing sites of the network map in the game's own order, each paired
-     * with the name its icon option carries and the toggle that blocks it. Every
-     * site has an icon, built or not. The Last-destination option has a toggle
-     * of its own, since its menu entry does not name the site it flies to.
-     */
+    // The landing sites of the network map in the game's own order, each paired with the name its
+    // icon option carries and the toggle that blocks it. Every site has an icon, built or not. The
+    // Last-destination option has a toggle of its own, which also covers the option when it names
+    // the site it flies to.
     public enum Destination
     {
         CIVITAS("Civitas illa Fortis", TeleportBlockerConfig::quetzalCivitas),
@@ -153,6 +150,16 @@ public final class QuetzalTransport
         TAL_TEKLAN("Tal Teklan", TeleportBlockerConfig::quetzalTalTeklan),
         AUBURNVALE("Auburnvale", TeleportBlockerConfig::quetzalAuburnvale),
         KASTORI("Kastori", TeleportBlockerConfig::quetzalKastori);
+
+        private static final Map<String, Destination> BY_KEY = new HashMap<>();
+
+        static
+        {
+            for (Destination destination : values())
+            {
+                BY_KEY.put(StripAndLowercase.of(destination.destinationName), destination);
+            }
+        }
 
         private final String destinationName;
         private final Predicate<TeleportBlockerConfig> blocked;
@@ -171,6 +178,12 @@ public final class QuetzalTransport
         public boolean isBlocked(TeleportBlockerConfig config)
         {
             return blocked.test(config);
+        }
+
+        // The site an option names, or null when the option names none.
+        public static Destination forOption(String option)
+        {
+            return BY_KEY.get(StripAndLowercase.of(option));
         }
 
         @Override
