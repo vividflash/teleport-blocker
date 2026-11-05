@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
 // Comparison key for option text, ignoring case and punctuation.
 public final class StripAndLowercase
 {
-    private static final Pattern NON_ALPHANUMERIC = Pattern.compile("[^a-z0-9]");
     private static final Pattern NON_ALPHANUMERIC_RUN = Pattern.compile("[^a-z0-9]+");
 
     private StripAndLowercase()
@@ -39,7 +38,22 @@ public final class StripAndLowercase
 
     public static String of(String text)
     {
-        return text == null ? "" : NON_ALPHANUMERIC.matcher(text.toLowerCase(Locale.ROOT)).replaceAll("");
+        if (text == null)
+        {
+            return "";
+        }
+
+        int length = text.length();
+        StringBuilder key = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+        {
+            char ch = Character.toLowerCase(text.charAt(i));
+            if ((ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9'))
+            {
+                key.append(ch);
+            }
+        }
+        return key.toString();
     }
 
     // The words of a text, lowercased, between single spaces and with a space at both ends.

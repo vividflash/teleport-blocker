@@ -54,7 +54,7 @@ public class TeleportBlockerPlugin extends Plugin
 
     // The release the notice below belongs to, not the packaged version.
     private static final String VERSION = "1.8";
-    private static final String UPDATE_TITLE = "Teleport Blocker v1.8:";
+    private static final String UPDATE_TITLE = "Teleport Blocker v" + VERSION + ":";
     private static final String[] UPDATE_LINES = {
         "Order: Alphabetical for easier Navigation",
         "Added: Arceuus Spellbook, Mushtrees, Morytania Boats",

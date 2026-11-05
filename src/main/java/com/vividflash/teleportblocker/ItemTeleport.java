@@ -114,9 +114,10 @@ public enum ItemTeleport
     WILDERNESS_FOUNTAIN_OF_RUNE(Item.WILDERNESS_SWORD, "Teleport", TeleportBlockerConfig::wildernessFountainOfRune);
 
 
+    private static final ItemTeleport[] VALUES = values();
+
     private final Item item;
     private final String optionLine;
-    private final String altOptionLine;
     private final String optionKey;
     private final String altOptionKey;
     private final Predicate<TeleportBlockerConfig> blocked;
@@ -130,7 +131,6 @@ public enum ItemTeleport
     {
         this.item = item;
         this.optionLine = optionLine;
-        this.altOptionLine = altOptionLine;
         this.optionKey = StripAndLowercase.of(optionLine);
         this.altOptionKey = altOptionLine == null ? null : StripAndLowercase.of(altOptionLine);
         this.blocked = blocked;
@@ -145,20 +145,18 @@ public enum ItemTeleport
     // for example Eagles' Eyrie against Eagle's Eyrie, so both sides are
     // compared with punctuation and case removed. Names that differ by a whole
     // word, such as Dondakan against Dondakan's Rock, still need the alternate.
-    public boolean matchesOption(String line)
+    // The key is the line as made by StripAndLowercase.
+    public boolean matchesOptionKey(String key)
     {
-        String key = StripAndLowercase.of(line);
-        return !key.isEmpty()
-            && (key.equals(optionKey)
-                || (altOptionKey != null && key.equals(altOptionKey)));
+        return !key.isEmpty() && (key.equals(optionKey) || key.equals(altOptionKey));
     }
 
-    // True when the line is a known destination of the given item.
-    public static boolean matchesDialogueLine(Item item, String line)
+    // True when the key, as made by StripAndLowercase, is a known destination of the given item.
+    public static boolean matchesDialogueKey(Item item, String key)
     {
-        for (ItemTeleport teleport : values())
+        for (ItemTeleport teleport : VALUES)
         {
-            if (teleport.item == item && teleport.matchesOption(line))
+            if (teleport.item == item && teleport.matchesOptionKey(key))
             {
                 return true;
             }
@@ -207,6 +205,8 @@ public enum ItemTeleport
         WESTERN_BANNER("Western banner", "western banner", InterfaceID.Wornitems.SLOT3, false),
         WILDERNESS_SWORD("Wilderness sword", "wilderness sword", InterfaceID.Wornitems.SLOT3, false);
 
+        private static final Item[] ITEMS = values();
+
         private final String itemName;
         private final String targetKeyword;
         private final int wornComponentId;
@@ -241,6 +241,20 @@ public enum ItemTeleport
         public boolean matchesTarget(String target)
         {
             return target != null && target.toLowerCase(Locale.ROOT).contains(targetKeyword);
+        }
+
+        // The item a menu target names, or null when it names none.
+        public static Item forTarget(String target)
+        {
+            String lower = target.toLowerCase(Locale.ROOT);
+            for (Item item : ITEMS)
+            {
+                if (lower.contains(item.targetKeyword))
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         @Override

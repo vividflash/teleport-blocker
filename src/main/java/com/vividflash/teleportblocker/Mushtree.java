@@ -88,10 +88,10 @@ public final class Mushtree
             this.blocked = blocked;
         }
 
-        // True when the label names this tree.
-        public boolean isNamedBy(String label)
+        // True when the label, as made by StripAndLowercase, names this tree.
+        public boolean isNamedByKey(String labelKey)
         {
-            return StripAndLowercase.of(label).contains(placeKey);
+            return labelKey.contains(placeKey);
         }
 
         public boolean isBlocked(TeleportBlockerConfig config)

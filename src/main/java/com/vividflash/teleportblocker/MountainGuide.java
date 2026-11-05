@@ -77,21 +77,21 @@ public final class MountainGuide
         QUETZACALLI_GORGE(null, x -> x < VARLAMORE_MIDPOINT_X, TeleportBlockerConfig::mountainGuideQuetzacalliGorge),
         NEMUS_RETREAT(null, x -> x >= VARLAMORE_MIDPOINT_X, TeleportBlockerConfig::mountainGuideNemusRetreat);
 
-        private final String line;
+        private final String lineKey;
         private final IntPredicate followFromX;
         private final Predicate<TeleportBlockerConfig> blocked;
 
         Destination(String line, IntPredicate followFromX, Predicate<TeleportBlockerConfig> blocked)
         {
-            this.line = line;
+            this.lineKey = line == null ? null : StripAndLowercase.of(line);
             this.followFromX = followFromX;
             this.blocked = blocked;
         }
 
-        public boolean matchesLine(String text)
+        // True when the key, as made by StripAndLowercase, is this destination's picker line.
+        public boolean matchesLineKey(String key)
         {
-            String key = StripAndLowercase.of(text);
-            return line != null && !key.isEmpty() && StripAndLowercase.of(line).equals(key);
+            return lineKey != null && lineKey.equals(key);
         }
 
         // True when Follow on the Varlamore guide standing at this x goes here.

@@ -245,8 +245,6 @@ public final class Ship
             TeleportBlockerConfig::shipMiscellaniaRellekka);
 
         private final Set<Integer> npcIds;
-        private final List<String> options;
-        private final List<String> lines;
         private final List<String> optionKeys;
         private final List<String> lineKeys;
         private final Set<Integer> talkIds;
@@ -256,8 +254,6 @@ public final class Ship
             Predicate<TeleportBlockerConfig> blocked)
         {
             this.npcIds = npcIds;
-            this.options = options;
-            this.lines = lines;
             this.optionKeys = keys(options);
             this.lineKeys = keys(lines);
             this.talkIds = talkIds;
@@ -302,6 +298,11 @@ public final class Ship
 
         private static boolean matchesAny(List<String> keys, String text)
         {
+            if (keys.isEmpty())
+            {
+                return false;
+            }
+
             String key = StripAndLowercase.of(text);
             for (String candidate : keys)
             {

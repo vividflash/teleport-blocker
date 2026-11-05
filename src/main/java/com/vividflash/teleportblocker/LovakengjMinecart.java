@@ -33,6 +33,7 @@ public final class LovakengjMinecart
 {
     // The start of the title printed above the station list, ahead of the fare.
     public static final String TITLE = "Minecart rides";
+    private static final String TITLE_KEY = StripAndLowercase.of(TITLE);
 
     private LovakengjMinecart()
     {
@@ -41,7 +42,7 @@ public final class LovakengjMinecart
     // True when a list title belongs to the station list, whatever fare it names.
     public static boolean isTitle(String title)
     {
-        return StripAndLowercase.of(title).startsWith(StripAndLowercase.of(TITLE));
+        return StripAndLowercase.of(title).startsWith(TITLE_KEY);
     }
 
     // The stations of the list in list order, each paired with the name its line prints and the
@@ -62,17 +63,19 @@ public final class LovakengjMinecart
         SHAYZIEN_WEST("Shayzien West", TeleportBlockerConfig::minecartShayzienWest);
 
         private final String stationName;
+        private final String stationKey;
         private final Predicate<TeleportBlockerConfig> blocked;
 
         Station(String stationName, Predicate<TeleportBlockerConfig> blocked)
         {
             this.stationName = stationName;
+            this.stationKey = StripAndLowercase.of(stationName);
             this.blocked = blocked;
         }
 
-        public String getStationName()
+        public String getStationKey()
         {
-            return stationName;
+            return stationKey;
         }
 
         public boolean isBlocked(TeleportBlockerConfig config)

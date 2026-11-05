@@ -170,11 +170,6 @@ public final class QuetzalTransport
             this.blocked = blocked;
         }
 
-        public String getDestinationName()
-        {
-            return destinationName;
-        }
-
         public boolean isBlocked(TeleportBlockerConfig config)
         {
             return blocked.test(config);

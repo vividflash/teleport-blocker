@@ -35,17 +35,19 @@ public enum SoulWarsPortal
     FEROX_ENCLAVE("Ferox Enclave", TeleportBlockerConfig::soulWarsPortalFeroxEnclave);
 
     private final String optionLine;
+    private final String optionKey;
     private final Predicate<TeleportBlockerConfig> blocked;
 
     SoulWarsPortal(String optionLine, Predicate<TeleportBlockerConfig> blocked)
     {
         this.optionLine = optionLine;
+        this.optionKey = StripAndLowercase.of(optionLine);
         this.blocked = blocked;
     }
 
-    public String getOptionLine()
+    public String getOptionKey()
     {
-        return optionLine;
+        return optionKey;
     }
 
     public boolean isBlocked(TeleportBlockerConfig config)

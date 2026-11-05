@@ -95,13 +95,12 @@ public final class SpiritTree
             return blocked.test(config);
         }
 
-        // True when the text after a line's shortcut names this destination. The house line can
-        // carry the house's location in brackets, which is cut before comparing.
-        public boolean matchesLine(String destination)
+        // The destination the text after a line's shortcut names, or null when it names none. The
+        // house line can carry the house's location in brackets, which is cut before comparing.
+        public static Destination forLine(String destination)
         {
             int bracket = destination.indexOf(" (");
-            String place = bracket > 0 ? destination.substring(0, bracket) : destination;
-            return StripAndLowercase.of(destinationName).equals(StripAndLowercase.of(place));
+            return BY_KEY.get(StripAndLowercase.of(bracket > 0 ? destination.substring(0, bracket) : destination));
         }
 
         // The destination a tree option names, or null when the option names none.

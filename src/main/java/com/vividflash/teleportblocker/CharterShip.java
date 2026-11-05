@@ -307,13 +307,12 @@ public final class CharterShip
             return blocked.test(config);
         }
 
-        // True when the text is one of the names this port carries.
-        public boolean matchesName(String text)
+        // True when the key, as made by StripAndLowercase, is one of the names this port carries.
+        public boolean matchesKey(String name)
         {
-            String name = StripAndLowercase.of(text);
             for (String portKey : portKeys)
             {
-                if (!name.isEmpty() && portKey.equals(name))
+                if (portKey.equals(name))
                 {
                     return true;
                 }

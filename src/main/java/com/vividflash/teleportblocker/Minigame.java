@@ -103,17 +103,19 @@ public enum Minigame
         PORT_SARIM("Port Sarim (wily cats)", TeleportBlockerConfig::ratPitsPortSarim);
 
         private final String optionLine;
+        private final String optionKey;
         private final Predicate<TeleportBlockerConfig> blocked;
 
         RatPit(String optionLine, Predicate<TeleportBlockerConfig> blocked)
         {
             this.optionLine = optionLine;
+            this.optionKey = StripAndLowercase.of(optionLine);
             this.blocked = blocked;
         }
 
-        public String getOptionLine()
+        public String getOptionKey()
         {
-            return optionLine;
+            return optionKey;
         }
 
         public boolean isBlocked(TeleportBlockerConfig config)

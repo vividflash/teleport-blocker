@@ -44,17 +44,19 @@ public enum CanoeDestination
     TREE_GNOME_STRONGHOLD("Tree Gnome Stronghold", TeleportBlockerConfig::canoeTreeGnomeStronghold);
 
     private final String destinationName;
+    private final String destinationKey;
     private final Predicate<TeleportBlockerConfig> blocked;
 
     CanoeDestination(String destinationName, Predicate<TeleportBlockerConfig> blocked)
     {
         this.destinationName = destinationName;
+        this.destinationKey = StripAndLowercase.of(destinationName);
         this.blocked = blocked;
     }
 
-    public String getDestinationName()
+    public String getDestinationKey()
     {
-        return destinationName;
+        return destinationKey;
     }
 
     public boolean isBlocked(TeleportBlockerConfig config)

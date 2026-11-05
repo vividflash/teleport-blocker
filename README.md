@@ -129,7 +129,7 @@ everything else. Default `Allow`.
 - **Canoes**: Lumbridge, Champions' Guild, Barbarian Village, Edgeville, Ferox
   Enclave, Wilderness Pond, Castle Wars, Tree Gnome Village, Clocktower, Chaos
   Druid Tower, Tree Gnome Stronghold.
-- **Soul Wars Portal and Edgeville Lever**: Ardougne Lever to Wilderness,
+- **Soul Wars | Edgeville Lever**: Ardougne Lever to Wilderness,
   Edgeville Lever to Wilderness, Edgeville to Soul Wars, Ferox Enclave to Soul
   Wars, Soul Wars to Edgeville, Soul Wars to Ferox Enclave, Wilderness Lever
   to Ardougne, Wilderness Lever to Edgeville.

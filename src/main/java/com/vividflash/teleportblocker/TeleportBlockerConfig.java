@@ -1893,7 +1893,7 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
-        name = "Soul Wars Portal and Edgeville Lever",
+        name = "Soul Wars | Edgeville Lever",
         description = "",
         position = 20,
         closedByDefault = true

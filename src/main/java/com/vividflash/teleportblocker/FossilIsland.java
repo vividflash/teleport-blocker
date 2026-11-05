@@ -63,6 +63,17 @@ public final class FossilIsland
         return Collections.unmodifiableList(Arrays.asList(texts));
     }
 
+    // The place words as made by StripAndLowercase.words, which a picker line is searched for.
+    private static String[] wordKeys(List<String> words)
+    {
+        String[] keys = new String[words.size()];
+        for (int i = 0; i < keys.length; i++)
+        {
+            keys[i] = StripAndLowercase.words(words.get(i));
+        }
+        return keys;
+    }
+
     public static boolean isTravel(String option)
     {
         return TRAVEL_KEY.equals(StripAndLowercase.of(option));
@@ -87,13 +98,15 @@ public final class FossilIsland
             TeleportBlockerConfig::fossilIslandLithkren),
         FOSSIL_ISLAND(texts(), ids(ObjectID.LITHKREN_ROWBOAT), TeleportBlockerConfig::fossilIslandFossilIsland);
 
-        private final List<String> lines;
+        private static final Destination[] VALUES = values();
+
+        private final String[] wordKeys;
         private final Set<Integer> travelObjectIds;
         private final Predicate<TeleportBlockerConfig> blocked;
 
         Destination(List<String> lines, Set<Integer> travelObjectIds, Predicate<TeleportBlockerConfig> blocked)
         {
-            this.lines = lines;
+            this.wordKeys = wordKeys(lines);
             this.travelObjectIds = travelObjectIds;
             this.blocked = blocked;
         }
@@ -116,11 +129,11 @@ public final class FossilIsland
             String line = StripAndLowercase.words(text);
             Destination best = null;
             int longest = 0;
-            for (Destination destination : values())
+            for (Destination destination : VALUES)
             {
-                for (String word : destination.lines)
+                for (String word : destination.wordKeys)
                 {
-                    if (word.length() > longest && line.contains(StripAndLowercase.words(word)))
+                    if (word.length() > longest && line.contains(word))
                     {
                         best = destination;
                         longest = word.length();

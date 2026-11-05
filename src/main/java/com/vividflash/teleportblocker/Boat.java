@@ -57,6 +57,17 @@ public final class Boat
         return Collections.unmodifiableList(Arrays.asList(texts));
     }
 
+    // The place words as made by StripAndLowercase.words, which a picker line is searched for.
+    private static String[] wordKeys(List<String> words)
+    {
+        String[] keys = new String[words.size()];
+        for (int i = 0; i < keys.length; i++)
+        {
+            keys[i] = StripAndLowercase.words(words.get(i));
+        }
+        return keys;
+    }
+
     // The boats, each paired with the objects whose option opens its picker and the NPCs whose chat
     // can pick one of its destinations. A boat with neither is only ever used through click
     // options.
@@ -143,8 +154,11 @@ public final class Boat
         CONCH_NORTH_COAST(Network.CONCH_ROWBOAT, texts("north"), TeleportBlockerConfig::boatConchNorthCoast),
         CONCH_EAST_COAST(Network.CONCH_ROWBOAT, texts("east"), TeleportBlockerConfig::boatConchEastCoast);
 
+        private static final Destination[] VALUES = values();
+
         private final Network network;
-        private final List<String> lines;
+        private final String[] lineKeys;
+        private final String[] wordKeys;
         private final String option;
         private final String optionKey;
         private final Set<Integer> objectIds;
@@ -160,7 +174,12 @@ public final class Boat
             Predicate<TeleportBlockerConfig> blocked)
         {
             this.network = network;
-            this.lines = lines;
+            this.lineKeys = new String[lines.size()];
+            for (int i = 0; i < lineKeys.length; i++)
+            {
+                lineKeys[i] = StripAndLowercase.of(lines.get(i));
+            }
+            this.wordKeys = wordKeys(lines);
             this.option = option;
             this.optionKey = StripAndLowercase.of(option);
             this.objectIds = objectIds;
@@ -179,6 +198,12 @@ public final class Boat
             return option != null && optionKey.equals(key);
         }
 
+        // True when a click option travels here straight away.
+        public boolean hasOption()
+        {
+            return option != null;
+        }
+
         public boolean isOptionObject(int objectId)
         {
             return objectIds.contains(objectId);
@@ -189,19 +214,18 @@ public final class Boat
             return npcIds.contains(npcId);
         }
 
-        // True when the text is a chat line that picks this destination, on a boat reached through
-        // chat.
-        public boolean matchesTalkLine(String text)
+        // True when the key, as made by StripAndLowercase, is a chat line that picks this
+        // destination, on a boat reached through chat.
+        public boolean matchesTalkKey(String key)
         {
             if (network.hasPicker())
             {
                 return false;
             }
 
-            String key = StripAndLowercase.of(text);
-            for (String line : lines)
+            for (String line : lineKeys)
             {
-                if (!key.isEmpty() && StripAndLowercase.of(line).equals(key))
+                if (line.equals(key))
                 {
                     return true;
                 }
@@ -227,15 +251,15 @@ public final class Boat
             String line = StripAndLowercase.words(text);
             Destination best = null;
             int longest = 0;
-            for (Destination destination : values())
+            for (Destination destination : VALUES)
             {
                 if (destination.network != network)
                 {
                     continue;
                 }
-                for (String word : destination.lines)
+                for (String word : destination.wordKeys)
                 {
-                    if (word.length() > longest && line.contains(StripAndLowercase.words(word)))
+                    if (word.length() > longest && line.contains(word))
                     {
                         best = destination;
                         longest = word.length();
