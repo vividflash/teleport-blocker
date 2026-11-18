@@ -70,6 +70,10 @@ everything else. Default `Allow`.
 - **Western Banner**: Piscatoris.
 - **Wilderness Sword**: Fountain of Rune.
 
+**Other Items**
+
+- **Sailors' Amulet**: The Pandemonium, Port Roberts, Red Rock, Deepfin Point.
+
 **Nature Transport**
 
 - **Spirit Trees**: Tree Gnome Village, Gnome Stronghold, Battlefield of

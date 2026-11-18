@@ -1705,6 +1705,62 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
+        name = "Sailors' Amulet",
+        description = "",
+        position = 20,
+        closedByDefault = true
+    )
+    String sailorsAmuletSection = "sailorsAmuletSection";
+
+    @ConfigItem(
+        keyName = "sailorsThePandemonium",
+        name = "The Pandemonium",
+        description = "",
+        position = 10,
+        section = sailorsAmuletSection
+    )
+    default boolean sailorsThePandemonium()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "sailorsPortRoberts",
+        name = "Port Roberts",
+        description = "",
+        position = 20,
+        section = sailorsAmuletSection
+    )
+    default boolean sailorsPortRoberts()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "sailorsRedRock",
+        name = "Red Rock",
+        description = "",
+        position = 30,
+        section = sailorsAmuletSection
+    )
+    default boolean sailorsRedRock()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "sailorsDeepfinPoint",
+        name = "Deepfin Point",
+        description = "",
+        position = 40,
+        section = sailorsAmuletSection
+    )
+    default boolean sailorsDeepfinPoint()
+    {
+        return false;
+    }
+
+    @ConfigSection(
         name = "Diary Items",
         description = "",
         position = 20,
