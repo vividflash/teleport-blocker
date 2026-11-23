@@ -87,21 +87,10 @@ import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.util.Text;
 
-// Removes the menu entries pointing at blocked spellbook teleports, at blocked rows of the
-// Minigames window, at blocked canoe map destinations, at blocked portals into Soul Wars, at
-// blocked destinations on worn teleport jewellery, at blocked options of the Wilderness levers, at
-// blocked lines of the spirit tree list and at the trees' Last-destination option, at blocked
-// glider map destinations and at the pilots' Glider option, at blocked quetzal map landing sites
-// and legs of the Varrock quetzal route, at the quetzals' and whistles' Last-destination option and
-// at a whistle's Signal set to fly to a blocked Hunter Guild, at blocked lines of the Lovakengj
-// minecart station list, at blocked charter ports and the crews' Charter-to option, at the options
-// of blocked ship legs, boat trips and Mountain Guide trips, at the fairy ring dials' Confirm for a
-// blocked code and the rings' Zanaris, Last and Favourites options, and at blocked lines of a boat
-// picker, and consumes clicks and number-key presses on blocked options of the rat pit, jewellery
-// and Soul Wars portal dialogues, of the charter confirm dialogue, of ship and Mountain Guide chats
-// and of boat pickers, as well as shortcut key presses on blocked spirit tree, minecart, charter
-// and boat picker lines. The spell icons themselves are only touched through the Minigame Teleport
-// toggles.
+// Removes the menu entries of blocked teleports and transports, and consumes clicks and number-key
+// presses on blocked lines of the dialogues, chats and pickers they open, as well as shortcut key
+// presses on blocked picker lines. The spell icons themselves are only touched through the
+// Minigame Teleport toggles.
 @Slf4j
 @Singleton
 public class TeleportBlockFeature implements KeyListener
@@ -569,6 +558,18 @@ public class TeleportBlockFeature implements KeyListener
                 log.debug("[click] consumed fairy ring click option={} target={}", event.getMenuOption(), event.getMenuTarget());
             }
             event.consume();
+        }
+        // Menu Entry Swapper copies a submenu line to the top after the menu is
+        // filtered, so a left-click on a blocked entry is stopped here. A click
+        // that does nothing keeps the remembered transport for the open chat.
+        if (!event.isConsumed() && isFiltering() && isBlocked(event.getMenuEntry()))
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug("[click] consumed blocked click option={} target={}", event.getMenuOption(), event.getMenuTarget());
+            }
+            event.consume();
+            return;
         }
         rememberTransport(event.getMenuEntry());
     }

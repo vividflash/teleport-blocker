@@ -33,10 +33,9 @@ import java.util.function.Predicate;
 import net.runelite.api.gameval.NpcID;
 import net.runelite.api.gameval.ObjectID;
 
-// The boats: Boaty on Lake Molch, Larry's boat, the Morytania rowboat, the Slepe rowboat, Achilka's
-// boats and the Great Conch rowboats. Some offer their destinations as click options, the others open a picker
-// whose lines are not known word for word, so a picker line is read by the place names it contains,
-// and only while the picker of the boat just used is open.
+// The boats. Some offer their destinations as click options, the others open a picker whose lines
+// are not known word for word, so a picker line is read by the place names it contains, and only
+// while the picker of the boat just used is open.
 public final class Boat
 {
     // Larry's boat at Rellekka reaches the menu under this id, which shows PENG_BOAT_3OPS or

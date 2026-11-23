@@ -53,10 +53,10 @@ public class TeleportBlockerPlugin extends Plugin
     private static final String LAST_SEEN_VERSION_KEY = "lastSeenVersion";
 
     // The release the notice below belongs to, not the packaged version.
-    private static final String VERSION = "1.9";
+    private static final String VERSION = "2.0";
     private static final String UPDATE_TITLE = "Teleport Blocker v" + VERSION + ":";
     private static final String[] UPDATE_LINES = {
-        "Added: Sailors' Amulet",
+        "Added: Chronicle, Cowbell Amulet",
     };
 
     // Dark red, for legibility against the opaque chatbox background. Only the title carries it.

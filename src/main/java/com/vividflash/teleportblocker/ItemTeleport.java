@@ -28,11 +28,11 @@ import java.util.Locale;
 import java.util.function.Predicate;
 import net.runelite.api.gameval.InterfaceID;
 
-// Destinations offered by teleport jewellery, achievement diary reward items and the Sailors' amulet,
-// each paired with its item, the option text the game prints and the toggle that blocks it. A few
-// destinations are worded one way on the worn menu and another in the rub dialogue or the inventory
-// menu, so those carry a second accepted line. Cancel, Rub, Wear, Wield, Drop and the Ring of wealth Features,
-// Boss Log and Coin Collection options are not listed and are never touched.
+// Item teleport destinations, each paired with its item, the option text the game prints and the
+// toggle that blocks it. A few destinations are worded one way on the worn menu and another in the
+// rub dialogue or the inventory menu, so those carry a second accepted line. Cancel, Rub, Wear,
+// Wield, Drop and the Ring of wealth Features, Boss Log and Coin Collection options are not listed
+// and are never touched.
 public enum ItemTeleport
 {
     DUELING_EMIRS_ARENA(Item.RING_OF_DUELING, "Emir's Arena", TeleportBlockerConfig::duelingEmirsArena),
@@ -92,6 +92,10 @@ public enum ItemTeleport
     SAILORS_PORT_ROBERTS(Item.SAILORS_AMULET, "Port Roberts", TeleportBlockerConfig::sailorsPortRoberts),
     SAILORS_RED_ROCK(Item.SAILORS_AMULET, "Red Rock", TeleportBlockerConfig::sailorsRedRock),
     SAILORS_DEEPFIN_POINT(Item.SAILORS_AMULET, "Deepfin Point", TeleportBlockerConfig::sailorsDeepfinPoint),
+
+    COWBELL_LUMBRIDGE_COW_FIELD(Item.COWBELL_AMULET, "Teleport", TeleportBlockerConfig::cowbellLumbridgeCowField),
+
+    CHRONICLE_CHAMPIONS_GUILD(Item.CHRONICLE, "Teleport", TeleportBlockerConfig::chronicleChampionsGuild),
 
     ARDOUGNE_KANDARIN_MONASTERY(Item.ARDOUGNE_CLOAK, "Monastery Teleport", "Kandarin Monastery", TeleportBlockerConfig::ardougneKandarinMonastery),
     ARDOUGNE_ARDOUGNE_FARM(Item.ARDOUGNE_CLOAK, "Farm Teleport", "Ardougne Farm", TeleportBlockerConfig::ardougneArdougneFarm),
@@ -183,10 +187,10 @@ public enum ItemTeleport
     // Teleport items, each paired with the equipment slot its worn menu sits on and a lower case
     // fragment of the item name. Every charge variant and tier carries that fragment, so the
     // fragment stands in for a list of item ids. The fragment is matched against the menu target,
-    // which keeps a destination word from being read off some unrelated widget. The diary items
-    // and the Sailors' amulet have no rub dialogue, and several share the plain Teleport option, so
-    // their options are only matched with the item name on the target. Submenu lines are matched
-    // through the item named on their parent entry, whatever this flag says.
+    // which keeps a destination word from being read off some unrelated widget. Items without a rub
+    // dialogue (rubDialogue false) often share the plain Teleport option, so their options are only
+    // matched with the item name on the target. Submenu lines are matched through the item named on
+    // their parent entry, whatever this flag says.
     public enum Item
     {
         RING_OF_DUELING("Ring of dueling", "dueling", InterfaceID.Wornitems.SLOT12),
@@ -200,6 +204,8 @@ public enum ItemTeleport
         DIGSITE_PENDANT("Digsite pendant", "digsite pendant", InterfaceID.Wornitems.SLOT2),
         BURNING_AMULET("Burning amulet", "burning amulet", InterfaceID.Wornitems.SLOT2),
         SAILORS_AMULET("Sailors' amulet", "sailors' amulet", InterfaceID.Wornitems.SLOT2, false),
+        COWBELL_AMULET("Cowbell amulet", "cowbell amulet", InterfaceID.Wornitems.SLOT2, false),
+        CHRONICLE("Chronicle", "chronicle", InterfaceID.Wornitems.SLOT5, false),
 
         ARDOUGNE_CLOAK("Ardougne cloak", "ardougne cloak", InterfaceID.Wornitems.SLOT1, false),
         DESERT_AMULET("Desert amulet", "desert amulet", InterfaceID.Wornitems.SLOT2, false),

@@ -72,6 +72,8 @@ everything else. Default `Allow`.
 
 **Other Items**
 
+- **Chronicle**: Champions' Guild.
+- **Cowbell Amulet**: Lumbridge Cow Field.
 - **Sailors' Amulet**: The Pandemonium, Port Roberts, Red Rock, Deepfin Point.
 
 **Nature Transport**

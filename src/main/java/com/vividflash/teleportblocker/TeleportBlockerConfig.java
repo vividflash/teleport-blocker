@@ -1761,6 +1761,38 @@ public interface TeleportBlockerConfig extends Config
     }
 
     @ConfigSection(
+        name = "Chronicle | Cowbell Amulet",
+        description = "",
+        position = 20,
+        closedByDefault = true
+    )
+    String chronicleCowbellSection = "chronicleCowbellSection";
+
+    @ConfigItem(
+        keyName = "chronicleChampionsGuild",
+        name = "Chronicle - Champions' Guild",
+        description = "",
+        position = 10,
+        section = chronicleCowbellSection
+    )
+    default boolean chronicleChampionsGuild()
+    {
+        return false;
+    }
+
+    @ConfigItem(
+        keyName = "cowbellLumbridgeCowField",
+        name = "Cowbell Amulet - Lumbridge Cow Field",
+        description = "",
+        position = 20,
+        section = chronicleCowbellSection
+    )
+    default boolean cowbellLumbridgeCowField()
+    {
+        return false;
+    }
+
+    @ConfigSection(
         name = "Diary Items",
         description = "",
         position = 20,
